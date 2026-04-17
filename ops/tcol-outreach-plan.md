@@ -4,9 +4,9 @@
 
 | Priorité | Lab | Contact | Data type | Status |
 |----------|-----|---------|-----------|--------|
-| 1 | Huth Lab (UT Austin) | alex@cs.utexas.edu | Narratives natural language | TODO S3 |
-| 2 | Norman Lab (Princeton) | knorman@princeton.edu | Episodic memory | TODO S3 |
-| 3 | Gallant Lab (UC Berkeley) | gallant@berkeley.edu | Natural stimuli | TODO S4 |
+| 1 | Huth Lab (UT Austin) | alex@cs.utexas.edu | Narratives natural language | DRAFT_READY_S3 |
+| 2 | Norman Lab (Princeton) | knorman@princeton.edu | Episodic memory | DRAFT_READY_S3 |
+| 3 | Gallant Lab (UC Berkeley) | gallant@berkeley.edu | Natural stimuli | DRAFT_READY_S3 |
 
 Fallback : **Studyforrest** (public, already available) — feasibility
 note S2 mandatory before proceeding.
@@ -18,6 +18,7 @@ note S2 mandatory before proceeding.
 | 1 | Chercheur TCS, monoïdes/catégories | Formel rigoureux | Via réseau académique perso |
 | 2 | Cognitive modeling researcher | Interdisciplinaire | Via T-Col.2 outreach natural |
 | 3 | Sub-agent critic + validator | Automated fallback | Backup si humain indisponible |
+| NB | — | — | Studyforrest Branch A locked (G1) — external fMRI collab moins urgent, mais reviewer formel reste critique pour G3-draft S6. |
 
 Cible : recruter S3-S5, relecture DR-2 draft S6-S8 (G3-draft
 milestone).
@@ -32,3 +33,21 @@ milestone).
 
 Statuts à mettre à jour chaque Dream-sync Monday dans ce fichier.
 Escalade vers sync pack si blocage >2 semaines.
+
+## Weekly status log
+
+### Week S2 (2026-04-17)
+
+- **G1 (Studyforrest feasibility)** : locked Branch A GO-STUDYFORREST.
+  See `docs/feasibility/studyforrest-rsa-note.md`. All 4 checks pass:
+  ROIs via FreeSurfer+Shen-268, word/phoneme/sentence alignment
+  present, RDM count 2-3 orders above floor, PDDL+BIDS+DataLad open
+  access.
+- **fMRI labs outreach** : proposal template drafted at
+  `ops/proposal-template-draft.md`. User action pending week S3:
+  finalize lab-specific framing per target and send emails.
+- **Formal reviewer (Q_CR.1 b)** : candidate shortlist to assemble
+  week S3. Priority profile: TCS / monoids / categories theory
+  familiar with formal proof review. DR-2 draft circulation target
+  S6 (G3-draft).
+- **Intel NRC (cycle 2)** : not started (S9+ per plan).
