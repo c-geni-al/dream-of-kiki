@@ -1,0 +1,75 @@
+# fMRI schema for M2.b RSA alignment
+# Locked at S4.1 based on G1 Branch A (Studyforrest)
+# Reference: docs/feasibility/studyforrest-rsa-note.md
+
+version: "C-v0.3.1+STABLE"
+data_source: studyforrest
+branch: A  # GO-STUDYFORREST from G1 decision
+
+dataset:
+  name: Studyforrest
+  version: "2.0.0"  # pin current version at lock time
+  license: PDDL
+  access: open  # BIDS + DataLad, no auth required
+  canonical_url: https://www.studyforrest.org
+
+  format:
+    structure: BIDS
+    transport: DataLad
+    file_format: nifti
+
+parcellations:
+  - name: FreeSurfer
+    rois_required:
+      - STG  # Superior Temporal Gyrus (auditory + lexical)
+      - IFG  # Inferior Frontal Gyrus (syntax)
+      - AG   # Angular Gyrus (semantic)
+  - name: Shen-268
+    rois_required:
+      - language_network  # Shen-268 parcels overlapping STG/IFG/AG
+
+stimulus_annotations:
+  granularity_available:
+    - phoneme_level  # 66,611 phonemes timed
+    - word_level     # 16,187 words timed
+    - sentence_level # 2,528 sentences
+    - scene_level    # narrative scene segmentation
+
+  ortho_species_mapping:
+    rho_phono: phoneme_level
+    rho_lex: word_level
+    rho_syntax: sentence_level
+    rho_sem: word_level + context_window_300d
+
+  vector_embeddings:
+    dimensions: 300
+    provenance: Studyforrest STOP annotation
+    mappable_to_kiki: true
+
+rdm_computation:
+  method: pearson_correlation
+  framework: nilearn
+  determinism: cpu_nilearn_seeded  # contract R1
+  rdm_size_floor: 50  # minimum conditions
+  rdm_size_actual: ">= 1000 unique events per ROI (above floor)"
+
+alignment:
+  metric: M2.b
+  formula: "Pearson(RDM(kiki_activations), RDM(fMRI_ROI))"
+  per_profile: true  # H3 monotonic ordering P_min < P_equ < P_max
+
+caveats:
+  - Studyforrest rois_required not pre-packaged as language ROIs;
+    must extract via FreeSurfer/Shen-268 parcellation post-hoc.
+  - Mapping rho_sem -> context window is approximate; must document
+    choice in paper 1 methods section.
+  - Phoneme-level timing from STOP annotation is aligned to audio
+    track, not post-hoc transcription.
+
+future_migrations:
+  - If S5-S8 T-Col outreach succeeds with dedicated fMRI lab,
+    extend schema to include lab-specific ROIs as additional
+    alternative source. Keep Studyforrest as default fallback.
+  - If Branch B (PIVOT-SYNTHETIC) is ever activated, add
+    synthetic_benchmark section with EEG linguistic corpora
+    reference.
