@@ -5,6 +5,9 @@ finite budget. Validates framework spec §6.2 DR-0.
 """
 from __future__ import annotations
 
+import math
+
+import pytest
 from hypothesis import given, settings
 from hypothesis import strategies as st
 
@@ -55,7 +58,17 @@ def test_dr0_every_executed_de_has_log_entry(
 @given(ep=dream_episodes_with_replay_only())
 @settings(max_examples=50, deadline=None)
 def test_dr0_budget_is_finite(ep: DreamEpisode) -> None:
-    # Budget components must be finite — enforced at construction
+    # Budget components must be non-negative AND finite
     assert ep.budget.flops >= 0
     assert ep.budget.wall_time_s >= 0
     assert ep.budget.energy_j >= 0
+    assert math.isfinite(ep.budget.wall_time_s)
+    assert math.isfinite(ep.budget.energy_j)
+
+
+def test_budget_cap_rejects_non_finite_values() -> None:
+    """BudgetCap construction rejects NaN/Inf, not just negatives."""
+    with pytest.raises((ValueError, TypeError)):
+        BudgetCap(flops=10, wall_time_s=math.nan, energy_j=0.1)
+    with pytest.raises((ValueError, TypeError)):
+        BudgetCap(flops=10, wall_time_s=math.inf, energy_j=0.1)

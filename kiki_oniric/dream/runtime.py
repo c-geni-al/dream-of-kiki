@@ -62,7 +62,9 @@ class DreamRuntime:
 
         DR-0 guarantee: every call appends a log entry regardless
         of handler outcome. `completed=False` + `error` populated
-        when a handler raises.
+        when a handler raises. `operations_executed` reflects only
+        the operations actually attempted (a failure mid-sequence
+        truncates the recorded list at the failing op).
 
         Raises NotImplementedError if any operation lacks a handler
         (checked before execution begins, no log entry produced for
@@ -76,8 +78,10 @@ class DreamRuntime:
 
         error: str | None = None
         completed = False
+        executed_ops: list[Operation] = []
         try:
             for op in episode.operation_set:
+                executed_ops.append(op)
                 self._handlers[op](episode)
             completed = True
         except Exception as exc:
@@ -87,7 +91,7 @@ class DreamRuntime:
             self._log.append(
                 EpisodeLogEntry(
                     episode_id=episode.episode_id,
-                    operations_executed=episode.operation_set,
+                    operations_executed=tuple(executed_ops),
                     completed=completed,
                     error=error,
                 )

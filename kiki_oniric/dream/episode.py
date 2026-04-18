@@ -4,9 +4,11 @@ Reference: docs/specs/2026-04-17-dreamofkiki-framework-C-design.md §4.1
 """
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any
+from types import MappingProxyType
+from typing import Any, Mapping
 
 
 class EpisodeTrigger(str, Enum):
@@ -48,6 +50,14 @@ class BudgetCap:
             raise ValueError(
                 f"energy_j must be non-negative, got {self.energy_j}"
             )
+        if not math.isfinite(self.wall_time_s):
+            raise ValueError(
+                f"wall_time_s must be finite, got {self.wall_time_s}"
+            )
+        if not math.isfinite(self.energy_j):
+            raise ValueError(
+                f"energy_j must be finite, got {self.energy_j}"
+            )
 
 
 @dataclass(frozen=True)
@@ -57,7 +67,7 @@ class DreamEpisode:
     """
 
     trigger: EpisodeTrigger
-    input_slice: dict[str, Any]
+    input_slice: Mapping[str, Any]
     operation_set: tuple[Operation, ...]
     output_channels: tuple[OutputChannel, ...]
     budget: BudgetCap
@@ -69,3 +79,7 @@ class DreamEpisode:
                 "operation_set must be non-empty — DE with zero "
                 "operations has no effect"
             )
+        # Wrap input_slice immutably to enforce frozen=True for content
+        object.__setattr__(
+            self, "input_slice", MappingProxyType(dict(self.input_slice))
+        )
