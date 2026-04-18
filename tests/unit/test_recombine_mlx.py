@@ -93,6 +93,24 @@ def test_recombine_mlx_sampling_diversity_over_runs() -> None:
     assert len(set(samples)) >= 3
 
 
+def test_recombine_mlx_rejects_mismatched_latent_dimensions() -> None:
+    """I3 dimensionality check : even though only latents[0] is
+    consumed, the MLX handler rejects mismatched-dim batches so the
+    contract matches the skeleton handler exactly.
+    """
+    state = RecombineOpState()
+    encoder = TinyEncoder(input_dim=3, latent_dim=4)
+    decoder = TinyDecoder(latent_dim=4, output_dim=5)
+    handler = recombine_handler_mlx(
+        state=state, encoder=encoder, decoder=decoder, seed=42
+    )
+    with pytest.raises(ValueError, match="I3"):
+        handler(make_recombine_episode(
+            "de-mlx-dim-mismatch",
+            [[1.0, 0.0, 0.0], [0.0, 1.0]],  # mismatched dims
+        ))
+
+
 def test_recombine_mlx_deterministic_with_same_seed() -> None:
     """Same seed should produce identical samples."""
     encoder = TinyEncoder(input_dim=3, latent_dim=4)

@@ -53,7 +53,9 @@ of that spec, structured per §4 outline.md.
 
 Awake → Dream channels :
 - α (raw traces, P_max only) — firehose ring buffer
-- β (curated episodic) — SQLite append-log with saillance gating
+- β (curated episodic buffer) — SQLite append-log with
+  salience-gated insertion (records pass only when their
+  salience score exceeds an adaptive top-k threshold)
 - γ (weights snapshot) — checkpoint pointer fallback
 - δ (hierarchical latents) — ring buffer N=256 multi-species
 
@@ -106,7 +108,9 @@ finding 12 non-commutative cross-pairs.
   pending).
 - **DR-3 (substrate-agnosticism)** : Conformance Criterion =
   signature typing ∧ axiom property tests pass ∧ BLOCKING
-  invariants enforceable. kiki-oniric satisfies all three.
+  invariants enforceable. The reference implementation satisfies
+  all three (see §5 Conformance Criterion validation approach
+  and Paper 2 for the empirical instantiation).
 - **DR-4 (profile chain inclusion)** : P_min ⊆ P_equ ⊆ P_max
   for ops and channels.
 

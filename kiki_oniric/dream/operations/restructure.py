@@ -55,8 +55,8 @@ def restructure_handler(
         # operations before any state mutation.
         if topo_op not in VALID_TOPO_OPS:
             raise ValueError(
-                f"S3: topo_op must be one of "
-                f"{sorted(VALID_TOPO_OPS)}, got {topo_op!r}"
+                f"S3: DE {episode.episode_id!r}: topo_op must be "
+                f"one of {sorted(VALID_TOPO_OPS)}, got {topo_op!r}"
             )
         state.total_episodes_handled += 1
         state.total_diffs_emitted += 1
@@ -90,8 +90,8 @@ def restructure_handler_mlx(
         topo_op = episode.input_slice.get("topo_op", "")
         if topo_op not in VALID_TOPO_OPS:
             raise ValueError(
-                f"topo_op must be one of {sorted(VALID_TOPO_OPS)}, "
-                f"got {topo_op!r}"
+                f"S3: DE {episode.episode_id!r}: topo_op must be "
+                f"one of {sorted(VALID_TOPO_OPS)}, got {topo_op!r}"
             )
 
         if topo_op == "add":
@@ -117,7 +117,9 @@ def restructure_handler_mlx(
             layer_index = episode.input_slice.get("layer_index", -1)
             if not (0 <= layer_index < len(model.layers)):
                 raise ValueError(
-                    f"S3: layer_index {layer_index} out of range"
+                    f"S3: DE {episode.episode_id!r}: layer_index "
+                    f"{layer_index} out of range "
+                    f"[0, {len(model.layers)})"
                 )
             del model.layers[layer_index]
 

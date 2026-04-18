@@ -118,9 +118,11 @@ structured per §4 outline.md.
 Protocols}\label{primitives-8-typed-protocols}
 
 Awake → Dream channels : - α (raw traces, P\_max only) --- firehose ring
-buffer - β (curated episodic) --- SQLite append-log with saillance
-gating - γ (weights snapshot) --- checkpoint pointer fallback - δ
-(hierarchical latents) --- ring buffer N=256 multi-species
+buffer - β (curated episodic buffer) --- SQLite append-log with
+salience-gated insertion (records pass only when their salience score
+exceeds an adaptive top-k threshold) - γ (weights snapshot) ---
+checkpoint pointer fallback - δ (hierarchical latents) --- ring buffer
+N=256 multi-species
 
 Dream → Awake channels : - 1 (weight delta) --- applied via swap
 protocol - 2 (latent samples) --- generative replay queue - 3 (hierarchy
@@ -200,7 +202,9 @@ finding 12 non-commutative cross-pairs.
 \item
   \textbf{DR-3 (substrate-agnosticism)} : Conformance Criterion =
   signature typing ∧ axiom property tests pass ∧ BLOCKING invariants
-  enforceable. kiki-oniric satisfies all three.
+  enforceable. The reference implementation satisfies all three (see §5
+  Conformance Criterion validation approach and Paper 2 for the
+  empirical instantiation).
 \item
   \textbf{DR-4 (profile chain inclusion)} : P\_min ⊆ P\_equ ⊆ P\_max for
   ops and channels.

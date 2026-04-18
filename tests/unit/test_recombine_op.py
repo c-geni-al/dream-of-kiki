@@ -64,6 +64,20 @@ def test_recombine_rejects_too_few_latents() -> None:
         ))
 
 
+def test_recombine_default_rng_is_deterministic() -> None:
+    """When `rng` is None, the handler uses `random.Random(0)` so
+    repeated runs produce identical samples (R1 reproducibility).
+    """
+    state_a = RecombineOpState()
+    state_b = RecombineOpState()
+    handler_a = recombine_handler(state_a)  # default rng
+    handler_b = recombine_handler(state_b)  # default rng
+    latents = [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]
+    handler_a(make_recombine_episode("de-rc-det-a", latents))
+    handler_b(make_recombine_episode("de-rc-det-b", latents))
+    assert state_a.last_sample == state_b.last_sample
+
+
 def test_recombine_accumulates_across_episodes() -> None:
     state = RecombineOpState()
     runtime = DreamRuntime()

@@ -63,9 +63,18 @@ def recombine_handler(
     and appends to `sample_history`), I3 (latent dimension
     consistency — guarded by `_interpolate`), and DR-4 (recombine
     op is part of the P_equ/P_max chain).
+
+    Reproducibility : when `rng` is None, a deterministic seed
+    `random.Random(0)` is used to honour the R1 contract (same
+    inputs → same outputs). Production callers that need genuine
+    stochastic sampling MUST inject their own `random.Random`
+    instance seeded from the harness run-registry.
     """
     if rng is None:
-        rng = random.Random()
+        # Deterministic default for R1 reproducibility contract.
+        # Production callers should inject their own rng for
+        # genuine stochastic sampling.
+        rng = random.Random(0)
 
     def handler(episode: DreamEpisode) -> None:
         latents = episode.input_slice.get("delta_latents", [])
@@ -124,12 +133,24 @@ def recombine_handler_mlx(
 
     def handler(episode: DreamEpisode) -> None:
         latents = episode.input_slice.get("delta_latents", [])
-        # Invariant I3 (input shape): need >= 2 latents to
-        # interpolate / reparameterize.
+        # Invariant I3 (input shape): keep API compatibility with
+        # the skeleton handler that requires >= 2 latents to
+        # interpolate ; the MLX variant only consumes `latents[0]`
+        # (diversity comes from sampling z, not latent selection)
+        # but the >= 2 contract is preserved so callers can swap
+        # handlers without changing their input_slice.
         if len(latents) < 2:
             raise ValueError(
                 f"I3: delta_latents must contain at least 2 "
                 f"latents, got {len(latents)}"
+            )
+        # I3 dimensionality consistency : even though only
+        # latents[0] is consumed, reject mismatched-dim batches
+        # so the contract matches the skeleton handler exactly.
+        if not all(len(lat) == len(latents[0]) for lat in latents):
+            raise ValueError(
+                "I3: delta_latents must all have the same "
+                "dimensionality"
             )
 
         # Local PRNG key for isolated reproducibility — does not

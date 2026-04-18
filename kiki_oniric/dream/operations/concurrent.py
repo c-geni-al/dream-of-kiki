@@ -95,6 +95,15 @@ class ConcurrentDreamWorker:
         last `drain()` call. The drain counter resets to 0 after
         the slice is returned ; callers that need the full log
         history should read `runtime.log` directly.
+
+        In deferred mode, the drain loop processes ALL pending
+        futures even when individual episodes raise — this preserves
+        the DR-0 accountability guarantee (every submitted DE gets
+        its log entry appended via `runtime.execute`'s try/finally).
+        Aggregated exceptions are surfaced after the loop completes
+        by re-raising the first one ; subsequent failures are
+        accessible via `future.exception()` on the resolved futures
+        held by the caller.
         """
         if self.sync_drain:
             n = self._resolved_since_last_drain
@@ -104,13 +113,31 @@ class ConcurrentDreamWorker:
             return list(self.runtime.log[-n:])
 
         entries: list[EpisodeLogEntry] = []
+        exceptions: list[BaseException] = []
         while self._pending:
             episode, future = self._pending.pop(0)
             self._execute_one(episode, future)
-            entries.append(future.result())
+            try:
+                entries.append(future.result())
+            except BaseException as exc:
+                exceptions.append(exc)
+                # The runtime's try/finally (DR-0) guarantees a log
+                # entry was appended even on handler failure ;
+                # surface it in the returned list so callers see the
+                # full submission-order trace.
+                if (
+                    self.runtime.log
+                    and self.runtime.log[-1].episode_id
+                    == episode.episode_id
+                ):
+                    entries.append(self.runtime.log[-1])
         # Deferred drains return the just-executed entries
         # directly ; the sync counter is irrelevant in this mode.
         self._resolved_since_last_drain = 0
+        if exceptions:
+            # Surface the first exception after draining ALL
+            # remaining futures (preserves DR-0 for the rest).
+            raise exceptions[0]
         return entries
 
     def _execute_one(
