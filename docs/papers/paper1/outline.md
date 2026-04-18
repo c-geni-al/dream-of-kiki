@@ -85,7 +85,7 @@ Subsections :
 - 5.1 Deterministic compilation graph
 - 5.2 Single-threaded scheduler with handler registry (DR-0
   log guarantee)
-- 5.3 Atomic swap with invariant guards (S1 + S2 + S3)
+- 5.3 Atomic swap with invariant guards (S1 + S2 + S3 + I3)
 - 5.4 Profile chain inclusion DR-4
 - 5.5 Pointer to Paper 2 for an empirical instantiation
 
@@ -150,7 +150,7 @@ Subsections :
 Subsections :
 - 8.1 Theoretical contribution : first executable formal framework
   for dream-based consolidation. Each claim cites the relevant
-  axiom IDs (DR-0..DR-4) and invariant IDs (I1, I2, S1, S2, S3,
+  axiom IDs (DR-0..DR-4) and invariant IDs (I1, I2, I3, S1, S2, S3,
   K1) from `docs/invariants/registry.md` and the spec sections
   in `docs/specs/2026-04-17-dreamofkiki-framework-C-design.md`.
 - 8.2 Empirical contribution : pipeline-validation evidence

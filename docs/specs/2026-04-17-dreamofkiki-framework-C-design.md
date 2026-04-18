@@ -185,6 +185,18 @@ DE_canonical = replay → downscale → restructure (parallel: recombine)
 
 Note: the canonical order A→B→D in series is thermodynamically motivated (first preserve, then regulate, then restructure). Recombine (C) runs in parallel as a separate branch.
 
+**Note on the `recombine` ∥ `DE_canonical` interaction and DR-2** :
+because the `recombine` branch executes in parallel with the
+sequential chain `replay → downscale → restructure`, it is
+explicitly **out-of-scope of DR-2 sequential composition** (which
+models a non-commutative monoid of in-series operations). A proper
+parallel monoidal model — expressing effect isolation between the
+serial branch and the `recombine` branch — is deferred to
+`g3-draft.md` (cycle 2). Until then, the operational invariant is :
+outputs from the `recombine` branch (channel-2 LatentSample) are
+journalled independently and do not participate in `effect(...)` of
+the DR-2 series until the atomic swap §7.2.
+
 ---
 
 ## 5. Invariants
@@ -305,7 +317,7 @@ Let:
 
 **Enforcement** : I1 runtime check + β purge gate.
 
-#### DR-2 (Compositionality — TO BE PROVEN)
+#### DR-2 (Compositionality — unproven working axiom)
 
 ```
 ∀ op_1, op_2 ∈ Op,
@@ -313,6 +325,16 @@ Let:
   ∧ budget(op_2 ∘ op_1) = budget(op_1) + budget(op_2)
   ∧ effect(op_2 ∘ op_1, s) = effect(op_2, effect(op_1, s))
 ```
+
+**Cycle-1 status** : DR-2 is an **unproven working axiom**. The
+closure lemma, budget additivity, and associativity are not
+formally proven here ; the sketch below delimits what would have to
+be shown. The operational version actually used by the G2/G4
+pilots is **DR-2'** (composition restricted to the canonical order,
+see below), retained as the empirical contract until a strict
+proof is written. Open TODO under Track C `formal-proofs.md` ;
+cycle-2 g3-draft `docs/drafts/g3-draft.md` carries the move to a
+full monoidal model (including the parallel `recombine` branch).
 
 **Proof target** : by cases over the 4 operations + associativity lemma.
 
@@ -353,16 +375,24 @@ then DR-0, DR-1, DR-2 (or DR-2') hold on S.
 
 3. **BLOCKING invariants enforceable** — invariants S1 (retained non-regression), S2 (no NaN/Inf), S3 (hierarchy valid), and I1 (episodic conservation) are implemented as runtime checks on S with automated enforcement (abort-on-violation + logging to `aborted-swaps/` or equivalent).
 
-**Formal statement** :
+**Operational statement** :
 
 ```
 conforms(S) ≜ typed(S) ∧ axiom_tests_pass(S) ∧ invariants_enforced(S, {S1,S2,S3,I1})
-∀ S, conforms(S) ⟹ (DR-0 ∧ DR-1 ∧ DR-2) holds on S
 ```
 
-**Proof sketch** : given `conforms(S)`, each of the three conditions directly enables one part of the axioms:
-- `typed(S)` → operations are compositional in type (closure part of DR-2)
-- `axiom_tests_pass(S)` → behavioral axioms are empirically validated (functional composition part of DR-2, accountability DR-0, conservation DR-1)
+`conforms(S)` is **not** a formal implication into DR-0 ∧ DR-1 ∧
+DR-2 — that would be circular (the property tests defining
+`axiom_tests_pass(S)` are precisely the axiom checks themselves).
+It is an **operational criterion** : a substrate that satisfies
+`conforms(S)` provides **empirical evidence** (validation, not
+proof) that DR-0/DR-1/DR-2 hold on that substrate. A violation of
+`conforms(S)`, on the other hand, is a direct counter-example to
+the corresponding axioms.
+
+**Evidence decomposition** : given `conforms(S)`, each of the three conditions provides evidence for one part of the axioms:
+- `typed(S)` → operations are compositional in type (evidence for the closure part of DR-2)
+- `axiom_tests_pass(S)` → behavioral axioms are empirically validated (evidence for the functional composition part of DR-2, accountability DR-0, conservation DR-1)
 - `invariants_enforced(S)` → runtime guarantees preserve axioms under concurrent execution (swap worktree, async dream process)
 
 Together, conforming substrate is validated both **statically** (typing + property tests) and **dynamically** (invariant enforcement), not merely asserted by construction.
@@ -407,7 +437,7 @@ Each axiom must be **empirically testable** via mechanical test:
 When dream signals `ready_to_commit`:
 
 ```
-1. awake.pause(max=500ms)                      # K3 budget
+1. awake.pause(max=500ms)                      # operational target ; K3_max=1s = warning threshold (§5.3)
 2. validate_scratch_finite(W_scratch)          # S2 guard
 3. acc_post = eval(W_scratch, retained_bench)  # S1 guard
 4. if acc_post < acc_pre - δ_regression:
@@ -446,7 +476,7 @@ When dream signals `ready_to_commit`:
 | M3.a | FLOPs ratio | `FLOPs(dream) / FLOPs(awake)` over comparable window | MLX static profile |
 | M3.b | Offline gain | `Δ(M1.b, post-dream) - Δ(M1.b, no-dream)` normalized by FLOPs-equivalent wall-clock | Simulated wall-clock from FLOPs |
 | M3.c | Energy per episode | `energy_proxy = f(FLOPs, model_size, precision)` — calibrated function | Deterministic function |
-| M4.a | Recomb quality | Teacher scorer (Qwen3.5-9B Q4_K_M SHA-pinned) evaluates plausibility + diversity of latent samples | Scorer temp=0, seed=0 |
+| M4.a | Recomb quality | Teacher scorer (Qwen3.5-9B Q4_K_M SHA-pinned — *SHA to be pinned at the benchmark v1.0 freeze ; see M4.a*) evaluates plausibility + diversity of latent samples | Scorer temp=0, seed=0 |
 | M4.b | Structure discovery | Permutation test on learned hierarchy invariants vs baseline | Permutation seeded |
 
 ### 8.2 Stratified matrix
