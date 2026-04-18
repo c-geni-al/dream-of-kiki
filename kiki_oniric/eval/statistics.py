@@ -77,6 +77,18 @@ def tost_equivalence(
                 + c_arr.var(ddof=1) / len(c_arr))
     )
     df = len(t_arr) + len(c_arr) - 2  # rough Welch-Satterthwaite floor
+    # Zero-variance guard : when both samples are constant
+    # (pooled_se == 0), the t-statistic is undefined. Treat
+    # equivalence as accepted iff the observed mean diff is
+    # strictly inside the equivalence interval, otherwise reject.
+    if np.isclose(pooled_se, 0.0):
+        is_equivalent = abs(diff_mean) < epsilon
+        return StatTestResult(
+            test_name="TOST equivalence",
+            p_value=0.0 if is_equivalent else 1.0,
+            reject_h0=bool(is_equivalent),
+            statistic=diff_mean,
+        )
     # Lower bound test: H0_lower: diff <= -epsilon
     t_lower = (diff_mean - (-epsilon)) / pooled_se
     p_lower = 1.0 - stats.t.cdf(t_lower, df)

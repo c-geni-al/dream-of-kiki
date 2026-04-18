@@ -29,7 +29,7 @@ def _check_required_species(graph: dict[str, list[str]]) -> None:
     missing = REQUIRED_SPECIES - graph.keys()
     if missing:
         raise TopologyGuardError(
-            f"missing required species: {sorted(missing)}"
+            f"S3: missing required species: {sorted(missing)}"
         )
 
 
@@ -37,7 +37,7 @@ def _check_self_loops(graph: dict[str, list[str]]) -> None:
     for node, edges in graph.items():
         if node in edges:
             raise TopologyGuardError(
-                f"self-loop detected on node {node!r}"
+                f"S3: self-loop detected on node {node!r}"
             )
 
 
@@ -47,8 +47,8 @@ def _check_dangling_edges(graph: dict[str, list[str]]) -> None:
         for target in edges:
             if target not in nodes:
                 raise TopologyGuardError(
-                    f"edge {node!r} -> {target!r}: target node "
-                    f"{target!r} does not exist"
+                    f"S3: edge {node!r} -> {target!r}: target "
+                    f"node {target!r} does not exist"
                 )
 
 
@@ -64,7 +64,7 @@ def _check_sem_reachable(graph: dict[str, list[str]]) -> None:
         queue.extend(graph.get(node, []))
     if "rho_sem" not in visited:
         raise TopologyGuardError(
-            "rho_sem unreachable from rho_phono — chain broken"
+            "S3: rho_sem unreachable from rho_phono — chain broken"
         )
 
 
@@ -73,7 +73,8 @@ def _check_layer_count(
 ) -> None:
     if len(graph) > max_layers:
         raise TopologyGuardError(
-            f"layer count {len(graph)} exceeds bound {max_layers}"
+            f"S3: layer count {len(graph)} exceeds bound "
+            f"{max_layers}"
         )
 
 

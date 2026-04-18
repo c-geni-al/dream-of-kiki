@@ -1,4 +1,8 @@
-"""Unit tests for P_equ profile fully wired (4 ops + 3 channels)."""
+"""Unit tests for P_equ profile fully wired (4 ops + 3 channels).
+
+Enforces axiom DR-4 wiring (profile chain inclusion : P_min ⊆
+P_equ on ops and out-channels) at the runtime-handler layer.
+"""
 from __future__ import annotations
 
 from kiki_oniric.dream.episode import (

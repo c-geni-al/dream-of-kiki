@@ -108,4 +108,7 @@ def test_recombine_mlx_deterministic_with_same_seed() -> None:
     latents = [[0.5, 0.5, 0.5], [0.1, 0.1, 0.1]]
     handler_a(make_recombine_episode("de-a", latents))
     handler_b(make_recombine_episode("de-b", latents))
-    assert state_a.last_sample == state_b.last_sample
+    # last_sample is `list[float]`; compare element-wise with a
+    # single boolean assertion (the previous `==` against an mx
+    # array silently produced an array of booleans).
+    assert list(state_a.last_sample) == list(state_b.last_sample)

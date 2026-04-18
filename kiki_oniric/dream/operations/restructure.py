@@ -40,16 +40,23 @@ def restructure_handler(
 
     Handler reads `topo_op` from input_slice (must be in
     {add, remove, reroute}), updates state. No-op on actual graph
-    structure for now (skeleton) — real D-Friston FEP gradient
+    structure for now (skeleton) — real Friston FEP gradient
     descent on hierarchy lands S11.2.
+
+    Preserves : DR-0 (every episode bumps the state counter and
+    appends to the diff history), I2 (hierarchy traceability via
+    `diff_history`), and S3 (topology guard — enforced by the MLX
+    variant ; the skeleton only validates the topo_op vocabulary).
     """
 
     def handler(episode: DreamEpisode) -> None:
         topo_op = episode.input_slice.get("topo_op", "")
+        # Invariant S3 vocabulary check : reject unknown topo
+        # operations before any state mutation.
         if topo_op not in VALID_TOPO_OPS:
             raise ValueError(
-                f"topo_op must be one of {sorted(VALID_TOPO_OPS)}, "
-                f"got {topo_op!r}"
+                f"S3: topo_op must be one of "
+                f"{sorted(VALID_TOPO_OPS)}, got {topo_op!r}"
             )
         state.total_episodes_handled += 1
         state.total_diffs_emitted += 1
@@ -91,16 +98,26 @@ def restructure_handler_mlx(
             new_dim = episode.input_slice.get("new_dim", 0)
             if new_dim <= 0:
                 raise ValueError(
-                    f"add requires new_dim > 0, got {new_dim}"
+                    f"S3: add requires new_dim > 0, got {new_dim}"
                 )
-            last_out = model.layers[-1].weight.shape[0]
+            if model.layers:
+                last_out = model.layers[-1].weight.shape[0]
+            else:
+                # Empty model — fall back to declared input_dim
+                # on the model wrapper, otherwise refuse the op.
+                last_out = getattr(model, "input_dim", None)
+                if last_out is None:
+                    raise ValueError(
+                        "S3: cannot add layer to empty model "
+                        "without `model.input_dim` attribute"
+                    )
             model.layers.append(nn.Linear(last_out, new_dim))
 
         elif topo_op == "remove":
             layer_index = episode.input_slice.get("layer_index", -1)
             if not (0 <= layer_index < len(model.layers)):
                 raise ValueError(
-                    f"layer_index {layer_index} out of range"
+                    f"S3: layer_index {layer_index} out of range"
                 )
             del model.layers[layer_index]
 
@@ -108,9 +125,20 @@ def restructure_handler_mlx(
             swap_indices = episode.input_slice.get("swap_indices", [])
             if len(swap_indices) != 2:
                 raise ValueError(
-                    "reroute requires swap_indices of length 2"
+                    "S3: reroute requires swap_indices of length 2"
                 )
             i, j = swap_indices
+            if not (
+                isinstance(i, int)
+                and isinstance(j, int)
+                and 0 <= i < len(model.layers)
+                and 0 <= j < len(model.layers)
+            ):
+                raise ValueError(
+                    f"S3: reroute swap_indices {swap_indices!r} "
+                    f"out of bounds for layers of length "
+                    f"{len(model.layers)}"
+                )
             model.layers[i], model.layers[j] = (
                 model.layers[j], model.layers[i]
             )

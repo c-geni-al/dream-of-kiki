@@ -1,9 +1,11 @@
 """DR-4 Profile Chain Inclusion — axiom property test.
 
-Verifies ops(P_min) ⊆ ops(P_equ) and
-channels(P_min) ⊆ channels(P_equ).
+Verifies ops(P_min) ⊆ ops(P_equ) ⊆ target_ops(P_max) and
+channels(P_min) ⊆ channels(P_equ) ⊆ target_channels_out(P_max).
 
-P_max inclusion deferred until P_max profile is wired (S13+).
+The P_max half is exercised against the cycle-1 skeleton's
+target metadata (handlers wired cycle 2) — see the second
+section of the file.
 
 Reference: docs/proofs/dr4-profile-inclusion.md
          : docs/specs/2026-04-17-dreamofkiki-framework-C-design.md §6.2
@@ -12,6 +14,7 @@ from __future__ import annotations
 
 from kiki_oniric.dream.episode import Operation, OutputChannel
 from kiki_oniric.profiles.p_equ import PEquProfile
+from kiki_oniric.profiles.p_max import PMaxProfile
 from kiki_oniric.profiles.p_min import PMinProfile
 
 
@@ -66,15 +69,6 @@ def test_dr4_p_equ_contains_restructure_and_recombine() -> None:
 
 
 # === DR-4 P_equ ⊆ P_max chain (S16.2 extension) ===
-
-from kiki_oniric.profiles.p_max import PMaxProfile
-
-P_EQU_OPS_DECLARED: set[Operation] = {
-    Operation.REPLAY,
-    Operation.DOWNSCALE,
-    Operation.RESTRUCTURE,
-    Operation.RECOMBINE,
-}
 
 
 def _p_max_metadata():
