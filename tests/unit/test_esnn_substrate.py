@@ -1,8 +1,6 @@
 """Unit tests for E-SNN thalamocortical substrate skeleton (C2.2)."""
 from __future__ import annotations
 
-import pytest
-
 from kiki_oniric.substrates.esnn_thalamocortical import (
     ESNN_SUBSTRATE_NAME,
     ESNN_SUBSTRATE_VERSION,
@@ -45,9 +43,9 @@ def test_esnn_substrate_components_listed() -> None:
     assert set(components.keys()) == expected_keys
 
 
-def test_esnn_skeleton_ops_raise_not_implemented() -> None:
+def test_esnn_ops_return_callable_handlers() -> None:
     substrate = EsnnSubstrate()
-    with pytest.raises(NotImplementedError, match="C2.3"):
-        substrate.replay_handler_factory()
-    with pytest.raises(NotImplementedError, match="C2.3"):
-        substrate.downscale_handler_factory()
+    assert callable(substrate.replay_handler_factory())
+    assert callable(substrate.downscale_handler_factory())
+    assert callable(substrate.restructure_handler_factory())
+    assert callable(substrate.recombine_handler_factory())
