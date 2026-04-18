@@ -27,6 +27,18 @@ class RunRegistry:
     def _compute_run_id(
         self, c_version: str, profile: str, seed: int, commit_sha: str
     ) -> str:
+        """Compute deterministic run_id (128-bit SHA-256 prefix).
+
+        Contract R1: same (c_version, profile, seed, commit_sha)
+        tuple always produces the same run_id bit-for-bit.
+
+        History: initially truncated to 16 hex chars (64 bits),
+        bumped to 32 hex chars (128 bits) in commit df731b0 after
+        code-review finding MED2 identified 50%-collision risk at
+        ~2^32 runs. No migration was required because the DB was
+        empty at bump time. Any future change to this slice width
+        requires a migration script to recompute existing row ids.
+        """
         key = f"{c_version}|{profile}|{seed}|{commit_sha}".encode()
         return hashlib.sha256(key).hexdigest()[:32]
 
