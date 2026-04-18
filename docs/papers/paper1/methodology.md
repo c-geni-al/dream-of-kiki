@@ -1,0 +1,115 @@
+# Methodology (Paper 1, draft S20.1)
+
+**Target length** : ~1.5 pages markdown (≈ 1500 words)
+
+---
+
+## 6.1 Pre-registered hypotheses (OSF)
+
+Four hypotheses were pre-registered on the Open Science Framework
+(OSF) before any empirical run, following the Standard Pre-Data
+Collection template. Pre-registration was locked at S3 of the
+cycle (calendar reference) ; the OSF DOI is cited in the paper
+front matter and resolves to an immutable timestamp record.
+
+- **H1 — Forgetting reduction** : `mean(forgetting_P_equ) <
+  mean(forgetting_baseline)`. Test : Welch's t-test, one-sided.
+- **H2 — P_max equivalence** : `|mean(acc_P_max) -
+  mean(acc_P_equ)| < 0.05`. Test : two one-sided tests (TOST).
+  *Cycle 1 status* : self-equivalence smoke only (P_max skeleton).
+- **H3 — Monotonic alignment** : `mean(acc_P_min) <
+  mean(acc_P_equ) < mean(acc_P_max)`. Test :
+  Jonckheere-Terpstra. *Cycle 1 status* : two-group (P_min ↔
+  P_equ) only.
+- **H4 — Energy budget** : `mean(energy_dream / energy_awake)
+  < 2.0`. Test : one-sample t-test against threshold.
+
+## 6.2 Statistical tests + Bonferroni correction
+
+All hypothesis tests use a Bonferroni-corrected significance
+threshold : `α_per_hypothesis = 0.05 / 4 = 0.0125`. The four
+tests are implemented in `kiki_oniric/eval/statistics.py`,
+wrapping `scipy.stats` :
+
+- **`welch_one_sided`** (H1) : `scipy.stats.ttest_ind` with
+  `equal_var=False`, p-value halved for one-sided interpretation.
+- **`tost_equivalence`** (H2) : two manual one-sided t-tests
+  (lower bound `diff <= -ε` and upper bound `diff >= +ε`),
+  reject H0 when both pass at α (TOST max-p rule).
+- **`jonckheere_trend`** (H3) : sum of pairwise Mann-Whitney U
+  counts across ordered groups, z-approximation for p-value
+  (no scipy native).
+- **`one_sample_threshold`** (H4) : `scipy.stats.ttest_1samp`
+  against `popmean=threshold`, p-value adjusted for one-sided
+  (sample below threshold).
+
+All tests return a uniform `StatTestResult(test_name, p_value,
+reject_h0, statistic)` for downstream handling.
+
+## 6.3 mega-v2 benchmark
+
+Empirical runs use the **mega-v2** dataset (498K examples
+distributed across 25 domains : phonology, lexical, syntax,
+semantic, pragmatic, etc.). Cycle 1 stratifies a **500-item
+retained subset** (20 items per domain) and freezes it via
+SHA-256 hash for the reproducibility contract R1.
+
+The frozen retained benchmark is loaded via `harness.benchmarks.
+mega_v2.adapter.load_megav2_stratified()`, which falls back to
+a deterministic synthetic placeholder if the real mega-v2 path
+is unavailable. **All cycle-1 results in §7 use the synthetic
+fallback ; real mega-v2 integration lands cycle 1 closeout
+(S20+) or cycle 2.**
+
+## 6.4 RSA fMRI alignment (Studyforrest)
+
+The H3 monotonic representational alignment hypothesis is
+evaluated by Representational Similarity Analysis (RSA) between
+kiki-oniric activations and fMRI responses. Cycle 1 uses the
+**Studyforrest** dataset (Branch A locked at G1 — see
+`docs/feasibility/studyforrest-rsa-note.md`) :
+
+- **Format** : BIDS, DataLad-distributed, PDDL license (open).
+- **Annotations** : 16,187 timed words, 2,528 sentences, 66,611
+  phonemes ; 300-d STOP word vectors. Mappable to ortho species
+  (rho_phono / rho_lex / rho_syntax / rho_sem).
+- **ROIs** : extracted via FreeSurfer + Shen-268 parcellations
+  for STG, IFG, AG (the canonical language network).
+- **Pipeline** : `nilearn` CPU-deterministic mode for R1
+  reproducibility. Real ablation deferred S20+ (real model
+  inference) ; cycle 1 reports infrastructure validation only.
+
+## 6.5 Reproducibility contract R1 + R3
+
+Reproducibility is enforced by two contracts :
+
+- **R1 (deterministic run_id)** : every run is keyed by a
+  16-character SHA-256 prefix of `(c_version, profile, seed,
+  commit_sha)`. Re-running the same key produces an identical
+  `run_id` (verified by `harness.storage.run_registry`). Width
+  was bumped from 16 → 32 hex chars in commit `df731b0` after a
+  code-review finding flagged 64-bit collision risk at scale.
+- **R3 (artifact addressability)** : all benchmarks ship with a
+  paired `.sha256` integrity file. The `RetainedBenchmark`
+  loader rejects any items file whose hash does not match the
+  frozen reference, raising `RetainedIntegrityError`.
+
+The DualVer versioning scheme (formal axis FC + empirical axis
+EC) tags each artifact with the framework version under which
+it was produced. Empirical results are valid only against the
+declared `c_version` ; bumping FC-MAJOR invalidates EC and
+requires re-running the affected matrix.
+
+---
+
+## Notes for revision
+
+- Insert OSF DOI in §6.1 once OSF lock action is completed
+  (currently pending — see `docs/osf-upload-checklist.md`)
+- Replace synthetic-placeholder caveats in §6.3 once real
+  mega-v2 ablation runs S20+
+- Add Methods supplementary table : full statistical test
+  parameters (sample sizes per cell, exclusion criteria from
+  OSF pre-reg)
+- Add Methods supplementary figure : pipeline diagram
+  (benchmark → predictor → evaluate_retained → swap → metrics)
