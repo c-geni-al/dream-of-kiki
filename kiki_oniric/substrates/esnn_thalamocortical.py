@@ -136,7 +136,11 @@ class EsnnSubstrate:
             all_inputs = [
                 np.asarray(r["input"], dtype=float)
                 for r in beta_records
+                if "input" in r
             ]
+            if not all_inputs:
+                # All records malformed or missing "input" key
+                return np.zeros(1, dtype=float)
             mean_input = np.mean(all_inputs, axis=0)
             return _simulate_population(mean_input, n_steps=n_steps)
         return handler
