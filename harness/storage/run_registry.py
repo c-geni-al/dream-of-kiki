@@ -28,7 +28,7 @@ class RunRegistry:
         self, c_version: str, profile: str, seed: int, commit_sha: str
     ) -> str:
         key = f"{c_version}|{profile}|{seed}|{commit_sha}".encode()
-        return hashlib.sha256(key).hexdigest()[:16]
+        return hashlib.sha256(key).hexdigest()[:32]
 
     def register(
         self, c_version: str, profile: str, seed: int, commit_sha: str
