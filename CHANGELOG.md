@@ -10,6 +10,80 @@ see `docs/specs/2026-04-17-dreamofkiki-framework-C-design.md` §12).
 
 ---
 
+## [C-v0.6.0+PARTIAL] — 2026-04-19
+
+Cycle 2 closeout. Engineering Phases 1 + 2 + 5 complete.
+Phase 3 (cross-substrate ablation C2.9-C2.12) + Phase 4 (Paper 2
+narrative C2.13-C2.16) deferred per user scope decision ;
+G9 gate = CONDITIONAL-GO/PARTIAL.
+
+### Added
+
+- E-SNN thalamocortical substrate (Phase 1 : C2.1-C2.4) — second
+  `@runtime_checkable` Protocol target for DR-3
+- DR-3 Conformance Criterion extended to E-SNN substrate (G7 LOCKED)
+  ; condition (1) of DR-3 now spans 2 substrates
+- P_max profile fully wired : 4 ops + 4 channels (Phase 2 :
+  C2.5-C2.8, G8 LOCKED) ; DR-4 chain extended in
+  `tests/conformance/axioms/test_dr4_p_max_chain.py`
+- α-stream raw-traces ring buffer (canal-α)
+- recombine_full MLX VAE variant (encoder + decoder + KL)
+- ATTENTION_PRIOR canal-4 + S4 invariant guard
+- Real concurrent dream worker (C2.17 : asyncio/threading via
+  `threaded=True` mode)
+- G9 cycle-2 publication-ready gate report
+  (CONDITIONAL-GO/PARTIAL)
+- Paper 3 outline (cycle-3 amorçage, PROVISIONAL)
+
+### Changed
+
+- DR-2 reframed as unproven working axiom (DR-2') ; parallel
+  `recombine` branch marked out-of-scope of sequential composition
+  until G3-draft delivers a parallel monoidal model
+- DR-3 conformance proof reframed as operational evidence (vs
+  formal `⟹`) — circular-implication footgun closed
+- recombine MLX RNG isolated (local `mx.random.key`, no global
+  seed mutation) — R1 hardened
+- attention_prior `get_prior()` returns read-only numpy view —
+  S4 cannot be bypassed by mutation
+- attention guard rejects NaN explicitly before range/budget checks
+  — S4 plug
+- `awake.pause(500ms)` clarified vs `K3_max=1s` (operational target
+  vs warning threshold) in §7.2 swap protocol
+- 19 CodeRabbit cycle-9 findings applied (3 commits : safety +
+  spec-fr + prose, then 1 EN-sync commit mirroring spec/outline)
+
+### Pending — external user actions
+
+- Phase 3 cycle-2 (cross-substrate ablation C2.9-C2.12) — deferred
+- Phase 4 cycle-2 (Paper 2 narrative C2.13-C2.16) — deferred
+- arXiv submission of Paper 1
+- Nature HB editorial decision
+- OSF DOI lock (`docs/osf-upload-checklist.md`)
+- DR-2 external reviewer feedback (T-Col Q_CR.1 b)
+- HAL FR deposit (post-arXiv)
+- fMRI lab partnership formalization (T-Col extension)
+
+### Stats
+
+- 173 tests passing (target ≥ 173), coverage 91.26 %
+  (gate ≥ 90 %)
+- ~13 commits across cycle 2 (Phase 1 + Phase 2 + Phase 5 +
+  3 cycle-9 fix commits + 1 EN-sync + 1 DualVer bump)
+- 0 AI attribution in any commit
+- Substrates : **2** (MLX kiki-oniric + E-SNN thalamocortical)
+- Profiles : **3** wired (P_min, P_equ, P_max)
+- DR-3 Conformance conditions (1) + (2) + (3) : all green on both
+  substrates
+
+### Milestones achieved
+
+- **G7** E-SNN substrate conformance LOCKED
+- **G8** P_max profile wired LOCKED
+- **G9** cycle-2 publication-ready CONDITIONAL-GO/PARTIAL
+
+---
+
 ## [C-v0.5.0+STABLE] — 2026-04-17
 
 End of setup phase (S1-S4). Program enters implementation phase (S5+).

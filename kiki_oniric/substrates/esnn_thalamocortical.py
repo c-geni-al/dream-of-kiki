@@ -34,7 +34,7 @@ from numpy.typing import NDArray
 
 
 ESNN_SUBSTRATE_NAME = "esnn_thalamocortical"
-ESNN_SUBSTRATE_VERSION = "C-v0.5.0+STABLE"
+ESNN_SUBSTRATE_VERSION = "C-v0.6.0+PARTIAL"
 
 
 class EsnnBackend(str, Enum):

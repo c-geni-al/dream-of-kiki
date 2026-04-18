@@ -18,7 +18,7 @@ from __future__ import annotations
 
 # Substrate identity
 MLX_SUBSTRATE_NAME = "mlx_kiki_oniric"
-MLX_SUBSTRATE_VERSION = "C-v0.5.0+STABLE"
+MLX_SUBSTRATE_VERSION = "C-v0.6.0+PARTIAL"
 
 
 def mlx_substrate_components() -> dict[str, str]:

@@ -1,8 +1,10 @@
 # dream-of-kiki — Status
 
-**As of** : 2026-04-17 end of S4
-**Version** : C-v0.5.0+STABLE
-**Phase** : end of setup (S1-S4) → start of implementation (S5+)
+**As of** : 2026-04-19 end of cycle-2 closeout
+**Version** : C-v0.6.0+PARTIAL
+**Phase** : cycle-2 engineering Phases 1+2+5 complete ; Phase 3
+(cross-substrate ablation) + Phase 4 (Paper 2 narrative) deferred
+per user scope decision
 
 Public repo : https://github.com/electron-rare/dream-of-kiki
 
@@ -10,33 +12,26 @@ Public repo : https://github.com/electron-rare/dream-of-kiki
 
 ## Program progress
 
-Cycle 1 calendar : 28 weeks total (S1-S28)
-Completed : S1-S4 (setup + formalization phase)
-In progress : S5 (dream runtime + P_min + property tests DR-0/DR-1)
-Upcoming gates : G2 (P_min viable, S8), G3 (DR-2 proof, S8),
-  G4 (P_equ fonctionnel, S12), G5 (PUBLICATION-READY, S18)
+Cycle 1 calendar : 28 weeks total (S1-S28) — closed at C-v0.5.0+STABLE
+Cycle 2 calendar : Phases 1-5 (engineering deliverables) green ;
+Phases 3-4 (publication track) deferred ; G9 = CONDITIONAL-GO/PARTIAL
+Active gate : **G9 cycle-2 publication-ready (CONDITIONAL-GO/PARTIAL)**
 
 ## Test suite
 
 ```
-16 tests passing
-coverage 93.62% (gate 90%)
-
-breakdown:
-- tests/unit/test_run_registry.py         : 2 tests
-- tests/unit/test_eval_matrix.py          : 6 tests
-- tests/unit/test_retained_benchmark.py   : 5 tests
-- tests/conformance/axioms/test_dr3_substrate.py : 3 tests
+173 tests passing
+coverage 91.26% (gate 90%)
 ```
 
 ## DualVer status
 
 | Axis | Value | Meaning |
 |------|-------|---------|
-| FC   | v0.5.0 | MINOR bump (added Conformance Criterion, Protocols, infra) |
-| EC   | STABLE | No empirical invalidation (pre-S5) |
+| FC   | v0.6.0 | MINOR bump (DR-3 extended to E-SNN, P_max wired, DR-2 reframed as DR-2', RNG isolated, S4 read-only) |
+| EC   | PARTIAL | Engineering deliverables green, publication track (Phases 3+4) deferred |
 
-Next target : C-v0.7.0+STABLE at S6 (DR-2 draft, G3-draft milestone)
+Next target : C-v0.7.0+STABLE post-G3 (DR-2 external reviewer feedback returned, parallel monoidal model in g3-draft)
 
 ## Gates
 

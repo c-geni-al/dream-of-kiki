@@ -91,7 +91,7 @@ class AblationRunner:
     profile_specs: list[ProfileSpec]
     seeds: list[int]
     benchmark: RetainedBenchmark
-    c_version: str = "C-v0.5.0+STABLE"
+    c_version: str = "C-v0.6.0+PARTIAL"
     registry_path: Path = field(default_factory=_default_registry_path)
 
     def _batch_seed(self) -> int:

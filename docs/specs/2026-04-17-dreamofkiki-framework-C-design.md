@@ -1,7 +1,7 @@
 # dreamOfkiki — Framework C Formal Design Spec
 
-**Version** : C-v0.5.0+STABLE
-**Date** : 2026-04-17
+**Version** : C-v0.6.0+PARTIAL
+**Date** : 2026-04-17 (initial) ; 2026-04-19 (cycle-2 closeout bump)
 **Author** : Clement Saillant (L'Electron Rare)
 **Status** : Draft for user review
 **Companion** : `2026-04-17-dreamofkiki-master-design.md` (master vision)
