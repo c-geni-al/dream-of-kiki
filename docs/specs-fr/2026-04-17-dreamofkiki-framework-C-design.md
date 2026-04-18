@@ -185,6 +185,18 @@ DE_canonical = replay → downscale → restructure (parallèle : recombine)
 
 Remarque : l'ordre canonique A→B→D en série est motivé thermodynamiquement (préserver d'abord, réguler ensuite, restructurer enfin). Recombine (C) tourne en parallèle comme branche séparée.
 
+**Note sur l'interaction `recombine` ∥ `DE_canonical` et DR-2** : la
+branche `recombine` étant exécutée en parallèle de la chaîne
+séquentielle `replay → downscale → restructure`, elle est
+explicitement **hors-portée de la composition séquentielle DR-2**
+(qui modélise un monoïde non-commutatif d'opérations en série). Un
+modèle monoïdal parallèle propre — exprimant l'isolation des effets
+entre branche série et branche `recombine` — est différé à
+`g3-draft.md` (cycle 2). En attendant, l'invariant pratique est :
+les outputs de la branche `recombine` (canal 2 LatentSample) sont
+journalisés indépendamment et ne participent pas à `effect(...)` du
+DR-2 série jusqu'au swap atomique §7.2.
+
 ---
 
 ## 5. Invariants
@@ -305,7 +317,7 @@ Soit :
 
 **Application** : vérification runtime I1 + porte de purge β.
 
-#### DR-2 (Compositionnalité — À PROUVER)
+#### DR-2 (Compositionnalité — axiome de travail, non prouvé)
 
 ```
 ∀ op_1, op_2 ∈ Op,
@@ -313,6 +325,18 @@ Soit :
   ∧ budget(op_2 ∘ op_1) = budget(op_1) + budget(op_2)
   ∧ effect(op_2 ∘ op_1, s) = effect(op_2, effect(op_1, s))
 ```
+
+**Statut au cycle 1** : DR-2 est un **axiome de travail
+(unproven working axiom)**. Les lemmes de clôture, d'additivité du
+budget et l'associativité ne sont pas formellement démontrés ici ;
+l'esquisse ci-dessous délimite ce qu'il faudrait prouver. La
+version opérationnelle effectivement utilisée par les pilotes
+G2/G4 est **DR-2'** (composition restreinte à l'ordre canonique,
+voir ci-dessous), retenue comme contrat empirique tant que la
+preuve stricte n'est pas écrite. Tâche TODO ouverte dans Track C
+`formal-proofs.md` ; cycle 2 g3-draft `docs/drafts/g3-draft.md`
+prend en charge le passage au modèle monoïdal complet (incluant la
+branche parallèle `recombine`).
 
 **Cible de preuve** : par cas sur les 4 opérations + lemme d'associativité.
 
@@ -353,16 +377,26 @@ alors DR-0, DR-1, DR-2 (ou DR-2') sont vérifiés sur S.
 
 3. **Invariants BLOCKING applicables** — les invariants S1 (non-régression retenue), S2 (pas de NaN/Inf), S3 (hiérarchie valide) et I1 (conservation épisodique) sont implémentés comme des vérifications runtime sur S avec application automatisée (abort-on-violation + log vers `aborted-swaps/` ou équivalent).
 
-**Énoncé formel** :
+**Énoncé opérationnel** :
 
 ```
 conforms(S) ≜ typed(S) ∧ axiom_tests_pass(S) ∧ invariants_enforced(S, {S1,S2,S3,I1})
-∀ S, conforms(S) ⟹ (DR-0 ∧ DR-1 ∧ DR-2) holds on S
 ```
 
-**Esquisse de preuve** : étant donné `conforms(S)`, chacune des trois conditions active directement une partie des axiomes :
-- `typed(S)` → les opérations sont compositionnelles en type (partie clôture de DR-2)
-- `axiom_tests_pass(S)` → les axiomes comportementaux sont empiriquement validés (partie composition fonctionnelle de DR-2, redevabilité DR-0, conservation DR-1)
+`conforms(S)` n'est **pas** une implication formelle vers DR-0 ∧
+DR-1 ∧ DR-2 — ce serait circulaire (les tests de propriété qui
+définissent `axiom_tests_pass(S)` sont précisément les vérifications
+des axiomes). C'est un **critère opérationnel** : un substrat qui
+satisfait `conforms(S)` fournit une **évidence empirique**
+(validation, pas preuve) que DR-0/DR-1/DR-2 tiennent sur ce
+substrat. Une violation de `conforms(S)` constitue en revanche un
+contre-exemple direct des axiomes correspondants.
+
+**Décomposition de l'évidence** : étant donné `conforms(S)`,
+chacune des trois conditions fournit une évidence pour une partie
+des axiomes :
+- `typed(S)` → les opérations sont compositionnelles en type (évidence pour la clôture de DR-2)
+- `axiom_tests_pass(S)` → les axiomes comportementaux sont empiriquement validés (évidence pour la composition fonctionnelle de DR-2, la redevabilité DR-0, la conservation DR-1)
 - `invariants_enforced(S)` → les garanties runtime préservent les axiomes sous exécution concurrente (swap de worktree, processus rêve asynchrone)
 
 Ensemble, le substrat conforme est validé à la fois **statiquement** (typage + tests de propriété) et **dynamiquement** (application des invariants), pas simplement asserté par construction.
@@ -407,7 +441,7 @@ Chaque axiome doit être **empiriquement testable** via un test mécanique :
 Quand le rêve signale `ready_to_commit` :
 
 ```
-1. awake.pause(max=500ms)                      # budget K3
+1. awake.pause(max=500ms)                      # cible opérationnelle ; K3_max=1s = seuil d'avertissement (§5.3)
 2. validate_scratch_finite(W_scratch)          # garde S2
 3. acc_post = eval(W_scratch, retained_bench)  # garde S1
 4. if acc_post < acc_pre - δ_regression:
@@ -446,7 +480,7 @@ Quand le rêve signale `ready_to_commit` :
 | M3.a | Ratio FLOPs | `FLOPs(dream) / FLOPs(awake)` sur fenêtre comparable | Profil MLX statique |
 | M3.b | Gain hors-ligne | `Δ(M1.b, post-dream) - Δ(M1.b, no-dream)` normalisé par wall-clock FLOPs-équivalent | Wall-clock simulé depuis les FLOPs |
 | M3.c | Énergie par épisode | `energy_proxy = f(FLOPs, model_size, precision)` — fonction calibrée | Fonction déterministe |
-| M4.a | Qualité de recombinaison | Le scorer enseignant (Qwen3.5-9B Q4_K_M SHA épinglé) évalue la plausibilité + diversité des échantillons latents | Scorer temp=0, seed=0 |
+| M4.a | Qualité de recombinaison | Le scorer enseignant (Qwen3.5-9B Q4_K_M SHA épinglé — *SHA à pinner au moment du gel benchmark v1.0 ; voir M4.a*) évalue la plausibilité + diversité des échantillons latents | Scorer temp=0, seed=0 |
 | M4.b | Découverte de structure | Test de permutation sur invariants de hiérarchie appris vs baseline | Permutation seedée |
 
 ### 8.2 Matrice stratifiée

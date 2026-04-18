@@ -65,7 +65,7 @@ L'ordre A→B→D est justifié thermodynamiquement (dissipation progressive : c
 - **Track A** : implémentation 3 profils (P_min, P_equ, P_max) sur fork `kiki-oniric` avec runtime asynchrone à swap de worktree
 - **Track T-Ops** : infrastructure CI/CD, banc de test d'évaluation stratifié, tableau de bord public, scorer enseignant gelé, reproductibilité bit-exact
 - **Track T-Col** : approche des labos IRMf (Gallant/Norman/Huth), repli Studyforrest pré-verrouillé, réseau de pré-soumission
-- **2 articles** : Article 1 (Nature HB) soumis S20, Article 2 (NeurIPS/ICML/TMLR) brouillon complet S24, soumis **après acceptation Article 1** (S1-séquentielle stricte)
+- **2 articles** : Article 1 (Nature HB) soumis S20, Article 2 (NeurIPS/ICML/TMLR) brouillon complet S24, soumis **après acceptation Article 1** (S1-séquentielle stricte — voir contingence §6.2 ci-dessous)
 - **Infrastructure ouverte** : GitHub public, modèles HuggingFace, DOI Zenodo, pré-enregistrement OSF
 
 ### 2.2 Hors-portée cycle 1 (déplacé au cycle 2)
@@ -206,7 +206,20 @@ Avantages par rapport à EASGD : conflits éliminés par construction, rollback 
 
 ### 5.3 Reproductibilité bit-exact (8 métriques, contrat R1 étendu)
 
-Tous les résultats sont bit-identiques pour le même `(c_version, profile, seed, run_id, commit_sha, benchmark_version)`. Stratégies par métrique : RNG seedé, mode déterministe MLX ou repli CPU, wall-clock FLOPs-équivalent (pas wall-clock réel), scorer enseignant Qwen3.5-9B Q4_K_M gelé par SHA256.
+Tous les résultats sont bit-identiques pour le même `(c_version, profile, seed, run_id, commit_sha, benchmark_version)`. Stratégies par métrique : RNG seedé, mode déterministe MLX ou repli CPU, **wall-clock FLOPs-équivalent**[^wcfe] (pas wall-clock réel), scorer enseignant Qwen3.5-9B Q4_K_M gelé par SHA256.
+
+[^wcfe]: **Wall-clock FLOPs-équivalent** — substitut déterministe au
+    wall-clock réel pour le contrat R1. Construction : compteurs
+    FLOPs par opération (profilés statiquement par MLX), pondérés
+    par la précision (FP32 = 1.0, FP16 = 0.5, INT8 = 0.25), puis
+    sommés sur la fenêtre de mesure. La conversion en
+    secondes-équivalent passe par un coefficient calibré une fois
+    par substrat dans le run-registry T-Ops (voir
+    `harness/storage/run_registry.py` champ `flops_to_seconds`).
+    Cette quantité est reproductible bit-identique d'une exécution
+    à l'autre, contrairement au wall-clock matériel sensible à la
+    pression thermique, à l'ordonnancement OS et au bruit
+    cache/DRAM. Méthodologie complète : design Track T-Ops §3.4.
 
 ### 5.4 Hypothèses pré-enregistrées (OSF, S3)
 
@@ -234,6 +247,28 @@ Tous les résultats sont bit-identiques pour le même `(c_version, profile, seed
 - Contribution ingénierie (swap worktree, runtime asynchrone) + ablation empirique 3 profils + publication open-source
 - Principal : 9 pages ; Supp : illimité
 - Jalon : brouillon complet S24, soumission **après acceptation Article 1** (probablement 2027)
+
+#### 6.2.1 Contingence Publication (Pivot B)
+
+La règle S1-séquentielle stricte (§6.1 → §6.2 conditionnée par
+acceptation) est elle-même conditionnée à un **délai
+opérationnel** : si à **6 mois post-soumission Article 1**
+(approximativement S46 si soumission à S20) aucune décision
+d'acceptation/réjection définitive n'est rendue par la revue
+cible, l'Article 2 procède **indépendamment** de l'issue Article 1
+selon la cascade de repli :
+
+1. NeurIPS / ICML / TMLR (cible nominale, hors-cycle Article 1)
+2. **Workshop NeurIPS / ICLR** (repli prioritaire, dépôt
+   ressources accélérées)
+3. arXiv preprint + dépôt HAL (filet de sécurité minimal)
+
+Cette contingence évite que le calendrier Article 2 ne soit pris
+en otage par la lenteur du processus de revue Article 1 (ratio
+moyen Nature HB : 11 mois, queue 90e percentile : > 18 mois). Voir
+le document de construction Paper 1 (`docs/papers/paper1/`)
+section *Pivot B* pour le contexte stratégique complet et les
+critères de déclenchement.
 
 ### 6.3 Paternité & affiliation
 
