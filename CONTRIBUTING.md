@@ -80,7 +80,9 @@ rules :
   commits that change functionality, add features, modify a public
   API, or touch multiple modules ; in French : commits qui changent
   la fonctionnalité, ajoutent des fonctionnalités, modifient une
-  API publique, ou touchent plusieurs modules)
+  API publique, ou touchent plusieurs modules — Note: commits must
+  be in English; the French translation is provided for reference
+  only)
 - NO AI attribution
 - NO `--no-verify`
 
