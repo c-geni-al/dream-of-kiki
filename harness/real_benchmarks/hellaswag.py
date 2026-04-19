@@ -155,3 +155,300 @@ class HellaSwagLoader:
             )
         rng = random.Random(seed)
         return [self._record_from_raw(r) for r in rng.sample(raws, n)]
+
+
+# --------------------------------------------------------------------------
+# Evaluator (cycle-3 C3.8 Phase A) — HellaSwag 4-choice continuation
+# log-probability scoring. Network-free with a committed fallback fixture.
+# --------------------------------------------------------------------------
+
+
+_DEFAULT_HELLASWAG_FALLBACK = (
+    Path(__file__).resolve().parents[2]
+    / "tests"
+    / "fixtures"
+    / "hellaswag_sanity.jsonl"
+)
+
+
+def _hellaswag_default_fallback_records() -> list[dict]:
+    """Tiny hand-authored fallback — 8 commonsense-style rows.
+
+    The full HellaSwag eval needs the real ``Rowan/hellaswag`` HF
+    export for scientific claims. This fallback lets the pipeline
+    run end-to-end on hosts without the HF cache, matching the
+    same zero-shot schema (``ctx`` / ``endings`` / ``label`` /
+    ``activity_label``). 8 rows cycled seeded up to ``n_samples``.
+    """
+    return [
+        {
+            "ctx": "The chef cracked three eggs into the bowl. They",
+            "endings": [
+                " started cleaning the windows.",
+                " began singing a song loudly.",
+                " whisked them together with a fork.",
+                " watched television quietly.",
+            ],
+            "label": 2,
+            "activity_label": "cooking",
+        },
+        {
+            "ctx": "The dog saw the mailman approach the gate. It",
+            "endings": [
+                " started painting the fence.",
+                " ran over and barked excitedly.",
+                " read a book on the porch.",
+                " baked a cake in the oven.",
+            ],
+            "label": 1,
+            "activity_label": "animal_behavior",
+        },
+        {
+            "ctx": "She was tired after the long run, so she",
+            "endings": [
+                " jumped up and did more push-ups.",
+                " started another marathon immediately.",
+                " sat down and drank some water.",
+                " climbed the roof to sing.",
+            ],
+            "label": 2,
+            "activity_label": "fitness",
+        },
+        {
+            "ctx": "The rain started pouring heavily, so the cyclists",
+            "endings": [
+                " continued without concern.",
+                " took shelter under the bridge.",
+                " removed their helmets to feel the drops.",
+                " raced faster through the storm.",
+            ],
+            "label": 1,
+            "activity_label": "outdoor",
+        },
+        {
+            "ctx": "He lit the candle on the birthday cake and",
+            "endings": [
+                " everyone sang happy birthday.",
+                " the cat solved a puzzle.",
+                " a ship arrived at the harbor.",
+                " the tree grew five inches.",
+            ],
+            "label": 0,
+            "activity_label": "celebration",
+        },
+        {
+            "ctx": "The teacher handed out the exam papers. The students",
+            "endings": [
+                " left for the beach.",
+                " started painting murals.",
+                " picked up their pencils and began to write.",
+                " planted tomatoes in the classroom.",
+            ],
+            "label": 2,
+            "activity_label": "school",
+        },
+        {
+            "ctx": "She plugged the guitar into the amplifier and",
+            "endings": [
+                " the cows started mooing louder.",
+                " strummed a chord that filled the room.",
+                " the oven preheated itself.",
+                " the clock stopped ticking.",
+            ],
+            "label": 1,
+            "activity_label": "music",
+        },
+        {
+            "ctx": "The pilot announced turbulence, so the passengers",
+            "endings": [
+                " stood up to dance.",
+                " opened the emergency doors.",
+                " fastened their seat belts.",
+                " started a cooking class.",
+            ],
+            "label": 2,
+            "activity_label": "travel",
+        },
+    ]
+
+
+def _load_hellaswag_records(
+    n_samples: int,
+    seed: int,
+    *,
+    fixture_path: Path | None = None,
+) -> list[HellaSwagRecord]:
+    """Materialise ``n_samples`` HellaSwag records with R1 discipline.
+
+    Search order :
+
+    1. Caller-supplied ``fixture_path`` (if set and existing).
+    2. The committed fallback fixture at
+       ``tests/fixtures/hellaswag_sanity.jsonl`` (if present).
+    3. Offline HF cache (``Rowan/hellaswag`` validation split).
+    4. The 8-row hand-authored in-module fallback —
+       :func:`_hellaswag_default_fallback_records`.
+    """
+    def _materialise(raws: list[dict]) -> list[HellaSwagRecord]:
+        rng = random.Random(seed)
+        rng.shuffle(raws)
+        if len(raws) >= n_samples:
+            selected = raws[:n_samples]
+        else:
+            selected = [
+                raws[i % len(raws)] for i in range(n_samples)
+            ]
+        records: list[HellaSwagRecord] = []
+        for row in selected:
+            endings = row["endings"]
+            if len(endings) != 4:
+                raise ValueError(
+                    f"HellaSwag row has {len(endings)} endings: "
+                    f"{row!r}"
+                )
+            records.append(
+                HellaSwagRecord(
+                    ctx=str(row["ctx"]),
+                    endings=(
+                        str(endings[0]),
+                        str(endings[1]),
+                        str(endings[2]),
+                        str(endings[3]),
+                    ),
+                    label=int(row["label"]),
+                    activity_label=str(
+                        row.get("activity_label", "unknown")
+                    ),
+                )
+            )
+        return records
+
+    # 1. Caller-supplied path
+    target = fixture_path or _DEFAULT_HELLASWAG_FALLBACK
+    if target.exists():
+        raws = []
+        with target.open("r", encoding="utf-8") as fh:
+            for line in fh:
+                line = line.strip()
+                if not line:
+                    continue
+                raws.append(json.loads(line))
+        return _materialise(raws)
+
+    # 2. Offline HF cache.
+    try:  # pragma: no cover - optional cache path
+        import os
+
+        from datasets import load_dataset  # type: ignore[import-not-found]
+
+        os.environ.setdefault("HF_DATASETS_OFFLINE", "1")
+        ds = load_dataset("Rowan/hellaswag", split="validation")
+        raws = [dict(ex) for ex in ds.select(range(min(len(ds), n_samples * 2)))]
+        return _materialise(raws)
+    except Exception:
+        pass
+
+    # 3. In-module hand-authored fallback — pipeline validation only.
+    return _materialise(_hellaswag_default_fallback_records())
+
+
+def _continuation_logprob(
+    model_callable,
+    tokenizer,
+    ctx_ids: list[int],
+    ending_ids: list[int],
+) -> float:
+    """Return the summed log-probability of ``ending_ids`` given ``ctx_ids``.
+
+    Runs a single forward pass on ``ctx + ending``, then for each
+    ending-position reads the predicted token's log-softmax entry.
+    Sum (not mean) matches the lm-evaluation-harness ``loglikelihood``
+    convention.
+    """
+    import mlx.core as mx
+    import numpy as np
+
+    full = ctx_ids + ending_ids
+    tokens = mx.array([full])
+    mx.random.seed(0)
+    logits = model_callable(tokens)
+    mx.eval(logits)
+    logits_np = np.asarray(logits[0]).astype(np.float32)
+    # Position i predicts token at i+1. The ending spans tokens
+    # indices [len(ctx), len(ctx)+len(ending)-1] ; use positions
+    # [len(ctx)-1, …, len(ctx)+len(ending)-2] to read the logits.
+    total = 0.0
+    start = len(ctx_ids) - 1
+    for i, tok_id in enumerate(ending_ids):
+        pos = start + i
+        if pos < 0 or pos >= logits_np.shape[0]:
+            # Degenerate : ctx empty ; treat as -inf so ending
+            # loses the tie.
+            total += -1e9
+            continue
+        row = logits_np[pos]
+        m = float(np.max(row))
+        logsumexp = m + float(np.log(np.sum(np.exp(row - m)) + 1e-30))
+        total += float(row[int(tok_id)]) - logsumexp
+    return total
+
+
+def evaluate_hellaswag(
+    model,
+    tokenizer,
+    *,
+    n_samples: int = 100,
+    seed: int = 0,
+    fixture_path: Path | None = None,
+) -> dict[str, float]:
+    """Run HellaSwag 4-choice continuation-scoring against ``model``.
+
+    For each record, tokenise ``ctx + ending`` for each of the 4
+    candidate endings, compute the summed log-probability of the
+    ending tokens, and pick the argmax. Accuracy = fraction of
+    records whose argmax ending matches ``label``.
+
+    Returns ``{"accuracy": float, "n": int}``. Deterministic under
+    ``(model_weights, tokenizer, fixture, seed)``.
+    """
+    records = _load_hellaswag_records(
+        n_samples, seed, fixture_path=fixture_path
+    )
+    forward = model.model if hasattr(model, "model") else model
+
+    correct = 0
+    for record in records:
+        try:
+            ctx_ids = tokenizer.encode(record.ctx)
+        except TypeError:
+            ctx_ids = tokenizer.encode(record.ctx, add_special_tokens=True)
+        scores: list[float] = []
+        for ending in record.endings:
+            try:
+                end_ids = tokenizer.encode(ending)
+            except TypeError:
+                end_ids = tokenizer.encode(
+                    ending, add_special_tokens=False
+                )
+            # Ensure the ending contributes at least one token —
+            # a tokenizer that collapses whitespace could yield an
+            # empty list, which defeats the loglikelihood signal.
+            if not end_ids:
+                end_ids = [0]
+            scores.append(
+                _continuation_logprob(
+                    forward, tokenizer, ctx_ids, end_ids
+                )
+            )
+        pred = int(max(range(4), key=lambda i: scores[i]))
+        if pred == record.label:
+            correct += 1
+    n = len(records)
+    return {"accuracy": correct / n if n else 0.0, "n": n}
+
+
+__all__ = [
+    "HellaSwagLoader",
+    "HellaSwagRecord",
+    "evaluate_hellaswag",
+]

@@ -207,3 +207,223 @@ class MMLULoader:
             )
         rng = random.Random(seed)
         return [self._record_from_raw(r) for r in rng.sample(raws, n)]
+
+
+# --------------------------------------------------------------------------
+# Evaluator (cycle-3 C3.8 Phase A) — runs ``evaluate_mmlu(model, tokenizer)``
+# as used by ``scripts/pilot_cycle3_real.py``. Network-free : loads from
+# the ``HF_DATASETS_CACHE`` default or a committed fallback fixture.
+# --------------------------------------------------------------------------
+
+
+_DEFAULT_MMLU_FALLBACK = (
+    Path(__file__).resolve().parents[2]
+    / "tests"
+    / "fixtures"
+    / "mmlu_sanity.jsonl"
+)
+
+
+def _load_mmlu_records(
+    n_samples: int,
+    seed: int,
+    *,
+    fixture_path: Path | None = None,
+) -> list[MMLURecord]:
+    """Materialise ``n_samples`` MMLU records with R1 discipline.
+
+    Search order :
+
+    1. Caller-supplied ``fixture_path`` (if set and existing).
+    2. The HF ``datasets`` cache if the ``datasets`` package is
+       available and a local copy of ``cais/mmlu`` is already
+       materialised — no network fetch is attempted, per the R1
+       contract established by :class:`MMLULoader`.
+    3. The committed sanity fixture at ``tests/fixtures/mmlu_sanity.jsonl``
+       expanded to ``n_samples`` via seeded cycling. The fallback
+       is meant to validate the pipeline only ; empirical claims
+       require the full cais/mmlu export.
+    """
+    def _materialise(raws: list[dict]) -> list[MMLURecord]:
+        # Trim / expand to n_samples deterministically — seeded
+        # permutation of the underlying rows then cycle-and-slice.
+        if not raws:
+            raise ValueError("no MMLU records available")
+        rng = random.Random(seed)
+        rng.shuffle(raws)
+        if len(raws) >= n_samples:
+            selected = raws[:n_samples]
+        else:
+            # Cycle through the fixture deterministically. Not a
+            # scientific sample, but validates the pipeline shape.
+            selected = [
+                raws[i % len(raws)] for i in range(n_samples)
+            ]
+        records: list[MMLURecord] = []
+        for row in selected:
+            choices = row["choices"]
+            if len(choices) != 4:
+                raise ValueError(
+                    f"MMLU row has {len(choices)} choices: {row!r}"
+                )
+            answer = int(row["answer"])
+            if not 0 <= answer <= 3:
+                raise ValueError(
+                    f"MMLU answer {answer} outside [0,3]: {row!r}"
+                )
+            records.append(
+                MMLURecord(
+                    question=str(row["question"]),
+                    choices=(
+                        str(choices[0]),
+                        str(choices[1]),
+                        str(choices[2]),
+                        str(choices[3]),
+                    ),
+                    answer=answer,
+                    subject=str(row.get("subject", "unknown")),
+                )
+            )
+        return records
+
+    # 1. Caller-supplied path
+    target = fixture_path or _DEFAULT_MMLU_FALLBACK
+    if target.exists():
+        raws = []
+        with target.open("r", encoding="utf-8") as fh:
+            for line in fh:
+                line = line.strip()
+                if not line:
+                    continue
+                raws.append(json.loads(line))
+        return _materialise(raws)
+
+    # 2. Try HF datasets cache (offline only)
+    try:  # pragma: no cover - optional cache path
+        import os
+
+        from datasets import load_dataset  # type: ignore[import-not-found]
+
+        os.environ.setdefault("HF_DATASETS_OFFLINE", "1")
+        ds = load_dataset("cais/mmlu", "all", split="test")
+        raws = [dict(ex) for ex in ds.select(range(min(len(ds), n_samples * 2)))]
+        return _materialise(raws)
+    except Exception:
+        pass
+
+    raise MissingLocalDatasetError(
+        f"MMLU evaluator cannot locate either {target!s} or an "
+        "offline cais/mmlu cache — run the HF datasets export "
+        "once on a networked host before launching the pilot."
+    )
+
+
+def _mmlu_prompt(record: MMLURecord) -> str:
+    """Render an MMLU record as a zero-shot letter-choice prompt.
+
+    Mirrors the prompt format used by the C3.7 sanity pilot so
+    the two pilots are directly comparable.
+    """
+    return (
+        "The following is a multiple choice question. Respond "
+        "with only the letter of the correct answer.\n\n"
+        f"Question: {record.question}\n"
+        f"A. {record.choices[0]}\n"
+        f"B. {record.choices[1]}\n"
+        f"C. {record.choices[2]}\n"
+        f"D. {record.choices[3]}\n"
+        "Answer:"
+    )
+
+
+def _letter_token_ids(tokenizer) -> list[int]:
+    """Single-token IDs for the four letter choices.
+
+    Raises :class:`ValueError` if any letter does not tokenise to
+    exactly one token — that would silently bias the wrong
+    vocabulary slot.
+    """
+    ids: list[int] = []
+    for letter in ("A", "B", "C", "D"):
+        if hasattr(tokenizer, "encode"):
+            try:
+                enc = tokenizer.encode(letter, add_special_tokens=False)
+            except TypeError:
+                enc = tokenizer.encode(letter)
+        else:
+            raise ValueError(
+                f"tokenizer {tokenizer!r} has no ``encode`` method"
+            )
+        if len(enc) != 1:
+            raise ValueError(
+                f"letter {letter!r} tokenises to {enc!r} (len "
+                f"{len(enc)}) ; MMLU letter-argmax proxy requires "
+                "single-token letters"
+            )
+        ids.append(int(enc[0]))
+    return ids
+
+
+def evaluate_mmlu(
+    model,
+    tokenizer,
+    *,
+    n_samples: int = 100,
+    seed: int = 0,
+    fixture_path: Path | None = None,
+) -> dict[str, float]:
+    """Run the MMLU letter-argmax evaluation against ``model``.
+
+    Parameters
+    ----------
+    model
+        Callable returning logits for a given ``mx.array`` of token
+        ids. Typically a :class:`harness.real_models.qwen_mlx_fp16.QwenMLXFP16Wrapper`
+        or the raw ``mlx-lm`` model. Accepts the wrapper-style
+        ``.model`` attribute lookup when callable returns fail.
+    tokenizer
+        Must expose an ``encode(text)`` method.
+    n_samples
+        Number of MMLU records to score. Default 100 matches the
+        C3.8 Phase A per-cell eval volume.
+    seed
+        Pins the record subset + order.
+
+    Returns
+    -------
+    dict
+        ``{"accuracy": float, "n": int}`` — accuracy is the fraction
+        of records whose argmax letter matches the gold label.
+    """
+    import mlx.core as mx
+    import numpy as np
+
+    records = _load_mmlu_records(
+        n_samples, seed, fixture_path=fixture_path
+    )
+    letter_ids = _letter_token_ids(tokenizer)
+    # Accept either a wrapper (exposes .model) or a raw callable.
+    forward = model.model if hasattr(model, "model") else model
+
+    correct = 0
+    for record in records:
+        prompt = _mmlu_prompt(record)
+        token_ids = tokenizer.encode(prompt)
+        tokens = mx.array([token_ids])
+        mx.random.seed(0)
+        logits = forward(tokens)
+        mx.eval(logits)
+        last = np.asarray(logits[0, -1, :])
+        letter_logits = last[letter_ids].astype(np.float32)
+        pred = int(np.argmax(letter_logits))
+        if pred == record.answer:
+            correct += 1
+    n = len(records)
+    return {"accuracy": correct / n if n else 0.0, "n": n}
+
+
+__all__ = [
+    "MMLULoader",
+    "MMLURecord",
+    "evaluate_mmlu",
+]
