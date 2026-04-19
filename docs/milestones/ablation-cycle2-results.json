@@ -1,0 +1,136 @@
+{
+  "cycle2_batch_id": "d25d8888c840424a5ffd03c8432a3a16",
+  "ablation_runner_run_id": "3cec0422f86aeeddb72f6444423ed270",
+  "harness_version": "C-v0.6.0+PARTIAL",
+  "is_synthetic": true,
+  "synthetic_substitute": true,
+  "data_provenance": "synthetic data \u2014 no real cohort/HW, mock predictors shared across substrate labels (cycle-2 C2.9/C2.11)",
+  "benchmark_size": 500,
+  "benchmark_hash": "synthetic:c8a0712000b6411cb6f84d3cca361f83b262c6798cc110c96e122c73f5b0def7",
+  "seeds": [
+    42,
+    123,
+    7
+  ],
+  "substrates": [
+    "mlx_kiki_oniric",
+    "esnn_thalamocortical"
+  ],
+  "accuracy": {
+    "mlx_kiki_oniric": {
+      "baseline": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "P_min": [
+        0.7,
+        0.7,
+        0.7
+      ],
+      "P_equ": [
+        0.85,
+        0.85,
+        0.85
+      ]
+    },
+    "esnn_thalamocortical": {
+      "baseline": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "P_min": [
+        0.7,
+        0.7,
+        0.7
+      ],
+      "P_equ": [
+        0.85,
+        0.85,
+        0.85
+      ]
+    }
+  },
+  "hypotheses_per_substrate": {
+    "mlx_kiki_oniric": {
+      "H1_forgetting": {
+        "test_name": "Welch's t-test (one-sided)",
+        "p_value": 0.0,
+        "reject_h0": true
+      },
+      "H2_equivalence_self": {
+        "test_name": "TOST equivalence",
+        "p_value": 5.328595908988577e-08,
+        "reject_h0": true
+      },
+      "H3_monotonic": {
+        "test_name": "Jonckheere-Terpstra trend",
+        "p_value": 0.024767306717813353,
+        "reject_h0": false
+      },
+      "H4_energy_budget": {
+        "test_name": "one-sample t-test (upper bound)",
+        "p_value": 0.010102051443364369,
+        "reject_h0": true
+      }
+    },
+    "esnn_thalamocortical": {
+      "H1_forgetting": {
+        "test_name": "Welch's t-test (one-sided)",
+        "p_value": 0.0,
+        "reject_h0": true
+      },
+      "H2_equivalence_self": {
+        "test_name": "TOST equivalence",
+        "p_value": 5.328595908988577e-08,
+        "reject_h0": true
+      },
+      "H3_monotonic": {
+        "test_name": "Jonckheere-Terpstra trend",
+        "p_value": 0.024767306717813353,
+        "reject_h0": false
+      },
+      "H4_energy_budget": {
+        "test_name": "one-sample t-test (upper bound)",
+        "p_value": 0.010102051443364369,
+        "reject_h0": true
+      }
+    }
+  },
+  "cross_substrate_consistency": {
+    "H1_forgetting": {
+      "verdicts": {
+        "mlx_kiki_oniric": true,
+        "esnn_thalamocortical": true
+      },
+      "agree": true
+    },
+    "H2_equivalence_self": {
+      "verdicts": {
+        "mlx_kiki_oniric": true,
+        "esnn_thalamocortical": true
+      },
+      "agree": true
+    },
+    "H3_monotonic": {
+      "verdicts": {
+        "mlx_kiki_oniric": false,
+        "esnn_thalamocortical": false
+      },
+      "agree": true
+    },
+    "H4_energy_budget": {
+      "verdicts": {
+        "mlx_kiki_oniric": true,
+        "esnn_thalamocortical": true
+      },
+      "agree": true
+    }
+  },
+  "significant_count_per_substrate": {
+    "mlx_kiki_oniric": 3,
+    "esnn_thalamocortical": 3
+  },
+  "fully_consistent": true
+}

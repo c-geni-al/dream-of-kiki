@@ -1,12 +1,24 @@
-"""Ablation runner harness — (profile × seed × benchmark) matrix.
+"""Ablation runner harness — (substrate × profile × seed × benchmark) matrix.
 
-Executes the cartesian product of profile specifications and
-seeds against a frozen benchmark, collecting metrics into a
-pandas.DataFrame ready for S15.1 statistical tests.
+Cycle-1 shape : ``profile × seed`` against a frozen benchmark.
+Cycle-2 (C2.9) extends with an optional ``substrate`` axis so the
+DR-3 substrate-agnosticism replication can be exercised
+empirically (MLX kiki-oniric × E-SNN thalamocortical, see
+`scripts/ablation_cycle2.py`). When `substrate_specs` is None the
+runner emits a sentinel ``"unspecified"`` substrate column,
+preserving the cycle-1 row schema while letting downstream code
+parametrise without branching.
 
 Profile specs are intentionally minimal — they bind a name to a
 predictor callable. Real ablation (S15.3) wraps PMin/PEqu profile
-inference into predictors. Tests use mock predictors directly.
+inference into predictors. Tests use mock predictors directly. In
+the multi-substrate setting the predictor is shared across
+substrates (the substrate axis labels which substrate is *under
+study* for the row, not which Python object computes the answer)
+because in cycle-2 the synthetic ablation only validates that the
+H1-H4 statistical chain runs identically on both substrates — see
+`docs/milestones/cross-substrate-results.md` (synthetic data — no
+real cohort/HW).
 
 Each `run()` call registers a single batch ``run_id`` against
 ``harness.storage.run_registry.RunRegistry`` so every emitted row
@@ -14,9 +26,12 @@ is traceable to the registered execution (R1 contract). The seed
 is propagated into ``evaluate_retained`` for trace integrity even
 when the predictor itself is deterministic — this matches the
 project rule that experimental claims resolve to a registered
-run_id.
+run_id. The substrate axis is included in the deterministic batch
+seed so a substrate change yields a different ``run_id``.
 
-Reference: docs/specs/2026-04-17-dreamofkiki-master-design.md §5
+Reference : docs/specs/2026-04-17-dreamofkiki-master-design.md §5
+            docs/specs/2026-04-17-dreamofkiki-framework-C-design.md
+            §6.2 (DR-3 Conformance Criterion)
 """
 from __future__ import annotations
 
@@ -35,6 +50,9 @@ from kiki_oniric.dream.eval_retained import evaluate_retained
 
 
 ItemPredictor = Callable[[dict], str]
+
+# Sentinel for cycle-1 callers that do not pass `substrate_specs`.
+_UNSPECIFIED_SUBSTRATE = "unspecified"
 
 
 def _resolve_commit_sha() -> str:
@@ -72,20 +90,40 @@ class ProfileSpec:
     predictor: ItemPredictor
 
 
+@dataclass(frozen=True)
+class SubstrateSpec:
+    """Binding of substrate name (cycle-2 C2.9 axis label).
+
+    The substrate axis carries an identity label for the row. It
+    does *not* swap the predictor — substrate-specific behaviour
+    is exercised by the conformance suite + dedicated wirings
+    under `scripts/ablation_cycle2.py`. Keeping the predictor
+    independent of the substrate label is what lets the H1-H4
+    cross-substrate replication compare like-for-like.
+    """
+
+    name: str
+
+
 @dataclass
 class AblationRunner:
-    """Run (profile × seed) matrix on a frozen benchmark.
+    """Run (substrate × profile × seed) matrix on a frozen benchmark.
 
     Each cell calls `evaluate_retained(spec.predictor, benchmark,
     seed=seed)` and records a row in the output DataFrame. Seeds
     are recorded alongside the result for downstream statistical
     handling (e.g., paired tests across seeds).
 
+    When `substrate_specs` is None the runner emits a single
+    sentinel substrate ``"unspecified"`` per row — preserving the
+    cycle-1 row count of `len(profile_specs) * len(seeds)` while
+    keeping the row schema stable.
+
     Run registration: a single ``run_id`` is computed per
     ``run()`` invocation from a deterministic key derived from the
-    batch (profile names + seeds + benchmark hash) and inserted
-    into the registry under profile ``"ablation_batch"``. The id
-    is broadcast to every output row.
+    batch (substrate names + profile names + seeds + benchmark
+    hash) and inserted into the registry under profile
+    ``"ablation_batch"``. The id is broadcast to every output row.
     """
 
     profile_specs: list[ProfileSpec]
@@ -93,13 +131,22 @@ class AblationRunner:
     benchmark: RetainedBenchmark
     c_version: str = "C-v0.6.0+PARTIAL"
     registry_path: Path = field(default_factory=_default_registry_path)
+    substrate_specs: list[SubstrateSpec] | None = None
+
+    def _effective_substrates(self) -> list[SubstrateSpec]:
+        if self.substrate_specs is None:
+            return [SubstrateSpec(name=_UNSPECIFIED_SUBSTRATE)]
+        return list(self.substrate_specs)
 
     def _batch_seed(self) -> int:
         """Deterministic 31-bit seed derived from the batch shape."""
+        substrates = "|".join(
+            spec.name for spec in self._effective_substrates()
+        )
         names = "|".join(spec.name for spec in self.profile_specs)
         seeds = ",".join(str(s) for s in self.seeds)
         bench = self.benchmark.source_hash or ""
-        key = f"{names}::{seeds}::{bench}".encode()
+        key = f"{substrates}::{names}::{seeds}::{bench}".encode()
         digest = hashlib.sha256(key).digest()
         return int.from_bytes(digest[:4], "big") & 0x7FFFFFFF
 
@@ -116,16 +163,18 @@ class AblationRunner:
         """Execute the full grid and return results DataFrame."""
         run_id = self._register()
         rows: list[dict] = []
-        for spec in self.profile_specs:
-            for seed in self.seeds:
-                acc = evaluate_retained(
-                    spec.predictor, self.benchmark, seed=seed
-                )
-                rows.append({
-                    "run_id": run_id,
-                    "profile": spec.name,
-                    "seed": seed,
-                    "accuracy": acc,
-                    "benchmark_hash": self.benchmark.source_hash,
-                })
+        for substrate in self._effective_substrates():
+            for spec in self.profile_specs:
+                for seed in self.seeds:
+                    acc = evaluate_retained(
+                        spec.predictor, self.benchmark, seed=seed
+                    )
+                    rows.append({
+                        "run_id": run_id,
+                        "substrate": substrate.name,
+                        "profile": spec.name,
+                        "seed": seed,
+                        "accuracy": acc,
+                        "benchmark_hash": self.benchmark.source_hash,
+                    })
         return pd.DataFrame(rows)
