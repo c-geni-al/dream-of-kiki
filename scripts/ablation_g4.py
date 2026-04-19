@@ -45,7 +45,7 @@ from kiki_oniric.eval.statistics import (
 )
 
 
-HARNESS_VERSION = "C-v0.6.0+PARTIAL"
+HARNESS_VERSION = "C-v0.6.0+STABLE"
 
 
 def _resolve_commit_sha() -> str:

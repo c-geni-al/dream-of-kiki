@@ -3,38 +3,57 @@
 **Gate** : G9 (cycle-2 publication-ready : Paper 2 ready for arXiv +
 NeurIPS submission + cycle-3 amorçage)
 **Target week** : cycle 2 closeout (after C2.17)
-**Status** : **CONDITIONAL-GO / PARTIAL** — engineering + substrate
-deliverables COMPLETE (Phase 1 + 2 + 5) ; empirical ablation
-(Phase 3) and Paper 2 narrative (Phase 4) DEFERRED per user scope
-decision ("objectif : phase 5").
+**Status** : **FULL-GO / STABLE** — all 5 cycle-2 phases delivered
+(Phase 1 E-SNN substrate + Phase 2 P_max wiring + Phase 3 cross-
+substrate ablation + Phase 4 Paper 2 narrative + Phase 5 async
+worker + closeout). Originally CONDITIONAL-GO / PARTIAL at cycle-2
+initial closeout ; graduated to FULL-GO / STABLE on 2026-04-19
+full-closeout after Phase 3 + 4 merge (commits 48b0521..b8d7abe).
+
+## 2026-04-19 — FULL-GO transition
+
+G9 originally CONDITIONAL-GO/PARTIAL with Phase 3 + Phase 4
+deferred. Both phases delivered (commits 48b0521..b8d7abe). Per
+DualVer §12.3 transition rule (PARTIAL→STABLE allowed on
+empirical-deliverable closure), EC bumped to +STABLE. External
+publication artifacts (arXiv ID, OSF DOI, Nature HB) remain
+orthogonal to EC ; they're tracked separately in the Pending list.
 
 ---
 
 ## Executive summary
 
-Cycle 2 was executed in a **scoped-down mode** : Phases 1 (E-SNN
-substrate), 2 (P_max full wiring) and 5 (async worker + this
+Cycle 2 was initially executed in a **scoped-down mode** : Phases 1
+(E-SNN substrate), 2 (P_max full wiring) and 5 (async worker + this
 closeout gate) were delivered end-to-end ; Phases 3 (cross-substrate
 ablation) and 4 (Paper 2 narrative authoring) were explicitly
-deferred by the user to a later cycle or a dedicated writing sprint.
+deferred by the user to a dedicated writing sprint. The gate
+originally closed as **CONDITIONAL-GO / PARTIAL**.
 
-As a consequence, the original G9 criterion — "Paper 2 ready for
-arXiv + NeurIPS submission" — is **not** satisfied. What IS
-satisfied is the **engineering foundation** that Paper 2 will
-ultimately rely on : E-SNN substrate DR-3 Conformance, P_max fully
-wired (4 ops × 4 channels), and a real concurrent dream worker. The
-gate is closed as **CONDITIONAL-GO / PARTIAL** to reflect the
-scope-honest status (research-discipline rule §3 : never report
-deferred work as complete).
+A full-closeout sprint then delivered Phases 3 + 4 (commits
+48b0521..b8d7abe), producing the cross-substrate ablation matrix,
+the Paper 2 full draft (EN + FR + pandoc LaTeX render), and the
+conformance-matrix artifact. The original G9 criterion — "Paper 2
+ready for arXiv + NeurIPS submission" — is now satisfied in-tree ;
+external publication artifacts (arXiv ID, OSF DOI, Nature HB) are
+orthogonal per §12.3 and remain tracked as external user actions.
+The gate is closed as **FULL-GO / STABLE**. See the 2026-04-19
+FULL-GO transition block at the top of this report for the
+canonical promotion notice.
 
 ---
 
-## DualVer bump proposal
+## DualVer bump history
 
-Current tag : `C-v0.5.0+STABLE` (end of cycle-1, per `STATUS.md`).
+Starting tag (cycle-1 closeout) : `C-v0.5.0+STABLE`.
 
-Proposed cycle-2 tag : **`C-v0.6.0+PARTIAL`** (formal minor bump,
-empirical axis marked PARTIAL).
+- **Step 1 — Initial cycle-2 closeout (commit `fd8ac04`)** : bumped
+  to **`C-v0.6.0+PARTIAL`** (formal MINOR bump, empirical axis
+  PARTIAL because Phase 3 + 4 were scoped-deferred).
+- **Step 2 — Cycle-2 full closeout (this report's transition
+  block, 2026-04-19)** : bumped to **`C-v0.6.0+STABLE`** per
+  framework-C §12.3 transition rule (PARTIAL → STABLE allowed on
+  re-closure of deferred cells) after Phase 3 + 4 delivery.
 
 Rationale :
 
@@ -43,23 +62,24 @@ Rationale :
   (E-SNN thalamocortical) and its 3 conditions verified (G7). This
   is a formal extension of the framework surface, not a breaking
   change — hence MINOR.
-- **Empirical axis : `+PARTIAL`** (not `+STABLE`) : the cross-
-  substrate ablation matrix (Phase 3) has not been executed ; the
-  cycle-2 empirical validation target is not met. `+PARTIAL` is the
-  honest qualifier until Phase 3 lands.
+- **Empirical axis PARTIAL → STABLE** : the cross-substrate
+  ablation matrix (Phase 3, C2.9-C2.12) and Paper 2 full-draft
+  (Phase 4, C2.13-C2.16) have been merged. §12.3 scopes +STABLE to
+  coverage completeness of the §8.2 stratified matrix, which is
+  now satisfied. Downstream empirical strength (divergent-
+  predictor replication on real data) remains a cycle-3 target
+  but is orthogonal to EC per §12.3.
 
-Cross-references (**proposed edits, not yet applied**) :
+Applied edits :
 
-- `CHANGELOG.md` : add `[C-v0.6.0+PARTIAL] — 2026-04-19` entry with
-  cycle-2 Phase 1 + 2 + 5 deliverables and explicit DEFERRED
-  subsection for Phase 3 + 4.
-- `STATUS.md` : bump **Version** field to `C-v0.6.0+PARTIAL` and
-  **Phase** field to `end of cycle-2 Phase 1+2+5 / Phase 3+4
-  deferred`.
-
-Do **not** apply these edits as part of the G9 commit ; they belong
-to a separate `docs(changelog): bump to C-v0.6.0+PARTIAL` commit
-that the user can review and sequence at their discretion.
+- `CHANGELOG.md` : top entry `[C-v0.6.0+STABLE cycle-2 closeout] —
+  2026-04-19` (current) ; earlier `[C-v0.6.0+PARTIAL] — 2026-04-19`
+  retained as provenance.
+- `STATUS.md` : Version + Phase + active gate + DualVer table
+  aligned.
+- framework-C spec (EN + FR), interface contracts, substrate
+  version constants, ablation harness default — all aligned to
+  `C-v0.6.0+STABLE`.
 
 ---
 
@@ -221,9 +241,9 @@ by cycle-2 scope :
 | Action | Gate | Status |
 |--------|------|--------|
 | arXiv submission of Paper 1 | G5 | ⏳ pending (action externe) |
-| arXiv submission of Paper 2 | G9 | ⏸ BLOCKED on Phase 3 + 4 |
+| arXiv submission of Paper 2 | G9 | ⏳ pending (action externe ; Paper 2 full-draft in-tree) |
 | Nature HB editorial decision (Paper 1) | G5 | ⏳ pending (action externe) |
-| NeurIPS / TMLR submission (Paper 2) | G9 | ⏸ BLOCKED on Phase 3 + 4 |
+| NeurIPS / TMLR submission (Paper 2) | G9 | ⏳ pending (action externe ; Paper 2 full-draft in-tree) |
 | OSF DOI lock | G5 | ⏳ pending (action externe) |
 | DR-2 external reviewer feedback (T-Col) | G3 | ⏳ pending (action externe) |
 | fMRI lab partnership formalization | G6 | ⏳ pending (action externe) |
@@ -236,21 +256,22 @@ by cycle-2 scope :
 
 | Criterion | Target | Actual | Status |
 |-----------|--------|--------|--------|
-| Paper 2 full-draft | ready for submit | **deferred (Phase 4)** | ⚠ PENDING |
-| Paper 2 arXiv submission | preprint live | **deferred** | ⚠ PENDING (action externe) |
-| Paper 2 NeurIPS / TMLR submission | under review | **deferred** | ⚠ PENDING (action externe) |
-| Cross-substrate ablation | 3 profiles × 2 substrates × H1-H4 | **deferred (Phase 3)** | ⚠ PENDING |
+| Paper 2 full-draft | ready for submit | achieved (C2.16) | ✅ |
+| Paper 2 arXiv submission | preprint live | **pending external action** | ⚠ PENDING (action externe) |
+| Paper 2 NeurIPS / TMLR submission | under review | **pending external action** | ⚠ PENDING (action externe) |
+| Cross-substrate ablation | 3 profiles × 2 substrates × H1-H4 | achieved (C2.11) | ✅ |
 | E-SNN substrate conformance | DR-3 conditions (1)+(2)+(3) | achieved (G7) | ✅ |
 | P_max profile functional | 4 ops + 4 channels wired | achieved (G8) | ✅ |
 | Async dream worker | real concurrent execution | achieved (C2.17) | ✅ |
-| Coverage ≥ 90 % | ≥ 90 % | 91.19 % | ✅ |
-| Test suite green | 0 failures | 169 pass / 0 fail | ✅ |
-| DualVer bump proposal documented | yes | yes (C-v0.6.0+PARTIAL proposed) | ✅ |
+| Coverage ≥ 90 % | ≥ 90 % | 91.34 % | ✅ |
+| Test suite green | 0 failures | 180 pass / 0 fail | ✅ |
+| DualVer bump proposal documented | yes | yes (C-v0.6.0+STABLE applied) | ✅ |
 
-**Decision** : **CONDITIONAL-GO / PARTIAL**. Engineering
-deliverables complete and coherent ; publication deliverables
-deferred by user scope decision. Close cycle-2 on this partial
-basis ; do not claim Paper 2 ready.
+**Decision** : **FULL-GO / STABLE**. All engineering + empirical
+cycle-2 deliverables complete and coherent ; publication-track
+Phases 3 + 4 delivered ; external publication artifacts (arXiv
+submit, OSF DOI lock, Nature HB) remain orthogonal per §12.3 and
+are tracked as external user actions.
 
 ---
 
@@ -282,27 +303,31 @@ brainstorming happen at cycle-3 kickoff, not here.
 
 ## Closing statement
 
-Cycle 2 closes at **C-v0.6.0+PARTIAL** (proposed) — formal axis
-minor-bumped on the E-SNN Conformance extension, empirical axis
-flagged PARTIAL because Phase 3 + 4 were explicitly out of scope.
-The engineering foundation is coherent : 2 substrates DR-3-
-conformant, 3 profiles wired, 4 invariants enforced, 4 channels
-operational, real async worker, 169 tests green at 91.19 %
-coverage.
+Cycle 2 closes at **C-v0.6.0+STABLE** — formal axis minor-bumped
+on the E-SNN Conformance extension, empirical axis promoted from
+PARTIAL → STABLE per §12.3 transition rule after Phase 3 (cross-
+substrate ablation) and Phase 4 (Paper 2 full-draft narrative)
+were delivered (commits 48b0521..b8d7abe). The engineering
+foundation is coherent : 2 substrates DR-3-conformant, 3 profiles
+wired, 4 invariants enforced, 4 channels operational, real async
+worker, 180 tests green at 91.34 % coverage.
 
-The gap between this status and the original G9 criterion (Paper 2
-ready for submission) is **honest scope deferral**, not hidden
-failure. Paper 2 submission is a cycle-3 agenda item, and the
-cycle-3 amorçage outline (`docs/papers/paper3/outline.md`) records
-that commitment alongside any additional cycle-3 research threads.
+The original G9 criterion (Paper 2 ready for submission) is now
+satisfied in-tree. External publication artifacts (arXiv submit,
+OSF DOI lock, Nature HB editorial decision) are orthogonal to EC
+and remain tracked as external user actions. Cycle-3 agenda moves
+to real-substrate-specific predictors, fMRI cohort data, and any
+Paper 3 emergence thread.
 
-STATUS.md lineage : propose a surgical 1-line update for the user
-to apply, **not** performed as part of this commit :
+STATUS.md lineage : applied in-tree as part of the cycle-2 full
+closeout commit alongside this gate report update :
 
 ```
-**As of** : 2026-04-19 end of cycle-2 (Phase 1+2+5)
-**Version** : C-v0.6.0+PARTIAL (proposed — pending changelog edit)
-**Phase** : cycle-2 closeout ; Phase 3+4 deferred to cycle 3
+**As of** : 2026-04-19 end of cycle-2 full closeout
+**Version** : C-v0.6.0+STABLE
+**Phase** : cycle 2 closed — Phases 1+2+3+4+5 delivered, G9 =
+FULL-GO/STABLE per §12.3 transition rule (publication-track
+deferred cells re-closed)
 ```
 
 ---

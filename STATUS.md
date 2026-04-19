@@ -1,10 +1,10 @@
 # dream-of-kiki — Status
 
-**As of** : 2026-04-19 end of cycle-2 closeout
-**Version** : C-v0.6.0+PARTIAL
-**Phase** : cycle-2 engineering Phases 1+2+5 complete ; Phase 3
-(cross-substrate ablation) + Phase 4 (Paper 2 narrative) deferred
-per user scope decision
+**As of** : 2026-04-19 end of cycle-2 full closeout
+**Version** : C-v0.6.0+STABLE
+**Phase** : cycle 2 closed — Phases 1+2+3+4+5 delivered, G9 =
+FULL-GO/STABLE per §12.3 transition rule (publication-track
+deferred cells re-closed)
 
 Public repo : https://github.com/electron-rare/dream-of-kiki
 
@@ -13,15 +13,17 @@ Public repo : https://github.com/electron-rare/dream-of-kiki
 ## Program progress
 
 Cycle 1 calendar : 28 weeks total (S1-S28) — closed at C-v0.5.0+STABLE
-Cycle 2 calendar : Phases 1, 2 and 5 complete ; Phases 3-4
-(publication track) deferred ; G9 = CONDITIONAL-GO/PARTIAL
-Active gate : **G9 cycle-2 publication-ready (CONDITIONAL-GO/PARTIAL)**
+Cycle 2 calendar : all 5 phases delivered (Phase 1 E-SNN substrate,
+Phase 2 P_max wiring, Phase 3 cross-substrate ablation, Phase 4
+Paper 2 narrative, Phase 5 async worker + closeout) ;
+G9 = FULL-GO/STABLE
+Active gate : **G9 cycle-2 publication-ready (FULL-GO/STABLE)**
 
 ## Test suite
 
 ```
-173 tests passing
-coverage 91.26% (gate 90%)
+180 tests passing
+coverage 91.34% (gate 90%)
 ```
 
 ## DualVer status
@@ -29,7 +31,7 @@ coverage 91.26% (gate 90%)
 | Axis | Value | Meaning |
 |------|-------|---------|
 | FC   | v0.6.0 | MINOR bump (DR-3 extended to E-SNN, P_max wired, DR-2 reframed as DR-2', RNG isolated, S4 read-only) |
-| EC   | PARTIAL | Engineering deliverables green, publication track (Phases 3+4) deferred |
+| EC   | STABLE | All cycle-2 empirical deliverables merged (cross-substrate ablation + Paper 2 full draft) ; PARTIAL → STABLE per framework-C §12.3 transition rule |
 
 Next target : C-v0.7.0+STABLE post-G3 (DR-2 external reviewer feedback returned, parallel monoidal model in g3-draft)
 
@@ -46,7 +48,7 @@ Next target : C-v0.7.0+STABLE post-G3 (DR-2 external reviewer feedback returned,
 | G6 — Cycle 2 decision | S28 | ⏳ Pending |
 | G7 — E-SNN substrate conformance | cycle-2 Phase 1 | ✅ LOCKED |
 | G8 — P_max profile wired | cycle-2 Phase 2 | ✅ LOCKED |
-| G9 — cycle-2 publication-ready | cycle-2 closeout | ⚠️ CONDITIONAL-GO/PARTIAL |
+| G9 — cycle-2 publication-ready | cycle-2 closeout | ✅ FULL-GO/STABLE |
 
 ## Critical risks watched
 

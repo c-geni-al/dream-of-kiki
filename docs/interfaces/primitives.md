@@ -1,6 +1,6 @@
 # Primitives Interface Contract
 
-**Version** : C-v0.6.0+PARTIAL
+**Version** : C-v0.6.0+STABLE
 **Owners** : Track C (design) + Track A (implementation)
 **Locked** : S2 → S4 (evolves with framework)
 
@@ -23,19 +23,19 @@ these 8 typed Protocols. Reference: `kiki_oniric/core/primitives.py`.
   framework-C spec §6.2.
 - **No API / behavior removed or renamed.**
 
-## PARTIAL stability
+## STABLE status (cycle-2 closeout)
 
-`+PARTIAL` on the empirical axis means engineering deliverables on
-these Protocols are green, but part of the §8.2 stratified matrix
-(cross-substrate ablation + Paper 2 narrative) is scoped-deferred.
-Contract tests for the primitives currently pass on both substrates
-— **no contract test is failing or skipped**. See framework-C spec
-§12.3 for full PARTIAL semantics.
+`+STABLE` on the empirical axis means all cycle-2 empirical
+deliverables have landed : cross-substrate ablation matrix (Phase 3,
+C2.9-C2.12) and Paper 2 full-draft narrative (Phase 4, C2.13-C2.16)
+are merged. Contract tests for the primitives pass on both
+substrates — **no contract test is failing or skipped**. See
+framework-C spec §12.3 for the PARTIAL → STABLE transition rule.
 
 Migration / test-status docs :
-- `STATUS.md` — gate G9 CONDITIONAL-GO/PARTIAL, 180 tests passing
-  at coverage ≥ 90 %
-- `CHANGELOG.md` §`[C-v0.6.0+PARTIAL]` — full bump log
+- `STATUS.md` — gate G9 FULL-GO/STABLE, 180 tests passing at
+  coverage ≥ 90 %
+- `CHANGELOG.md` §`[C-v0.6.0+STABLE cycle-2 closeout]` — full bump log
 - `tests/conformance/axioms/` — all DR-* property tests green
 
 ---

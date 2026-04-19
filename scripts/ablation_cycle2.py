@@ -60,7 +60,7 @@ from kiki_oniric.eval.statistics import (
 )
 
 
-HARNESS_VERSION = "C-v0.6.0+PARTIAL"
+HARNESS_VERSION = "C-v0.6.0+STABLE"
 SUBSTRATES = ["mlx_kiki_oniric", "esnn_thalamocortical"]
 SEEDS = [42, 123, 7]
 

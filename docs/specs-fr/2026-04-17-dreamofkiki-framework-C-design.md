@@ -1,7 +1,7 @@
 # dreamOfkiki — Spécification de conception formelle du framework C
 
-**Version** : C-v0.6.0+PARTIAL
-**Date** : 2026-04-17 (initiale) ; 2026-04-19 (bump clôture cycle 2)
+**Version** : C-v0.6.0+STABLE
+**Date** : 2026-04-17 (initiale) ; 2026-04-19 (bump clôture cycle 2 ; PARTIAL → STABLE après merge Phase 3+4)
 **Auteur** : Clément Saillant (L'Electron Rare)
 **Statut** : Brouillon pour relecture utilisateur
 **Companion** : `2026-04-17-dreamofkiki-master-design.md` (vision maître)

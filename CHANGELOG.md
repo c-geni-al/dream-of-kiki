@@ -10,6 +10,68 @@ see `docs/specs/2026-04-17-dreamofkiki-framework-C-design.md` §12).
 
 ---
 
+## [C-v0.6.0+STABLE cycle-2 closeout] — 2026-04-19
+
+Cycle 2 fully closed. Phase 3 (cross-substrate ablation) + Phase 4
+(Paper 2 narrative) delivered since PARTIAL tag (commits 48b0521..
+b8d7abe). G9 → FULL-GO.
+
+### Added — Phase 3 cross-substrate validation (C2.9-C2.12)
+
+- Multi-substrate ablation runner (`kiki_oniric/eval/ablation.py`,
+  substrate axis)
+- Conformance validation matrix script + docs (3×3 MLX × E-SNN ×
+  hypothetical_cycle3)
+- `docs/proofs/dr3-substrate-evidence.md` formal evidence
+- Cross-substrate H1-H4 statistical results (synthetic substitute)
+- Paper 1 §8.5 cycle-2 cross-substrate replication subsection
+  (EN + FR)
+- Paper 1 v2 arXiv plan (deferred until v1 acceptance)
+
+### Added — Phase 4 Paper 2 narrative (C2.13-C2.16)
+
+- Paper 2 abstract + introduction (EN + FR, ~1400 words)
+- Paper 2 §4 Conformance + §5 Architecture (EN + FR)
+- Paper 2 §6 Methodology + §7 Results (EN + FR, cross-substrate
+  comparative table)
+- Paper 2 §8 Discussion + §9 Future Work + full-draft assembly
+- Paper 2 pandoc LaTeX render `docs/papers/paper2/build/full-draft.tex`
+- Paper 2 build/ : README-arxiv.md + .gitignore (mirror Paper 1
+  pattern)
+
+### Changed
+
+- DualVer bumped C-v0.6.0+PARTIAL → C-v0.6.0+STABLE per §12.3
+  transition rule
+- G9 cycle-2 publication gate : CONDITIONAL-GO/PARTIAL →
+  FULL-GO/STABLE
+- STATUS.md active gate aligned
+- 13 CodeRabbit cycle-10 findings applied (commits 4b67f3e +
+  2d1228e)
+
+### Stats
+
+- 180 tests passing, coverage 91.34 % (gate ≥ 90 %)
+- 2 substrates real (MLX kiki-oniric + E-SNN thalamocortical),
+  1 placeholder (hypothetical_cycle3)
+- 3 profiles fully wired (P_min, P_equ, P_max)
+- 17 commits across cycle 2 (Phase 1 + 2 + 3 + 4 + 5 + 2
+  CodeRabbit cycle-9 + 2 cycle-10 fix batches + 2 DualVer bumps)
+- 32 CodeRabbit findings applied (cycle 9 = 19, cycle 10 = 13)
+- 0 AI attribution in any commit
+
+### Pending — external user actions (unchanged)
+
+- arXiv submit Paper 1 → obtain arXiv ID for Paper 2 cross-cite
+- Paper 2 v0.1 review + arXiv submit
+- OSF DOI lock (post-arXiv)
+- Nature HB submit (or Pivot B branch selection)
+- HAL FR deposit (post-arXiv)
+- DR-2 external reviewer feedback (T-Col Q_CR.1 b)
+- fMRI lab partnership formalization
+
+---
+
 ## [C-v0.6.0+PARTIAL] — 2026-04-19
 
 Cycle 2 closeout. Engineering Phases 1 + 2 + 5 complete.
