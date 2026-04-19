@@ -1,0 +1,18 @@
+{
+  "harness_version": "C-v0.7.0+PARTIAL",
+  "mode": "smoke-cell",
+  "eval_proxy": "mmlu_logit_bias",
+  "mmlu_n_prompts": 15,
+  "cell": {
+    "profile": "p_min",
+    "seed": 0,
+    "pre": 0.0,
+    "post": 0.0,
+    "delta": 0.0,
+    "wall_time_s": 0.13882875442504883,
+    "model_loaded": false,
+    "run_id": "67e35cacffe5601fa51a8a7853aad080"
+  },
+  "wall_time_s": 0.15078282356262207,
+  "extrapolated_full_pilot_s": 13.570454120635986
+}
