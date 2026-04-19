@@ -18,16 +18,17 @@ from __future__ import annotations
 
 # Substrate identity
 MLX_SUBSTRATE_NAME = "mlx_kiki_oniric"
-# DualVer empirical axis `+STABLE` : the substrate is green against
+# DualVer empirical axis `+PARTIAL` : the substrate is green against
 # the current framework-C (DR-3 conformance all three conditions pass
-# on MLX, all BLOCKING invariants S1/S2/S3/I1 enforced, 180 tests
-# passing ≥90% coverage) AND the cycle-2 publication-track has
-# landed — Phase 3 (cross-substrate ablation MLX vs E-SNN, C2.9-C2.12)
-# and Phase 4 (Paper 2 narrative C2.13-C2.16) are merged. Transition
-# PARTIAL → STABLE per framework-C spec §12.3 transition rule. See
-# CHANGELOG.md [C-v0.6.0+STABLE cycle-2 closeout] for the bump log
-# and STATUS.md for gate G9 FULL-GO/STABLE status.
-MLX_SUBSTRATE_VERSION = "C-v0.6.0+STABLE"
+# on MLX, all BLOCKING invariants S1/S2/S3/I1 enforced, 240 tests
+# passing ≥90% coverage). Bumped C-v0.6.0+STABLE → C-v0.7.0+PARTIAL
+# on 2026-04-19 at cycle-3 Phase 1 launch : FC MINOR (+0.1.0) adds
+# H6 profile-ordering derived constraint + scale-axis per
+# framework-C §12.2 ; EC demoted STABLE → PARTIAL per §12.3 because
+# cycle-3 Phase 2 cells (Norse LIF + fMRI alignment + Paper 1 v2)
+# are scoped-deferred. See CHANGELOG.md [C-v0.7.0+PARTIAL] for the
+# bump log and STATUS.md for gate G10 CONDITIONAL-GO/PARTIAL status.
+MLX_SUBSTRATE_VERSION = "C-v0.7.0+PARTIAL"
 
 
 def mlx_substrate_components() -> dict[str, str]:

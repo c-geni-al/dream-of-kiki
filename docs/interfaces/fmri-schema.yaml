@@ -4,16 +4,16 @@
 #
 # Version bump C-v0.5.0+STABLE → C-v0.6.0+PARTIAL (2026-04-19
 # cycle-2 closeout) → C-v0.6.0+STABLE (2026-04-19 cycle-2 full
-# closeout after Phase 3+4 merge). Schema itself unchanged — this
-# is an aligned DualVer bump consumed by harness code that cross-
-# checks the framework-C version against the schema header. The
-# empirical axis graduates to +STABLE per §12.3 transition rule
-# because publication-track Phases 3-4 (cross-substrate ablation
-# using this schema for M2.b) have been delivered ; see
-# CHANGELOG.md [C-v0.6.0+STABLE cycle-2 closeout] and framework-C
-# spec §12.3. No schema field is breaking or new.
+# closeout after Phase 3+4 merge) → C-v0.7.0+PARTIAL (2026-04-19
+# cycle-3 Phase 1 bump, pre-C3.6 matrix launch, EC STABLE demoted
+# to PARTIAL because cycle-3 Phase 2 cells are scoped-deferred
+# until sem 6). Schema itself unchanged — this is an aligned
+# DualVer bump consumed by harness code that cross-checks the
+# framework-C version against the schema header ; see CHANGELOG.md
+# [C-v0.7.0+PARTIAL] and framework-C spec §12.3. No schema field
+# is breaking or new.
 
-version: "C-v0.6.0+STABLE"
+version: "C-v0.7.0+PARTIAL"
 data_source: studyforrest
 branch: A  # GO-STUDYFORREST from G1 decision
 

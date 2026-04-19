@@ -1,6 +1,6 @@
 # Primitives Interface Contract
 
-**Version** : C-v0.6.0+STABLE
+**Version** : C-v0.7.0+PARTIAL
 **Owners** : Track C (design) + Track A (implementation)
 **Locked** : S2 → S4 (evolves with framework)
 
@@ -35,7 +35,9 @@ framework-C spec §12.3 for the PARTIAL → STABLE transition rule.
 Migration / test-status docs :
 - `STATUS.md` — gate G9 FULL-GO/STABLE, 180 tests passing at
   coverage ≥ 90 %
-- `CHANGELOG.md` §`[C-v0.6.0+STABLE cycle-2 closeout]` — full bump log
+- `CHANGELOG.md` §`[C-v0.7.0+PARTIAL]` — cycle-3 Phase 1 bump log
+  (preserves §`[C-v0.6.0+STABLE cycle-2 closeout]` for historical
+  reference)
 - `tests/conformance/axioms/` — all DR-* property tests green
 
 ---

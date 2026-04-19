@@ -10,6 +10,86 @@ see `docs/specs/2026-04-17-dreamofkiki-framework-C-design.md` §12).
 
 ---
 
+## [C-v0.7.0+PARTIAL] — 2026-04-19
+
+Cycle-3 Phase 1 launch bump. FC MINOR (+0.1.0) because cycle 3
+adds a new derived constraint surface on the formal axis :
+
+- **H6 profile-ordering** (`P_max > P_equ > P_min` on retained
+  accuracy after consolidation) is a new derived constraint per
+  framework-C §12.2. Exercised by the cycle-3 Gate D decision
+  script (C3.9, scheduled) ; pre-locked in the spec glossary.
+- **Scale-axis** (`{qwen3p5-1p5b, qwen3p5-7b, qwen3p5-35b}`) is a
+  new formal axis for cross-scale DR-3 replication — extends DR-3
+  Conformance Criterion from "two substrates" (cycle 2) to "two
+  substrates × three model scales" (cycle 3).
+- **R1 determinism contract** extended : cycle-3 run_id tuple now
+  encodes ``(harness_version, scale/profile/substrate
+  composite-tag, seed, commit_sha)`` so every cell of the
+  1080-config matrix is uniquely + deterministically addressable.
+
+EC axis set to **PARTIAL** (demoted from STABLE per §12.3
+transition rule) because cycle-3 Phase 2 cells are scoped-deferred :
+
+- C3.11-C3.14 — Norse LIF substrate + SNN ops (sem 4-5) — deferred
+- C3.15-C3.18 — fMRI alignment (Studyforrest HMM/CCA, sem 5-6) —
+  deferred
+- C3.19-C3.22 — Paper 1 v2 Nature HB writeup + publication lock
+  (sem 6) — deferred
+
+Phase 1 engineering (C3.1-C3.10) is green / in flight ; G10 Gate D
+= CONDITIONAL-GO/PARTIAL. Pivot-4 branch per spec §5.1 R3 replaces
+the final STABLE graduation with a new minor bump if Gate D = NO-GO.
+
+### Added — Phase 1 cycle-3 (C3.1-C3.5 pre-bump)
+
+- Qwen3.5 MLX SHA-256 pins — `harness/real_models/base_model_registry.py` (commit f3b0119)
+- MMLU + HellaSwag dataset SHA pins — `harness/real_benchmarks/dataset_registry.py` (commit 3271883)
+- Studyforrest download init script — `scripts/init_studyforrest_download.sh` (commit 7b79b9e)
+- Real-bench loaders (MMLU + HellaSwag + mega-v2) — commit cae16f8
+- Qwen3.5 MLX 3-scale wrappers — commit abcc6ea
+- Real-weight ops over Qwen MLX — commit ab55c67
+- H5 trivariant scaling law — `kiki_oniric/eval/scaling_law.py` (commit 8efec8f)
+- Bonferroni combined 8-test family — `kiki_oniric/eval/statistics.py` (commit 6643598)
+
+### Added — Phase 1 cycle-3 (C3.6, this bump cycle)
+
+- `scripts/ablation_cycle3.py` — 1080-config multi-scale cartesian
+  runner with resume semantics + deterministic run_id lineage
+
+### Changed
+
+- DualVer bumped C-v0.6.0+STABLE → C-v0.7.0+PARTIAL per §12.3
+  transition rule (FC MINOR + EC STABLE → PARTIAL demotion)
+- G10 cycle-3 Gate D surfaced as active gate in STATUS.md
+- `HARNESS_VERSION` constants in cycle-2 scripts
+  (`scripts/ablation_cycle2.py`, `scripts/ablation_g4.py`) aligned
+  to the new tag so all future cycle-2-rerun rows share the
+  current empirical-axis reading
+- `c_version` default in `kiki_oniric/eval/ablation.py` aligned
+- `MLX_SUBSTRATE_VERSION` / `ESNN_SUBSTRATE_VERSION` aligned
+
+### Pending — Phase 1 cycle-3 (C3.7-C3.10 remainder)
+
+- C3.7 : sanity pilot 1.5B fail-fast (scripted this bump cycle)
+- C3.8 : full 1080-config Studio launch (~10 days)
+- C3.9 : compute_gate_d + H1-H6 report generator
+- (C3.10 is this bump — no remainder)
+
+### Pending — Phase 2 cycle-3 (scoped-deferred, C3.11-C3.22)
+
+- Norse LIF substrate + SNN ops (C3.11-C3.14)
+- fMRI alignment (C3.15-C3.18)
+- Paper 1 v2 Nature HB writeup (C3.19-C3.22)
+
+### Stats (at this bump)
+
+- 240 tests passing, coverage 91.13 % (gate ≥ 90 %)
+- 0 AI attribution in any commit
+- 13 files version-bumped (see commit body)
+
+---
+
 ## [C-v0.6.0+STABLE cycle-2 closeout] — 2026-04-19
 
 Cycle 2 fully closed. Phase 3 (cross-substrate ablation) + Phase 4
