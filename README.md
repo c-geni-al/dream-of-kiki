@@ -8,7 +8,7 @@ Research program producing two complementary papers:
 - **Paper 2** (NeurIPS / ICML / TMLR target): empirical ablation on the `kiki_oniric` substrate across profiles `P_min`, `P_equ`, `P_max`.
 
 **Status** — Cycle 1, released `paper-v0.4-draft` (2026-04-18). Next gate: **G5** (full ablation).
-**Authors** — Clément Saillant (L'Electron Rare) and dreamOfkiki project contributors.
+**Author** — Clément Saillant (L'Electron Rare), *dreamOfkiki* program author. Hypneum Lab.
 **License** — MIT (code) + CC-BY-4.0 (docs).
 
 ---
@@ -94,15 +94,15 @@ Outputs land in `harness/registry/runs/` (gitignored). Figures go to `papers/fig
 
 ## Citation
 
-Draft pre-print, tag [`paper-v0.4-draft`](https://github.com/electron-rare/dream-of-kiki/releases/tag/paper-v0.4-draft):
+Draft pre-print, tag [`paper-v0.4-draft`](https://github.com/hypneum-lab/dream-of-kiki/releases/tag/paper-v0.4-draft):
 
 ```bibtex
 @unpublished{dreamofkiki-2026,
-  author = {dreamOfkiki project contributors},
+  author = {Saillant, Clément},
   title  = {Dream-Based Knowledge Consolidation in Artificial
             Cognitive Systems: A Formal Framework},
   year   = 2026,
-  url    = {https://github.com/electron-rare/dream-of-kiki},
+  url    = {https://github.com/hypneum-lab/dream-of-kiki},
   note   = {Draft v0.4; MIT code + CC-BY-4.0 docs}
 }
 ```
