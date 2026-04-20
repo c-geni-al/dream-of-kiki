@@ -60,6 +60,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 0,
       "run_id": "1acb1b1536c2496732db2bff3bcd158a",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -68,6 +69,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 1,
       "run_id": "452abf2be256399780118557d5c07096",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -76,6 +78,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 2,
       "run_id": "cf6e209067bdf6fe84db5ac3c24020bf",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -84,6 +87,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 3,
       "run_id": "8f28d764c0e431b6813d95e581f6faa9",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -92,6 +96,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 4,
       "run_id": "33d4f80124d8949ae4b3a42d4f2b2169",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -100,6 +105,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 5,
       "run_id": "c20bbd8bcbf348a95c0d737d26413d1a",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -108,6 +114,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 6,
       "run_id": "8bfaa71413838afe145aa22c3884b94e",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -116,6 +123,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 7,
       "run_id": "6b5fe72e51bd441008fee865c9b44e6f",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -124,6 +132,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 8,
       "run_id": "b69ad8fd880b31d1c7bc483b51b2935c",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -132,6 +141,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 9,
       "run_id": "d2415a315a79f5d7aa34c60a20f26ce1",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -140,6 +150,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 10,
       "run_id": "f649cc925308bfbb5c13eee63c9b9533",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -148,6 +159,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 11,
       "run_id": "0ec0383e806a0e53d63ca0e35cc61934",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -156,6 +168,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 12,
       "run_id": "478040f556f7a96c97d78f7fdd832427",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -164,6 +177,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 13,
       "run_id": "ab64ed032899713672027140147de388",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -172,6 +186,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 14,
       "run_id": "527bf085be54d97cf4535db08bb267f0",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -180,6 +195,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 15,
       "run_id": "589d0771e2ad8106b200c3d2e84b3e47",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -188,6 +204,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 16,
       "run_id": "a4ec72bccbdd6bd7e6c415747cf2250d",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -196,6 +213,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 17,
       "run_id": "edf5e60490803f3b028f9913b30f0286",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -204,6 +222,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 18,
       "run_id": "21fec61f0d46258c447826a99065980e",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -212,6 +231,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 19,
       "run_id": "5fa0098797064cfdc229b189a802949b",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -220,6 +240,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 20,
       "run_id": "de783b3a77215a38b96c3572a032bb38",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -228,6 +249,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 21,
       "run_id": "0e43d381714150e5c87f93f27fdf3c98",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -236,6 +258,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 22,
       "run_id": "19c3c0a0bf6d30929c284b14a0445aef",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -244,6 +267,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 23,
       "run_id": "8f749b0a25afcf911df4bc9415f1661d",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -252,6 +276,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 24,
       "run_id": "ade2a8d1a5f34e5ed0c3989fc728e838",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -260,6 +285,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 25,
       "run_id": "eb4a2b6478c6309d31591265efe2147f",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -268,6 +294,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 26,
       "run_id": "94db386c3834dfbabd0058751565eb17",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -276,6 +303,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 27,
       "run_id": "d415eef203a00e3156f80737d800e7ad",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -284,6 +312,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 28,
       "run_id": "b2f26ecc8501f2d2794771d8749e443b",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -292,6 +321,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 29,
       "run_id": "b302242e4952ca4d6357ca64bb5e7adf",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/mlx_kiki_oniric"
@@ -300,6 +330,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 0,
       "run_id": "10266c13f725a2bbe414fa3f0099c5db",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -308,6 +339,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 1,
       "run_id": "dc0ae66e453f3da5434ee4deedb01983",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -316,6 +348,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 2,
       "run_id": "f53ff717ebcead5f99ec424f5e0a4b38",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -324,6 +357,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 3,
       "run_id": "0e2055e992bc09ae0688912c56dd3618",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -332,6 +366,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 4,
       "run_id": "1e849914ba7d9b91b4b61cd5fcc162ce",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -340,6 +375,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 5,
       "run_id": "8f078b8dab1c0769d7a5b591a07b8529",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -348,6 +384,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 6,
       "run_id": "68aa2321ff9e250ef1b04dd91343d20a",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -356,6 +393,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 7,
       "run_id": "20c2cf47a9051052edff710dbaf584a1",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -364,6 +402,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 8,
       "run_id": "74c039d1c92ae8dd040ab1993dd39435",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -372,6 +411,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 9,
       "run_id": "7c2972c8f6e8afb6679f2bfd69e1287a",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -380,6 +420,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 10,
       "run_id": "569d2334cd7f223173c98358f9a7aded",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -388,6 +429,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 11,
       "run_id": "a417baedb8f2d2a6dfbe1bd4467db8f9",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -396,6 +438,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 12,
       "run_id": "a1a0cd5fa5d853d2a07238a6cf2001fc",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -404,6 +447,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 13,
       "run_id": "63690feb859ac6ce346daa3a25ed14fb",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -412,6 +456,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 14,
       "run_id": "1147c97154d8278c5575d6404dbd41b4",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -420,6 +465,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 15,
       "run_id": "423433423f13973fd604cdf6c9591ff8",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -428,6 +474,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 16,
       "run_id": "99ccf621d28c5d935ab4a44b21d5ea18",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -436,6 +483,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 17,
       "run_id": "9636c1cd167425848a5acd076d7db070",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -444,6 +492,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 18,
       "run_id": "aeda4d2cc8e93d19dc9f3ebffc3c04b4",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -452,6 +501,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 19,
       "run_id": "a8e8c24e6717898e08c350ead03a7845",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -460,6 +510,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 20,
       "run_id": "f2877466bfa21a94f344892b394d08a8",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -468,6 +519,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 21,
       "run_id": "d966d7dfad4f02f9d58e0e22a6fb1394",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -476,6 +528,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 22,
       "run_id": "12d267eb91de0cfeed8bf0837423ab7b",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -484,6 +537,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 23,
       "run_id": "90b945a64ef5a560ef24774b2cc425b1",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -492,6 +546,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 24,
       "run_id": "eefdb09fc83d8665941318493d65592c",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -500,6 +555,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 25,
       "run_id": "c22f0bcb8c5b36d0ef3153391052e565",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -508,6 +564,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 26,
       "run_id": "b38057ef440f0f4d36222d269f8216e3",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -516,6 +573,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 27,
       "run_id": "e2c53b43a7015ae6cfc77d38e2200942",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -524,6 +582,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 28,
       "run_id": "8cc2099b7f2184fcb9b55420dbae8b79",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -532,6 +591,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_min",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 29,
       "run_id": "b3cbcf7e47db39c5e86f5d77da2b089c",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_min/esnn_thalamocortical"
@@ -540,6 +600,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 0,
       "run_id": "5d54c894b60741ee7b7b8ed5adfd348e",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -548,6 +609,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 1,
       "run_id": "91582ec35c35be7b4987562fdfdea215",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -556,6 +618,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 2,
       "run_id": "34ecaf3db4907d098cd5119a875b9c8f",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -564,6 +627,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 3,
       "run_id": "81fd9b75daa9a18cb198b4c6eb32d694",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -572,6 +636,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 4,
       "run_id": "acbe0d6546d466019a4b533bb0c1ab0c",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -580,6 +645,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 5,
       "run_id": "611d2fec2f08063ac51c5e4c6068d6ff",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -588,6 +654,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 6,
       "run_id": "20edacce22ecf61585731163f63bce4c",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -596,6 +663,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 7,
       "run_id": "b620dad1ee4d0d0e40ac8f196a983d72",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -604,6 +672,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 8,
       "run_id": "fe5dbe9a867cced66e420007e05f283e",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -612,6 +681,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 9,
       "run_id": "408ea20c576710c92b933adafca87a00",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -620,6 +690,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 10,
       "run_id": "82e862fe4f33bfc5439e5343c59d04c1",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -628,6 +699,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 11,
       "run_id": "d9db826c22b7efb9e372876fd02b0981",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -636,6 +708,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 12,
       "run_id": "63c45bbc924767d5d67690bd039d62b3",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -644,6 +717,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 13,
       "run_id": "7a739e8d6c3ccbf1e039cbfd3c5fb95b",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -652,6 +726,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 14,
       "run_id": "09a935cc0e9068d5e6eac016e9209f6a",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -660,6 +735,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 15,
       "run_id": "14aaa9b1b31900a9b3f9cb9e2a199fdc",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -668,6 +744,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 16,
       "run_id": "6e212123342ae61748a5c94298d4dd05",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -676,6 +753,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 17,
       "run_id": "67eed1fa6e3c78e92d4c4717c20499f6",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -684,6 +762,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 18,
       "run_id": "4eb6aed4e3a6e7e0ed9c831e5e635e6e",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -692,6 +771,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 19,
       "run_id": "5368b52eb70de3f14f504c5a9ee54ff8",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -700,6 +780,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 20,
       "run_id": "48b1caaa4c564d330d01ae0b2da914fe",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -708,6 +789,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 21,
       "run_id": "dbb3f49e555b7eaf1e69bdb2545b9404",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -716,6 +798,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 22,
       "run_id": "7e253e620c9819ea8ee9f7a7fb1c6888",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -724,6 +807,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 23,
       "run_id": "f4970487bdfd2535ae0667c5c6ac04c9",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -732,6 +816,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 24,
       "run_id": "83543d8f5c892c758b62d11da2ce682c",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -740,6 +825,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 25,
       "run_id": "43903687e3ca928cac6bcca417d8cf4c",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -748,6 +834,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 26,
       "run_id": "bc29302254dbc184cce8e6b934a0a069",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -756,6 +843,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 27,
       "run_id": "480eb1594c9e07b3f56db43713e43edc",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -764,6 +852,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 28,
       "run_id": "3e67aec337c168e8707fd9d6b3ec1014",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -772,6 +861,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 29,
       "run_id": "ce82e86b9f9cbca25a560b3bc23e682f",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/mlx_kiki_oniric"
@@ -780,6 +870,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 0,
       "run_id": "301769267a66750120ef76dce681866b",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -788,6 +879,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 1,
       "run_id": "781ebeb404a636795f3eff2c6cb487c5",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -796,6 +888,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 2,
       "run_id": "e759486c80bec26060fdb47c4d75a26b",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -804,6 +897,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 3,
       "run_id": "710494f65aef0c1415a3c1e13f75d230",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -812,6 +906,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 4,
       "run_id": "776cad2894b22fb813cbe872f7abe9bb",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -820,6 +915,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 5,
       "run_id": "5d18d1fdcc92e237b9d80195cb9e7c1e",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -828,6 +924,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 6,
       "run_id": "fdc47c0a3d0f4bd154deab01b08b9d4b",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -836,6 +933,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 7,
       "run_id": "42f0eac378b99d815175521be6a3991b",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -844,6 +942,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 8,
       "run_id": "3b1211ef84f766191e840e21aa692e06",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -852,6 +951,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 9,
       "run_id": "de7ddfee5fc07ba1a5d5de9220875973",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -860,6 +960,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 10,
       "run_id": "ea0778a6013c4222a22b3fdc3d0fdb2e",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -868,6 +969,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 11,
       "run_id": "b38330cee4d9321fb9e5c664e7a2cd1a",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -876,6 +978,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 12,
       "run_id": "edf89df1fbdd3a5acbffa1fab33728bf",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -884,6 +987,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 13,
       "run_id": "9548706722681a4d9d107951d40c334d",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -892,6 +996,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 14,
       "run_id": "ec28bf11f4e65da7094b2e8bb89e9cd5",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -900,6 +1005,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 15,
       "run_id": "908d2cbdd7012495050af448dee99543",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -908,6 +1014,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 16,
       "run_id": "615ebc05504bd9a336d6c48ebe393cde",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -916,6 +1023,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 17,
       "run_id": "f368e420d337683a57970fdfb8e290d5",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -924,6 +1032,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 18,
       "run_id": "de216db05a749916c7014e5385585203",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -932,6 +1041,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 19,
       "run_id": "dba87a1622f7875e6e42395e534af085",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -940,6 +1050,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 20,
       "run_id": "f9657bb87be06244a8c34df50c4f46ca",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -948,6 +1059,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 21,
       "run_id": "85d2d5f513b19cead96eb73ec029cdf8",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -956,6 +1068,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 22,
       "run_id": "46b5a186c58a74259000304067821f78",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -964,6 +1077,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 23,
       "run_id": "5fba39f2c7b336c111f6de1fb62aea52",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -972,6 +1086,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 24,
       "run_id": "de256d241413cb4cb0dc24851546edbe",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -980,6 +1095,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 25,
       "run_id": "898cfbb6328833c11e769f7ac98194a0",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -988,6 +1104,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 26,
       "run_id": "34e08ba5857b3762637fa6cbcb2f7c5e",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -996,6 +1113,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 27,
       "run_id": "d90a4cf7fcc1f469ef01b4062b6a86bd",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -1004,6 +1122,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 28,
       "run_id": "183893920752e8548b74ed3fef8f7709",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -1012,6 +1131,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_equ",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 29,
       "run_id": "573b4a92a2692b3ce9b2eea8089c8058",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_equ/esnn_thalamocortical"
@@ -1020,6 +1140,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 0,
       "run_id": "d243d051edede73a160a8893117a7387",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1028,6 +1149,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 1,
       "run_id": "cac2e0f8bd95f3b1a13f119a1a780276",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1036,6 +1158,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 2,
       "run_id": "3dd13ba01de5089b71ba7d81566af235",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1044,6 +1167,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 3,
       "run_id": "c3f4e02299b3c552c8dcb77dcd00f2cc",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1052,6 +1176,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 4,
       "run_id": "13d3728232dc1e68a2fb1937ceeb546e",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1060,6 +1185,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 5,
       "run_id": "156b3ac1271fba5bcbe4e990a87c3fb7",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1068,6 +1194,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 6,
       "run_id": "4fc87a325ebcad9902bf51a33a17d612",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1076,6 +1203,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 7,
       "run_id": "07aec02ca2915632ac8d8c1f96bf9159",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1084,6 +1212,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 8,
       "run_id": "18e3b873a062260e9d24bfe0f52da367",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1092,6 +1221,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 9,
       "run_id": "fba18031ce0fe4b1227b885d5f6005b4",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1100,6 +1230,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 10,
       "run_id": "e38bcec4eb0be325151c3be418779dd4",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1108,6 +1239,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 11,
       "run_id": "f1dd074971f19e9027ada8397a096725",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1116,6 +1248,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 12,
       "run_id": "8f26b196bf023c545d32680674a9b0b6",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1124,6 +1257,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 13,
       "run_id": "2b0904bd87e8267c7aa0aca4dd5bb985",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1132,6 +1266,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 14,
       "run_id": "872649c77f473d0c46e90a4bffcb98e2",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1140,6 +1275,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 15,
       "run_id": "5341f6921655c991fa3039ed441f07d0",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1148,6 +1284,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 16,
       "run_id": "7e6b2a2fae9bba0ae3ccc3f9c5cbac77",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1156,6 +1293,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 17,
       "run_id": "8c97b95c144bec9934a1db57d91c6a64",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1164,6 +1302,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 18,
       "run_id": "87e2ab0f7eb4b296ef3b353a87fd3058",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1172,6 +1311,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 19,
       "run_id": "7f664e9347919ad62083ec67ee97104d",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1180,6 +1320,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 20,
       "run_id": "83c143b0818815514b3cdf7dd2dcfd6c",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1188,6 +1329,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 21,
       "run_id": "14ebd9204faeeb50687528023e69e676",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1196,6 +1338,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 22,
       "run_id": "2cf1d33c256e1e3696ed4ab217b32ab4",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1204,6 +1347,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 23,
       "run_id": "b952b5f85c2c2fed1011633167871677",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1212,6 +1356,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 24,
       "run_id": "10102ad8ac9138186db1567d72891d6c",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1220,6 +1365,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 25,
       "run_id": "aba66cf914339abd193086f6095554bf",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1228,6 +1374,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 26,
       "run_id": "60ef9be7811fbf4dcdc349de1bce4b03",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1236,6 +1383,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 27,
       "run_id": "085724f382f0c7d13c7c3472dc09522b",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1244,6 +1392,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 28,
       "run_id": "7a7dad2db76073e815bacd606d660028",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1252,6 +1401,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "mlx_kiki_oniric",
+      "executed": true,
       "seed": 29,
       "run_id": "3ce73ad5b144cd2313e5d78950d42461",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/mlx_kiki_oniric"
@@ -1260,6 +1410,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 0,
       "run_id": "82d4b661a873b8a4bc4d8a5857e2c52c",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1268,6 +1419,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 1,
       "run_id": "e813d1a52f2291407f38d294a9af91c6",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1276,6 +1428,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 2,
       "run_id": "4540c88c078bcae7e37d62f1afb01958",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1284,6 +1437,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 3,
       "run_id": "32f3e13b1bfc5b741b129824b75c7b65",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1292,6 +1446,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 4,
       "run_id": "b02a1e780a717f84c6d284273e86f690",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1300,6 +1455,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 5,
       "run_id": "09d61cb8dee84c8d9293dfc92d93218c",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1308,6 +1464,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 6,
       "run_id": "5b4071a7dcc50d7a42d4967a1d3ce957",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1316,6 +1473,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 7,
       "run_id": "6080128b14cc6efa3a8e73efaccc4dc2",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1324,6 +1482,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 8,
       "run_id": "7848a2b65e666598ac27bca08dd3a34d",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1332,6 +1491,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 9,
       "run_id": "6165d4a310edc39897909fc62b511cbd",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1340,6 +1500,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 10,
       "run_id": "79217d01d087580df58d2318a86aad9a",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1348,6 +1509,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 11,
       "run_id": "cbf25a52b43c265337d0bdce05f58503",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1356,6 +1518,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 12,
       "run_id": "0ec86d35db7d5d8741a43a9e971f07e7",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1364,6 +1527,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 13,
       "run_id": "0669085097e04f4069a182d5ee9d36f6",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1372,6 +1536,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 14,
       "run_id": "dc3fbc1e43417a3d5b79bc330a232272",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1380,6 +1545,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 15,
       "run_id": "9992c98217eb2dd103e876641aad2c04",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1388,6 +1554,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 16,
       "run_id": "ed634046c51c5ed49a2331d2be8f51b9",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1396,6 +1563,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 17,
       "run_id": "f3efb25997513c19554f7653dd84275c",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1404,6 +1572,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 18,
       "run_id": "820741b96c669f76dab089585cbe704f",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1412,6 +1581,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 19,
       "run_id": "2cee4227cc8532a64acce20ca84b5e42",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1420,6 +1590,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 20,
       "run_id": "c6764567a53d7a46430d1abc93833645",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1428,6 +1599,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 21,
       "run_id": "3b670d1d8fa324e7da50e53287301097",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1436,6 +1608,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 22,
       "run_id": "8b3e5a6f2d9f5d09636bfa3a5262042e",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1444,6 +1617,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 23,
       "run_id": "61a70d85059f256147d070748b99bf6a",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1452,6 +1626,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 24,
       "run_id": "31beed0fde1d50ad03642710e2993bed",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1460,6 +1635,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 25,
       "run_id": "bfa16c5a834510df22c59c2fbc30b6b3",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1468,6 +1644,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 26,
       "run_id": "b99f19e17b0d28744888bb04dc2ab2ad",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1476,6 +1653,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 27,
       "run_id": "040c7cf6790c2d5cb8bcda1ed192ea72",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1484,6 +1662,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 28,
       "run_id": "744a10c735ff1f4f1b7dc8162543e144",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"
@@ -1492,6 +1671,7 @@
       "scale": "qwen3p5-1p5b",
       "profile": "p_max",
       "substrate": "esnn_thalamocortical",
+      "executed": false,
       "seed": 29,
       "run_id": "6a5f2a87cf983b52f84375d715287a7f",
       "profile_tag": "cycle3/qwen3p5-1p5b/p_max/esnn_thalamocortical"

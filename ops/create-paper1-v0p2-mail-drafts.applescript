@@ -10,13 +10,36 @@
 --   Aucune envoi automatique : l'utilisateur revoit + envoie manuellement.
 --
 -- Drafts créés :
---   1. arXiv submission self-notice    (to: c.saillant@gmail.com)
---   2. OSF DOI mint trigger reminder   (to: c.saillant@gmail.com)
---   3. PLOS CB cover letter review     (to: TODO_REVIEWER_EMAIL@example.com)
+--   1. arXiv submission self-notice    (to: $DREAMOFKIKI_AUTHOR_EMAIL)
+--   2. OSF DOI mint trigger reminder   (to: $DREAMOFKIKI_AUTHOR_EMAIL)
+--   3. PLOS CB cover letter review     (to: $DREAMOFKIKI_REVIEWER_EMAIL)
 --
 -- Note locale : sur macOS français, le dossier "Drafts" s'appelle
 -- "Brouillons". Apple Mail gère automatiquement le routage du
 -- message sauvegardé vers le bon mailbox selon la locale système.
+--
+-- Recipient addresses : pour éviter de committer une adresse
+-- personnelle (PII) dans le repo, les destinataires sont lus depuis
+-- des variables d'environnement, avec fallback sur des placeholders
+-- visibles. Override avant exécution :
+--   export DREAMOFKIKI_AUTHOR_EMAIL="vous@exemple.fr"
+--   export DREAMOFKIKI_REVIEWER_EMAIL="reviewer@exemple.fr"
+--   osascript ops/create-paper1-v0p2-mail-drafts.applescript
+
+on getEnvDefault(varName, defaultValue)
+	try
+		set envValue to do shell script "printf %s \"${" & varName & ":-}\""
+		if envValue is "" then
+			return defaultValue
+		end if
+		return envValue
+	on error
+		return defaultValue
+	end try
+end getEnvDefault
+
+set authorEmail to getEnvDefault("DREAMOFKIKI_AUTHOR_EMAIL", "TODO_AUTHOR_EMAIL@example.com")
+set reviewerEmail to getEnvDefault("DREAMOFKIKI_REVIEWER_EMAIL", "TODO_REVIEWER_EMAIL@example.com")
 
 on makeDraftMessage(emailSubject, emailRecipient, emailBody)
 	tell application "Mail"
@@ -32,7 +55,7 @@ end makeDraftMessage
 -- Draft 1 : arXiv submission self-notice
 -- ========================================================
 set subject1 to "[dreamOfkiki] Paper 1 v0.2 — arXiv submission checklist"
-set recipient1 to "c.saillant@gmail.com"
+set recipient1 to authorEmail
 set body1 to "Pré-submission Paper 1 v0.2 — arXiv preprint
 Date target : 2026-04-21 ou ASAP
 
@@ -69,12 +92,12 @@ makeDraftMessage(subject1, recipient1, body1)
 -- Draft 2 : OSF DOI mint trigger reminder
 -- ========================================================
 set subject2 to "[dreamOfkiki] Paper 1 v0.2 — OSF DOI mint trigger"
-set recipient2 to "c.saillant@gmail.com"
+set recipient2 to authorEmail
 set body2 to "Trigger condition : arXiv ID assigned for Paper 1 v0.2 + Paper 1 v0.2
 state frozen.
 
 Action sequence :
-1. Login OSF (clement@saillant.cc)
+1. Login OSF (corresponding-author email)
 2. Project dreamOfkiki (existing pre-reg there)
 3. Amend pre-registration (paste content from
    docs/osf-amendment-bonferroni-cycle3.md)
@@ -97,7 +120,7 @@ makeDraftMessage(subject2, recipient2, body2)
 -- Draft 3 : PLOS CB cover letter review request (collègue)
 -- ========================================================
 set subject3 to "[Cover letter draft review] Paper 1 v0.2 → PLOS Computational Biology"
-set recipient3 to "TODO_REVIEWER_EMAIL@example.com"
+set recipient3 to reviewerEmail
 set body3 to "Bonjour,
 
 Je m'apprête à soumettre Paper 1 v0.2 du projet dreamOfkiki à
@@ -122,7 +145,7 @@ Deadline review souhaitée : 48-72h si possible (target submission
 
 Merci d'avance.
 
-c.saillant@gmail.com"
+" & authorEmail
 
 makeDraftMessage(subject3, recipient3, body3)
 
