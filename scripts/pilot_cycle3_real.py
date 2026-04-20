@@ -70,7 +70,17 @@ from scripts.ablation_cycle3 import (  # noqa: E402
     _resolve_commit_sha,
 )
 
+# Default scale slot — kept for backwards compatibility with the Phase
+# B 1.5B reference run. Callers can override via ``--scale`` to any
+# bf16/fp16 slot registered in ``base_model_registry.py`` (e.g.
+# ``qwen3p5-7b-fp16`` for the C3.8 scale-law check, or
+# ``qwen3p5-35b-fp16`` for the 35B extrapolation slot).
 REAL_SCALE_FP16 = "qwen3p5-1p5b-fp16"
+REAL_SCALE_CHOICES = (
+    "qwen3p5-1p5b-fp16",
+    "qwen3p5-7b-fp16",
+    "qwen3p5-35b-fp16",
+)
 REAL_SEEDS_DEFAULT = tuple(range(30))
 REAL_BENCHMARKS = ("mmlu", "hellaswag", "mega_v2")
 GO_BONFERRONI_ALPHA = 0.0125
@@ -78,6 +88,22 @@ GO_PROFILES_REJECTED_MIN = 2
 
 N_EPISODES_PER_PROFILE = 5
 DEFAULT_N_SAMPLES = 100
+
+
+def _scale_slug(scale: str) -> str:
+    """Return the filename-friendly scale slug (e.g. ``1p5b``, ``7b``).
+
+    Strips the ``qwen3p5-`` prefix and the ``-fp16`` suffix so milestone
+    JSON dumps stay readable (``pilot-cycle3-real-7b.json`` rather than
+    ``pilot-cycle3-real-qwen3p5-7b-fp16.json``). Unknown slot patterns
+    fall back to the raw slot name — never silently drop characters.
+    """
+    slug = scale
+    if slug.startswith("qwen3p5-"):
+        slug = slug[len("qwen3p5-"):]
+    if slug.endswith("-fp16"):
+        slug = slug[: -len("-fp16")]
+    return slug or scale
 
 
 # -------------------------------------------------------------------
@@ -121,6 +147,18 @@ def _parse_cli(argv: list[str]) -> argparse.Namespace:
         default="p_min",
         help="Profile used in --smoke-cell mode. Ignored by full run.",
     )
+    parser.add_argument(
+        "--scale",
+        choices=REAL_SCALE_CHOICES,
+        default=REAL_SCALE_FP16,
+        help=(
+            "Base-model scale slot — must be a bf16/fp16 pin in the "
+            "base-model registry. Default keeps the Phase B 1.5B "
+            "reference slot. C3.8 goal (d) scale law uses "
+            "``qwen3p5-7b-fp16`` ; 35B extrapolation slot lives at "
+            "``qwen3p5-35b-fp16``."
+        ),
+    )
     return parser.parse_args(argv)
 
 
@@ -129,16 +167,16 @@ def _parse_cli(argv: list[str]) -> argparse.Namespace:
 # -------------------------------------------------------------------
 
 
-def _load_fresh_fp16_wrapper():
-    """Load a FRESH bf16 Qwen 1.5B wrapper.
+def _load_fresh_fp16_wrapper(scale: str = REAL_SCALE_FP16):
+    """Load a FRESH bf16 Qwen wrapper for ``scale``.
 
     Fails fast with a clear message if ``mlx-lm`` is missing or the
-    HF cache has no bf16 weights — Phase A cannot proceed without
+    HF cache has no bf16 weights — Phase A/B cannot proceed without
     a gradient-bearing model.
     """
     from harness.real_models.qwen_mlx_fp16 import load_qwen_fp16
 
-    return load_qwen_fp16(REAL_SCALE_FP16)
+    return load_qwen_fp16(scale)
 
 
 def _seed_everything(seed: int) -> None:
@@ -573,6 +611,7 @@ def _run_cell(
     n_samples: int,
     n_episodes: int,
     verify_downscale: bool = False,
+    scale: str = REAL_SCALE_FP16,
 ) -> dict:
     """Execute one cell end-to-end : load + pre-eval + dream + post-eval.
 
@@ -587,9 +626,10 @@ def _run_cell(
         "seed": seed,
         "benchmarks": list(benchmarks),
         "n_samples": n_samples,
+        "scale": scale,
     }
     try:
-        wrapper = _load_fresh_fp16_wrapper()
+        wrapper = _load_fresh_fp16_wrapper(scale)
     except Exception as exc:
         cell["error"] = f"{type(exc).__name__}: {exc}"
         cell["wall_time_s"] = time.time() - start
@@ -646,7 +686,7 @@ def _run_cell(
             "pre_results": pre,
             "post_results": post,
             "wall_time_s": time.time() - start,
-            "model": REAL_SCALE_FP16,
+            "model": scale,
         }
     )
     return cell
@@ -707,12 +747,14 @@ def _h1_test(cells: list[dict]) -> dict:
 # -------------------------------------------------------------------
 
 
-def _register_cell(profile_name: str, seed: int) -> str:
+def _register_cell(
+    profile_name: str, seed: int, scale: str = REAL_SCALE_FP16
+) -> str:
     from harness.storage.run_registry import RunRegistry
 
     registry = RunRegistry(REPO_ROOT / ".run_registry.sqlite")
     profile_tag = (
-        f"cycle3/{REAL_SCALE_FP16}/{profile_name}/mlx_kiki_oniric"
+        f"cycle3/{scale}/{profile_name}/mlx_kiki_oniric"
     )
     return registry.register(
         c_version=HARNESS_VERSION,
@@ -727,12 +769,16 @@ def _register_cell(profile_name: str, seed: int) -> str:
 # -------------------------------------------------------------------
 
 
-def _print_banner(total_cells: int, n_samples: int) -> None:
+def _print_banner(
+    total_cells: int,
+    n_samples: int,
+    scale: str = REAL_SCALE_FP16,
+) -> None:
     print("=" * 64)
     print("CYCLE-3 C3.8 PHASE A REAL ABLATION PILOT")
     print("=" * 64)
     print(f"harness_version : {HARNESS_VERSION}")
-    print(f"scale           : {REAL_SCALE_FP16}")
+    print(f"scale           : {scale}")
     print(f"profiles        : {PROFILES}")
     print(f"benchmarks      : {REAL_BENCHMARKS}")
     print(f"n_samples/bench : {n_samples}")
@@ -746,8 +792,13 @@ def main(argv: list[str] | None = None) -> int:
     out_dir = REPO_ROOT / "docs" / "milestones"
     out_dir.mkdir(parents=True, exist_ok=True)
 
+    scale = args.scale
+    slug = _scale_slug(scale)
+
     if args.smoke_cell:
-        _print_banner(total_cells=1, n_samples=args.n_samples)
+        _print_banner(
+            total_cells=1, n_samples=args.n_samples, scale=scale
+        )
         benchmarks = (args.benchmark,)
         start = time.time()
         # ``verify_downscale=True`` so the smoke-cell log lands a
@@ -761,11 +812,14 @@ def main(argv: list[str] | None = None) -> int:
             n_samples=args.n_samples,
             n_episodes=N_EPISODES_PER_PROFILE,
             verify_downscale=True,
+            scale=scale,
         )
         wall = time.time() - start
+        smoke_path = (
+            out_dir / f"pilot-cycle3-real-{slug}-smoke.json"
+        )
         if "error" in cell:
             print(f"[smoke-cell] FAILED : {cell['error']}")
-            smoke_path = out_dir / "pilot-cycle3-real-1p5b-smoke.json"
             with smoke_path.open("w", encoding="utf-8") as fh:
                 json.dump(
                     {
@@ -774,7 +828,7 @@ def main(argv: list[str] | None = None) -> int:
                         "benchmark": args.benchmark,
                         "n_samples": args.n_samples,
                         "wall_time_s": wall,
-                        "model": REAL_SCALE_FP16,
+                        "model": scale,
                         "cell": cell,
                         "status": "FAILED",
                     },
@@ -783,7 +837,7 @@ def main(argv: list[str] | None = None) -> int:
                 )
             return 1
         try:
-            run_id = _register_cell(args.profile, 0)
+            run_id = _register_cell(args.profile, 0, scale)
         except Exception as exc:  # pragma: no cover - defensive
             run_id = f"register-failed:{exc}"
         pre_acc = cell["pre"]
@@ -792,10 +846,9 @@ def main(argv: list[str] | None = None) -> int:
             f"[smoke-cell] pre_acc={pre_acc:.4f} "
             f"post_acc={post_acc:.4f} "
             f"delta={cell['delta']:+.4f} "
-            f"wall={wall:.2f}s model={REAL_SCALE_FP16} "
+            f"wall={wall:.2f}s model={scale} "
             f"benchmark={args.benchmark} run_id={run_id}"
         )
-        smoke_path = out_dir / "pilot-cycle3-real-1p5b-smoke.json"
         with smoke_path.open("w", encoding="utf-8") as fh:
             json.dump(
                 {
@@ -804,7 +857,7 @@ def main(argv: list[str] | None = None) -> int:
                     "benchmark": args.benchmark,
                     "n_samples": args.n_samples,
                     "wall_time_s": wall,
-                    "model": REAL_SCALE_FP16,
+                    "model": scale,
                     "cell": {**cell, "run_id": run_id},
                     "status": "OK",
                 },
@@ -814,10 +867,12 @@ def main(argv: list[str] | None = None) -> int:
         print(f"[smoke-cell] dump written to {smoke_path}")
         return 0
 
-    # Full Phase A pilot — 3 profiles × n_seeds × 3 benchmarks.
+    # Full Phase A/B pilot — 3 profiles × n_seeds × 3 benchmarks.
     seeds = tuple(range(args.n_seeds))
     total_cells = len(PROFILES) * len(seeds)
-    _print_banner(total_cells=total_cells, n_samples=args.n_samples)
+    _print_banner(
+        total_cells=total_cells, n_samples=args.n_samples, scale=scale
+    )
     cells: list[dict] = []
     failures: list[dict] = []
     run_start = time.time()
@@ -831,6 +886,7 @@ def main(argv: list[str] | None = None) -> int:
                 benchmarks=REAL_BENCHMARKS,
                 n_samples=args.n_samples,
                 n_episodes=N_EPISODES_PER_PROFILE,
+                scale=scale,
             )
             if "error" in cell:
                 failures.append(cell)
@@ -840,7 +896,7 @@ def main(argv: list[str] | None = None) -> int:
                 )
                 continue
             try:
-                run_id = _register_cell(profile_name, seed)
+                run_id = _register_cell(profile_name, seed, scale)
             except Exception as exc:  # pragma: no cover - defensive
                 run_id = f"register-failed:{exc}"
             cells.append({**cell, "run_id": run_id})
@@ -865,12 +921,12 @@ def main(argv: list[str] | None = None) -> int:
     print(f"wall-clock total : {run_wall:.1f}s")
     print(f"failures         : {len(failures)}")
 
-    dump_path = out_dir / "pilot-cycle3-real-1p5b.json"
+    dump_path = out_dir / f"pilot-cycle3-real-{slug}.json"
     with dump_path.open("w", encoding="utf-8") as fh:
         json.dump(
             {
                 "harness_version": HARNESS_VERSION,
-                "scale": REAL_SCALE_FP16,
+                "scale": scale,
                 "profiles": list(PROFILES),
                 "seeds": list(seeds),
                 "benchmarks": list(REAL_BENCHMARKS),
