@@ -17,7 +17,9 @@ Research program producing two complementary papers:
 
 **`p_max` collapses 15 orders of magnitude between 1.5B and 7B substrates.** Phase-B pilot over three profiles (`p_min`, `p_equ`, `p_max`) × three benchmarks (MMLU, HellaSwag, mega_v2), 30 seeds × 3 profiles = 90 cells. 7B verdict : **GO (2/3)** — H1 p_min rejects H₀ at p = 1.4 × 10⁻²⁴, H1 p_equ at p = 6.2 × 10⁻²⁷ ; only H1 p_max (p = 0.055) fails to cross threshold.
 
-Micro-isolation of the four canonical operators (replay, downscale, **restructure**, recombine) reveals that three remain stable under scaling while **`restructure` alone exhibits the collapse** — seeding hypothesis **H7** for Paper 2 (NeurIPS / ICML / TMLR target). This is a strictly finer-grained finding than the aggregate-loss scaling laws (Kaplan 2020, Hoffmann 2022) or the discrete emergent-ability transitions (Wei 2022) in current literature ; see `docs/milestones/scaling-law-analysis-2026-04-20.md`.
+Micro-isolation of the four canonical operators (replay, downscale, **restructure**, recombine) suggests that three remain stable under scaling while **`restructure` alone exhibits the collapse** — seeding hypothesis **H7** for Paper 2 (NeurIPS / ICML / TMLR target). This is a strictly finer-grained observation than the aggregate-loss scaling laws (Kaplan 2020, Hoffmann 2022) or the discrete emergent-ability transitions (Wei 2022) ; see `docs/milestones/scaling-law-analysis-2026-04-20.md`.
+
+**Preliminary — pending critical validation.** The claim rests on **two data points (1.5B, 7B)** and a p-value (0.055) at the conventional threshold boundary. A 3rd data point (3B or 14B substrate) is required to confirm monotonicity, and a numerical audit is needed to verify that the 15-order-of-magnitude `p_max` figure is not a floating-point underflow artefact near machine precision. Paper 2 submission is gated on these two checks.
 
 ---
 
