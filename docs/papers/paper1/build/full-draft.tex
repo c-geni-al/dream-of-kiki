@@ -75,7 +75,7 @@
   % set entry spacing
   \setlength{\itemsep}{#2\baselineskip}}}
  {\end{list}}
-% \usepackage{calc} — already loaded above (see line 41); duplicate removed
+\usepackage{calc}
 \newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
@@ -161,8 +161,13 @@ tuples. We additionally report cross-substrate portability measurements
 from the sibling Nerve-WML work (§7.4) that independently confirm
 substrate-agnosticism on linearly separable tasks (gap \textless{} 5 \%)
 and disclose the non-linear regime gap (12.1 \%) as an honest negative
-result. No continual-learning hypothesis decisions on H1--H4 are
-announced in this paper ; empirical evaluation of H1--H4 is reported in
+result. A pilot run of the pre-registered pipeline on PermutedMNIST-5
+(§7.5) produces Bonferroni-compliant statistics (t = 2.524, p = 0.01216
+\textless{} α = 0.0125) consistent with the pre-registered H1 signal
+direction and surfaces an unexpected pilot result for H2 (EWC proxy adds
+no measurable benefit over replay alone on this benchmark). No
+continual-learning hypothesis decisions on H1--H4 are announced in this
+paper ; confirmatory evaluation of H1--H4 on mega-v2 is reported in
 Paper 2.
 
 Pre-registration is locked on the Open Science Framework (DOI
@@ -642,16 +647,17 @@ substrate-agnostic properties verified once at the framework level ;
 each conformant substrate inherits them by construction.
 
 \textbf{Interpretation.} Both substrates pass the Conformance Criterion
-under 9 axiom-property and invariant-enforcement tests each (\textasciitilde27
-assertions total: 18 substrate-paired tests \texttimes{} an average of 1.5
-underlying \texttt{assert} statements per test). The criterion is therefore non-vacuous in the minimal
-sense --- it distinguishes conformant implementations from
-non-conformant ones (confirmed by fault-injection experiments reported
-in §7.2). The criterion remains a \emph{necessary} test of framework
-compliance ; \emph{sufficient} empirical validation of the
-substrate-agnosticism claim across a broader class of substrates (SNN
-variants, transformer-based instantiations, analog neuromorphic
-hardware) is pursued in the companion paper.
+under 9 axiom-property and invariant-enforcement tests each
+(\textasciitilde27 assertions total: 18 substrate-paired tests × an
+average of 1.5 underlying \texttt{assert} statements per test). The
+criterion is therefore non-vacuous in the minimal sense --- it
+distinguishes conformant implementations from non-conformant ones
+(confirmed by fault-injection experiments reported in §7.2). The
+criterion remains a \emph{necessary} test of framework compliance ;
+\emph{sufficient} empirical validation of the substrate-agnosticism
+claim across a broader class of substrates (SNN variants,
+transformer-based instantiations, analog neuromorphic hardware) is
+pursued in the companion paper.
 
 \subsubsection{5.7 Proof sketches ---
 DR-0..DR-4}\label{proof-sketches-dr-0..dr-4}
@@ -915,13 +921,16 @@ mutation (\texttt{test\_r3\_integrity.py}). Width was bumped from 16 →
 corroboration}\label{cross-substrate-portability-independent-corroboration}
 
 A sibling project at \texttt{github.com/hypneum-lab/nerve-wml} (same
-byline, same Protocol-typing discipline) measures cross- substrate
-polymorphism on a separate Nerve interface with two concrete substrates
-: \texttt{MlpWML} (dense MLP) and \texttt{LifWML} (surrogate-gradient
-leaky-integrate-and-fire SNN). The nerve-wml Gate W measurement is a
-test of the same \emph{substrate-agnosticism} principle articulated here
-as DR-3. We summarise the reported numbers --- full details in the cited
-preprint.
+byline, same Protocol-typing discipline ; archived release
+\textbf{v1.1.2, Zenodo DOI
+\href{https://doi.org/10.5281/zenodo.19656354}{10.5281/zenodo.19656354}})
+measures cross-substrate polymorphism on a separate Nerve interface with
+two concrete substrates : \texttt{MlpWML} (dense MLP) and
+\texttt{LifWML} (surrogate-gradient leaky-integrate-and-fire SNN). The
+nerve-wml Gate W measurement is a test of the same
+\emph{substrate-agnosticism} principle articulated here as DR-3. We
+summarise the reported numbers --- full details in the cited preprint
+and the archived Zenodo record.
 
 \textbf{Linearly separable task (FlowProxyTask 4-class, N = 4 pool,
 multi-seed).} \texttt{MlpWML} and \texttt{LifWML} pools both saturate at
@@ -950,18 +959,109 @@ preserved. These numbers do not constitute H1--H4 evidence ; they
 constitute \emph{methodological} evidence that the framework's
 agnosticism claim is operational rather than asserted.
 
-\subsubsection{7.5 Summary}\label{summary}
+\subsubsection{7.5 Preliminary empirical pilot on a standard CL
+benchmark}\label{preliminary-empirical-pilot-on-a-standard-cl-benchmark}
 
-The §7 validation establishes four operational properties of the
+To confirm end-to-end operation of the pre-registered statistical
+pipeline on \emph{non-scripted} data, we ran a pilot on PermutedMNIST-5
+(avalanche-lib 0.6.0, SimpleMLP 784→512→10, 5 epochs per experience, 3
+seeds : 42 / 123 / 7) with three conditions matched to the
+pre-registered profile ladder :
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{baseline} ≡ Naive (no replay, no regularization) ;
+\item
+  \texttt{P\_min} ≡ ReplayPlugin(mem\_size = 500) --- \texttt{replay}
+  primitive only ;
+\item
+  \texttt{P\_equ} ≡ ReplayPlugin(mem\_size = 500) + EWCPlugin(λ = 0.4)
+  --- \texttt{replay} + EWC as a proxy for \texttt{restructure}.
+\end{itemize}
+
+All runs executed on CPU ; in the tested configuration the torch-2.11
+MPS backend on Apple Silicon silently skipped weight updates (diagnosed
+by direct weight-drift inspection, documented in
+\texttt{experiments/h1\_split\_mnist/LAB\_NOTEBOOK.md}). Raw
+per-experience results (3 seeds × 3 conditions × 5 experiences = 45
+rows) are archived at
+\texttt{experiments/h1\_split\_mnist/results\_h1\_v2.csv}.
+
+We measured \textbf{per-experience forgetting} = peak test accuracy −
+final test accuracy, aggregated over 3 seeds × 5 experiences :
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1447}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2632}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2763}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.3158}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Condition
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mean final acc (σ)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mean forgetting (σ)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Max forgetting (Exp 0)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+baseline & 0.887 (0.117) & 0.0895 (0.117) & 0.351 \\
+P\_min & 0.959 (0.010) & 0.0158 (0.010) & 0.030 \\
+P\_equ & 0.959 (0.009) & 0.0157 (0.009) & 0.028 \\
+\end{longtable}
+}
+
+A paired one-sided t-test on per-experience forgetting (baseline
+\textgreater{} P\_equ) gives \textbf{t = 2.524, p = 0.01216} ; against
+the pre-registered Bonferroni-corrected threshold α = 0.05 / 4 = 0.0125,
+this is below α. The paired comparison baseline \textgreater{} P\_min
+gives t = 2.534, p = 0.01193.
+
+\emph{Scope constraint.} PermutedMNIST-5 is \textbf{not} the
+pre-registered confirmatory benchmark (cf.~OSF DOI
+\href{https://doi.org/10.17605/OSF.IO/Q6JYN}{10.17605/OSF.IO/Q6JYN}) ;
+this is a pilot, not an H1 decision. The confirmatory evaluation on
+mega-v2 is Paper 2 scope. The pilot is reported here only as
+framework-level evidence that (i) the measurement pipeline produces
+interpretable statistics on real CL data rather than scripted
+accuracies, and (ii) the signal direction on a standard benchmark is
+consistent with the pre-registered prediction.
+
+\emph{Unexpected pilot finding for H2.} To four decimals,
+\texttt{P\_equ} and \texttt{P\_min} produce the same mean forgetting
+(0.0157 vs 0.0158) on PermutedMNIST-5. The pre-registered H2 prediction
+--- that the \texttt{restructure} primitive (proxied here by EWC
+regularization) adds value beyond \texttt{replay} alone --- is not
+supported in this pilot. Three non-exclusive interpretations : (a) EWC λ
+= 0.4 is miscalibrated for this benchmark ; (b) EWC is an imperfect
+proxy for \texttt{restructure} as defined by DR-3 ; (c) PermutedMNIST's
+input-level permutations do not stress the representational geometry
+that \texttt{restructure} is designed to address. The confirmatory H2
+decision is re-scoped to Paper 2 and will include an EWC-λ sweep (and
+alternative \texttt{restructure} proxies) as a sensitivity analysis.
+
+\subsubsection{7.6 Summary}\label{summary}
+
+The §7 validation establishes five operational properties of the
 framework : the pre-registered statistical pipeline executes correctly
 under Bonferroni correction ; the BLOCKING invariants S1--S3 enforce the
 expected abort behaviour under fault injection on both conformant
 substrates ; the R1 reproducibility contract produces deterministic
-\texttt{run\_id} hashes at the required width ; and independent
+\texttt{run\_id} hashes at the required width ; independent
 cross-substrate measurements in a sibling system corroborate the
-substrate-agnosticism principle in regimes where it is measurable today.
-No continual-learning hypothesis decisions on H1--H4 are announced in
-Paper 1 ; those decisions are the scope of Paper 2.
+substrate-agnosticism principle in regimes where it is measurable today
+(§7.4) ; and a pilot run of the pre-registered pipeline on a standard CL
+benchmark (§7.5) produces interpretable, signed, Bonferroni-compliant
+statistics on non-scripted data and surfaces an unexpected pilot result
+for H2 that will inform the Paper 2 analysis plan. No continual-learning
+hypothesis decisions on H1--H4 are announced in Paper 1 ; those
+decisions are the scope of Paper 2.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -1283,14 +1383,26 @@ and supplementary material absorbing overflow.
 \begin{itemize}
 \tightlist
 \item
+  \textbf{W6 added 2026-04-20} --- §7.5 ``Preliminary empirical pilot on
+  a standard CL benchmark'' inserted before Summary, which became §7.6.
+  Abstract §1 updated to reflect the pilot. Raw data and run log at
+  \texttt{experiments/h1\_split\_mnist/} (PermutedMNIST-5, avalanche-lib
+  0.6.0, 3 seeds, CPU device after MPS silent-fail diagnosis). Pilot
+  reports paired-t baseline \textgreater{} P\_equ forgetting t = 2.524,
+  p = 0.01216 \textless{} Bonferroni α = 0.0125 ; H2 (EWC as
+  \texttt{restructure} proxy) not supported in pilot, re-scoped to Paper
+  2 with EWC-λ sweep.
+\item
   Render via \texttt{./ops/build-arxiv.sh} → bundle for arXiv submit
-  (v0.2 with the four W-series revisions applied 2026-04-19)
+  (v0.2 with the four W-series revisions applied 2026-04-19 ; re-bundle
+  needed after W6 2026-04-20)
 \item
   Fill arXiv ID into §6.1 and CITATION.cff post-announcement
 \item
   Add Figures (1 four-pillars conceptual, 2 swap-protocol state diagram
   with invariant guards, 3 profile-chain inclusion P\_min ⊆ P\_equ ⊆
-  P\_max, 4 cross-substrate conformance matrix)
+  P\_max, 4 cross-substrate conformance matrix, 5 §7.5 per-experience
+  forgetting curves baseline / P\_min / P\_equ)
 \item
   BibTeX render with proper \texttt{\textbackslash{}cite\{\}} calls ;
   target \textasciitilde35 references for PLOS CB submission (W5 in cold
