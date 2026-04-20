@@ -111,7 +111,7 @@ from Nature Human Behaviour ; see §6.1 cover letter and
 - [ ] Authorship byline `dreamOfkiki project contributors` with
       Saillant C. as corresponding ; affiliation L'Electron Rare
 - [ ] Repo URL present in §5.5 :
-      `github.com/electron-rare/dream-of-kiki`
+      `github.com/genial-lab/dream-of-kiki`
 - [ ] HuggingFace model URLs present (P_min + P_equ ; P_max
       cycle-2 placeholder)
 - [ ] Zenodo DOI inserted (post-mint, see Methods §6.5)
