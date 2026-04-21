@@ -29,9 +29,11 @@ Phase boundaries (explicit) :
   tensors, restructure + recombine stubbed with an explicit
   ``NotImplementedError`` citing the blocker.
 - **Phase 2 (this file)** : OPLoRA projection wired in
-  (restructure ; arXiv 2510.13003 Du et al.) ; TIES-style merge
-  (recombine) still stubbed, lands once the 32-expert curriculum
-  stabilises.
+  (restructure ; arXiv 2510.13003 Du et al.) + TIES-Merge wired
+  in (recombine ; arXiv 2306.01708 Yadav et al.). All 4 handlers
+  now backed ; +PARTIAL retained until the Phase-4 conformance
+  harness lands (no downgrade on the EC axis while Phase-3
+  cross-substrate ablation is in flight).
 - **Phase 3** : swap / eval_retained bindings + cross-substrate
   ablation (cycle-3 G10 Gate D).
 """
@@ -49,13 +51,13 @@ from numpy.typing import NDArray
 _LOG = logging.getLogger(__name__)
 
 
-# DualVer C-v0.8.0+PARTIAL — restructure (OPLoRA) wired ; recombine
-# (TIES-merge) remains the only stub. Aligned to the sibling cycle-3
-# substrates (``esnn_thalamocortical`` + ``esnn_norse``). Phase 2
-# completion (recombine real backend) will bump EC axis only ; the
-# formal axis tracks upstream framework-C spec changes.
+# DualVer C-v0.9.0+PARTIAL — recombine (TIES-Merge, arXiv 2306.01708)
+# wired in ; all 4 handlers now backed. Retained ``+PARTIAL`` until
+# Phase-4 conformance harness confirms DR-2 / DR-4 across the
+# 3-substrate matrix. Aligned to the sibling cycle-3 substrates
+# (``esnn_thalamocortical`` + ``esnn_norse``).
 MICRO_KIKI_SUBSTRATE_NAME = "micro_kiki"
-MICRO_KIKI_SUBSTRATE_VERSION = "C-v0.8.0+PARTIAL"
+MICRO_KIKI_SUBSTRATE_VERSION = "C-v0.9.0+PARTIAL"
 
 
 # -----------------------------------------------------------------
@@ -223,6 +225,179 @@ class MicroKikiRestructureState:
     last_completed: bool = False
     episode_ids: list[str] = field(default_factory=list)
 
+
+# -----------------------------------------------------------------
+# TIES-Merge (Yadav et al., arXiv 2306.01708, §3)
+# -----------------------------------------------------------------
+# Given ``K`` task-specific delta tensors ``τ_i = W_ft_i - W_base``
+# (sharing a common shape), TIES-Merge produces a single merged
+# delta via a three-step procedure :
+#
+#   1. **Trim** : per task ``i``, zero the ``(1 - k)%`` smallest-
+#      magnitude entries of ``τ_i``. Keeps only the top-``k``
+#      fraction by absolute value — reduces "sign-noise"
+#      interference from parameters the task barely updated.
+#   2. **Elect sign** : per parameter ``p`` compute the sign of
+#      the sum of signed magnitudes across tasks,
+#      ``γ_p = sign(Σ_i sign(τ_i[p]) · |τ_i[p]|)``. Parameters
+#      with no consensus end up at ``γ = 0`` and contribute zero
+#      to the merged delta.
+#   3. **Disjoint merge** : per parameter, take the mean over only
+#      those tasks whose sign agrees with ``γ_p``. Parameters with
+#      ``γ = 0`` or no agreeing tasks remain ``0``.
+#
+# The merged delta is finally scaled by a merge coefficient
+# ``alpha`` (default 1.0 — paper §3 default ; larger values
+# amplify the merged contribution when downstream eval suggests
+# under-shooting).
+#
+# Numpy-only port so the dream runtime stays torch / mlx free.
+# -----------------------------------------------------------------
+
+
+def _ties_merge(
+    deltas: list[NDArray],
+    trim_fraction: float = 0.2,
+    alpha: float = 1.0,
+) -> NDArray:
+    """Merge a list of task-specific delta tensors via TIES-Merge.
+
+    Parameters
+    ----------
+    deltas
+        Non-empty list of per-task delta tensors. All must share
+        the same shape ; shape-mismatch raises ``ValueError``.
+    trim_fraction
+        Fraction of entries to **keep** per task (top-magnitude
+        quantile). Default ``0.2`` matches the paper's k=20 %.
+        Must lie in ``(0, 1]``.
+    alpha
+        Merge coefficient scaling the final delta. Default ``1.0``
+        — the paper's unscaled merge.
+
+    Returns
+    -------
+    merged : ndarray
+        Same shape as each input delta ; dtype of the first input.
+
+    Raises
+    ------
+    ValueError
+        - Empty ``deltas`` list.
+        - Shape-mismatch across inputs.
+        - ``trim_fraction`` outside ``(0, 1]``.
+
+    Notes
+    -----
+    Single-element input fast-paths to ``alpha * deltas[0]`` — no
+    election / trimming needed when only one task contributes.
+
+    Reference : Yadav et al., *TIES-Merging : Resolving
+    Interference When Merging Models*, arXiv 2306.01708, §3
+    (procedure) + §4 (empirical defaults).
+    """
+    if not deltas:
+        raise ValueError(
+            "TIES-Merge _ties_merge requires at least one delta ; "
+            "got empty list"
+        )
+    if not (0.0 < trim_fraction <= 1.0):
+        raise ValueError(
+            f"trim_fraction must lie in (0, 1], got {trim_fraction}"
+        )
+
+    first = np.asarray(deltas[0])
+    target_dtype = first.dtype
+    target_shape = first.shape
+
+    if len(deltas) == 1:
+        # Single-task fast path : no election / trim needed.
+        return (alpha * first.astype(np.float64)).astype(
+            target_dtype, copy=False,
+        )
+
+    for i, d in enumerate(deltas):
+        arr = np.asarray(d)
+        if arr.shape != target_shape:
+            raise ValueError(
+                f"TIES-Merge: all deltas must share shape "
+                f"{target_shape}, got {arr.shape} at index {i}"
+            )
+
+    # Stack into shape (K, *delta_shape) in float64 for a stable
+    # sign-sum reduction.
+    stack = np.stack(
+        [np.asarray(d, dtype=np.float64) for d in deltas], axis=0,
+    )
+    K = stack.shape[0]
+
+    # Step 1 — Trim : per task, zero entries below the
+    # (1 - trim_fraction) magnitude quantile.
+    abs_stack = np.abs(stack)
+    # Flatten per-task axis so we can take a per-row quantile.
+    flat_abs = abs_stack.reshape(K, -1)
+    # Quantile threshold : keep entries >= quantile(|τ_i|, 1-k).
+    # When trim_fraction == 1.0 the threshold is the min (keep
+    # everything) ; when trim_fraction is tiny the threshold is
+    # near the max (drop all but the largest entries).
+    q = 1.0 - trim_fraction
+    thresholds = np.quantile(flat_abs, q, axis=1)  # shape (K,)
+    # Broadcast threshold over the per-task slice.
+    keep_mask_shape = (K,) + (1,) * (stack.ndim - 1)
+    thresholds_b = thresholds.reshape(keep_mask_shape)
+    keep_mask = abs_stack >= thresholds_b
+    trimmed = np.where(keep_mask, stack, 0.0)
+
+    # Step 2 — Elect sign : per-parameter sign of the signed-
+    # magnitude sum across tasks. ``np.sign`` maps {<0, 0, >0} to
+    # {-1, 0, +1}.
+    signed_sum = np.sum(trimmed, axis=0)  # drop K axis
+    elected = np.sign(signed_sum)  # shape == target_shape
+
+    # Step 3 — Disjoint merge : per parameter, mean over tasks
+    # whose sign agrees with the elected sign.
+    trimmed_signs = np.sign(trimmed)
+    agree_mask = trimmed_signs == elected[None, ...]
+    # Exclude elected == 0 entries (no consensus → merged = 0).
+    agree_mask &= elected[None, ...] != 0
+
+    contrib_count = np.sum(agree_mask, axis=0)  # shape target
+    numerator = np.sum(np.where(agree_mask, trimmed, 0.0), axis=0)
+    # Divide-by-zero guard : parameters with zero contributors
+    # stay at 0 in the merged delta.
+    merged = np.where(
+        contrib_count > 0,
+        numerator / np.maximum(contrib_count, 1),
+        0.0,
+    )
+
+    merged *= alpha
+    return merged.astype(target_dtype, copy=False)
+
+
+@dataclass
+class MicroKikiRecombineState:
+    """DR-0 accountability record for the TIES-Merge recombine op.
+
+    Mirrors :class:`MicroKikiRestructureState` so the DR-3
+    conformance harness parametrises the 4 handlers uniformly.
+    Each invocation of the :meth:`recombine_handler_factory`
+    closure bumps ``total_episodes_handled`` and — when the
+    handler actually merged a non-empty delta list — records the
+    merged-tensor shape stamp on ``last_output_shape``. ``DR-1``
+    episode-id stamps land on ``last_episode_id`` + ``episode_ids``.
+    """
+
+    total_episodes_handled: int = 0
+    total_merges_applied: int = 0
+    last_episode_id: str | None = None
+    last_operation: str = "recombine"
+    last_completed: bool = False
+    last_k_deltas: int = 0
+    last_input_shape: tuple[int, ...] | None = None
+    last_output_shape: tuple[int, ...] | None = None
+    episode_ids: list[str] = field(default_factory=list)
+
 # Optional-dependency probe : ``mlx_lm`` (Apple Silicon MLX wheel
 # + LoRA adapters) is imported lazily inside the method that
 # actually needs it (:meth:`MicroKikiSubstrate.load`). We record
@@ -293,6 +468,14 @@ class MicroKikiSubstrate:
     # consistency) without poking private attributes.
     _restructure_state: MicroKikiRestructureState = field(
         default_factory=MicroKikiRestructureState,
+        init=False,
+        repr=False,
+    )
+    # DR-0 accountability state for the TIES-Merge recombine handler
+    # (arXiv 2306.01708). Same accessor pattern as
+    # ``_restructure_state`` — read-only via :meth:`recombine_state`.
+    _recombine_state: MicroKikiRecombineState = field(
+        default_factory=MicroKikiRecombineState,
         init=False,
         repr=False,
     )
@@ -528,31 +711,92 @@ class MicroKikiSubstrate:
 
     def recombine_handler_factory(
         self,
-    ) -> Callable[[NDArray, int, int], NDArray]:
-        """C-Hobson recombine → **phase-3 stub**.
+        trim_fraction: float = 0.2,
+        alpha: float = 1.0,
+    ) -> Callable[[dict, str], NDArray]:
+        """C-Hobson recombine → **TIES-Merge (phase 2)**.
 
-        Raises ``NotImplementedError`` : real implementation
-        requires a TIES-style merge (Yadav et al.,
-        *Resolving Interference When Merging Models*, arXiv
-        2306.01708) over a pair of per-domain LoRA adapters
-        (micro-kiki ships 32 experts). Merging two LoRAs is not
-        a raw latent interpolation ; the TIES sign-trim /
-        magnitude-elect procedure must be applied to respect the
-        downstream stack orthogonality guarantees. Deferred to
-        phase 3 — unblocks once the 32-expert curriculum
-        stabilises.
+        Wires the TIES-Merging algorithm of Yadav et al. (arXiv
+        2306.01708) : given a list of task-specific delta tensors
+        carried on ``payload["deltas"]``, the handler returns the
+        merged delta via trim → elect-sign → disjoint-mean. Scale
+        coefficient ``alpha`` amplifies the final merged
+        contribution (default ``1.0``, paper default).
+
+        Handler contract
+        ----------------
+        ``payload`` is a dict carrying at least ``"deltas"`` — a
+        list of numpy delta tensors (shape-consistent across the
+        list). Pragmatically matches ``DreamEpisode`` where the
+        canonical access path is ``episode.payload["deltas"]``.
+
+        - ``"deltas"`` : ``list[ndarray]`` — per-task / per-stack
+          ``τ_i = W_ft_i - W_base``. Empty list raises (caller
+          handles the no-op leg explicitly).
+        - Optional ``"episode_id"`` : DR-0 stamp propagated into
+          :attr:`_recombine_state`.
+
+        ``op`` is accepted for signature-compat with the sibling
+        :meth:`restructure_handler_factory` ; honours ``"ties"``
+        (default), ``"ties_merge"``, ``"merge"``. Any other op
+        raises ``ValueError`` — no silent no-ops per DR-3
+        condition 1.
+
+        Returns the merged delta tensor (dtype of the first input
+        delta). The substrate's ``_recombine_state`` is bumped on
+        every call (DR-0) ; the episode-id stamp (DR-1) is
+        appended when present.
+
+        Reference : Yadav et al., arXiv 2306.01708 §3.
         """
 
         def handler(
-            latents: NDArray, seed: int = 0, n_steps: int = 10,
+            payload: dict[str, Any], op: str = "ties",
         ) -> NDArray:
-            raise NotImplementedError(
-                "recombine_handler requires TIES-style LoRA merge "
-                "(Yadav et al., arXiv 2306.01708) — deferred to "
-                "phase 3 of the micro-kiki roadmap"
+            if op not in {"ties", "ties_merge", "merge"}:
+                raise ValueError(
+                    f"micro_kiki.recombine_handler: unsupported "
+                    f"op {op!r} ; expected one of "
+                    f"{{'ties', 'ties_merge', 'merge'}}"
+                )
+            if "deltas" not in payload:
+                raise KeyError(
+                    "micro_kiki.recombine_handler: payload missing "
+                    "'deltas' entry (expected list[ndarray])"
+                )
+            deltas = list(payload["deltas"])
+            episode_id = payload.get("episode_id")
+
+            # _ties_merge guards empty / single / shape-mismatch.
+            merged = _ties_merge(
+                deltas, trim_fraction=trim_fraction, alpha=alpha,
             )
 
+            # DR-0 bookkeeping.
+            self._recombine_state.total_episodes_handled += 1
+            self._recombine_state.total_merges_applied += 1
+            self._recombine_state.last_completed = True
+            self._recombine_state.last_operation = "recombine"
+            self._recombine_state.last_k_deltas = len(deltas)
+            first_shape = tuple(np.asarray(deltas[0]).shape)
+            self._recombine_state.last_input_shape = first_shape
+            self._recombine_state.last_output_shape = tuple(merged.shape)
+            if isinstance(episode_id, str):
+                self._recombine_state.last_episode_id = episode_id
+                self._recombine_state.episode_ids.append(episode_id)
+            return merged
+
         return handler
+
+    @property
+    def recombine_state(self) -> MicroKikiRecombineState:
+        """Read-only accessor for the TIES-Merge DR-0 record.
+
+        Mirrors :meth:`restructure_state`. The returned object is
+        the live state dataclass — do not mutate ; it is refreshed
+        by each handler call.
+        """
+        return self._recombine_state
 
     # ----- γ-snapshot : adapter round-trip -----
 
