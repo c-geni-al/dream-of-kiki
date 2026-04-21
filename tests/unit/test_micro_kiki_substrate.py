@@ -29,7 +29,7 @@ def test_module_manifest_matches_substrate_pattern() -> None:
     the sibling ``esnn_*`` substrates (DR-3 condition 1).
     """
     assert MICRO_KIKI_SUBSTRATE_NAME == "micro_kiki"
-    assert MICRO_KIKI_SUBSTRATE_VERSION == "C-v0.8.0+PARTIAL"
+    assert MICRO_KIKI_SUBSTRATE_VERSION == "C-v0.9.0+PARTIAL"
 
     components = micro_kiki_substrate_components()
     expected = {
@@ -137,19 +137,36 @@ def test_restructure_handler_oplora_wired() -> None:
         handler(adapter, "activate", "layers.0.q_proj_B")
 
 
-def test_recombine_raises_phase_2() -> None:
-    """TDD-5 — recombine factory returns a callable that raises
-    ``NotImplementedError`` with an explicit TIES-merge citation.
-    Paired with restructure above — both phase-2 stubs must be
-    discoverable by the DR-3 conformance matrix as *callable*
-    but *deliberately un-backed* surfaces.
+def test_recombine_handler_ties_wired() -> None:
+    """TDD-5 (phase-2) — recombine factory returns a callable
+    backed by TIES-Merge (arXiv 2306.01708, Yadav et al.). The
+    phase-1 ``NotImplementedError`` gate is retired here ; the
+    full algebra is exercised in
+    ``tests/unit/test_micro_kiki_recombine.py``.
+
+    This smoke test only asserts the factory is wired (not a
+    stub) and that the handler produces a numpy array of the
+    right shape for a trivial two-delta payload.
     """
     substrate = MicroKikiSubstrate()
     handler = substrate.recombine_handler_factory()
     assert callable(handler)
-    latents = np.array([[0.5, 0.2], [0.1, 0.8]], dtype=np.float32)
-    with pytest.raises(NotImplementedError, match="TIES"):
-        handler(latents, seed=0)
+
+    d1 = np.array([1.0, 2.0, 3.0, 4.0], dtype=np.float32)
+    d2 = np.array([1.0, -2.0, 3.0, -4.0], dtype=np.float32)
+    merged = handler({"deltas": [d1, d2], "episode_id": "ep-ties-0"}, "ties")
+    assert merged.shape == d1.shape
+    assert merged.dtype == d1.dtype
+
+    state = substrate.recombine_state
+    assert state.total_episodes_handled == 1
+    assert state.last_completed is True
+    assert state.last_operation == "recombine"
+    assert state.last_episode_id == "ep-ties-0"
+
+    # Unsupported op still rejected — DR-3 visibility.
+    with pytest.raises(ValueError, match="unsupported op"):
+        handler({"deltas": [d1, d2]}, "interpolate")
 
 
 def test_stub_mode_without_mlx_lm(tmp_path: Path) -> None:
