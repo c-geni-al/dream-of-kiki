@@ -55,6 +55,8 @@ from kiki_oniric.dream.operations.restructure_real import (
     restructure_real_handler,
 )
 from kiki_oniric.dream.runtime import DreamRuntime
+from kiki_oniric.profiles.p_equ import PEquProfile
+from kiki_oniric.profiles.p_min import PMinProfile
 
 
 # ---------------------------------------------------------------------------
@@ -152,20 +154,40 @@ def profile_channels(profile: str) -> tuple[OutputChannel, ...]:
     return _PROFILE_CHANNELS[profile]
 
 
-def registered_ops(profile: str) -> set[Operation]:
-    """Return the set of Operations wired by a fresh runtime for *profile*.
+# Mapping from profile name to production profile class.
+# Extend this dict when a new profile lands (e.g. "P_max" once its
+# handlers are wired) so DR-4 DSL tests automatically pick it up.
+_PROFILE_CLASSES: dict[str, type] = {
+    "P_min": PMinProfile,
+    "P_equ": PEquProfile,
+}
 
-    Introspects the private handler registry (``runtime._handlers``) of a
-    freshly seeded runtime. Used by DR-4 profile-inclusion tests.
+
+def registered_ops(profile: str) -> set[Operation]:
+    """Return the set of Operations wired by the real production Profile.
+
+    Instantiates the production profile class (PMinProfile, PEquProfile,
+    ...) matching *profile* and introspects its runtime handler registry.
+    This is the genuine profile-specific op set, NOT the set wired by the
+    DSL test fixture :func:`seeded_runtime` (which always wires all 4
+    handlers for determinism testing in DR-2 and similar).
+
+    Used by DR-4 profile-inclusion tests (ops(P_min) ⊆ ops(P_equ) ⊆ ...).
 
     Parameters
     ----------
     profile :
-        Profile name forwarded to :func:`seeded_runtime`. The returned
-        set reflects whichever operations the wiring installs.
+        Profile name, e.g. ``"P_min"`` or ``"P_equ"``.
+
+    Raises
+    ------
+    KeyError
+        For unknown profile names — forces deliberate DSL extension when
+        a new profile lands.
     """
-    wired = seeded_runtime(seed=0, profile=profile)
-    return set(wired.runtime._handlers.keys())
+    profile_class = _PROFILE_CLASSES[profile]
+    instance = profile_class()
+    return set(instance.runtime._handlers.keys())
 
 
 def _default_input_slice() -> dict[str, Any]:
