@@ -1,8 +1,14 @@
-# CLAUDE.md — dreamOfkiki
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when
+working with code in this repository.
+
+## dreamOfkiki
 
 Substrate-agnostic formal framework for dream-based knowledge
 consolidation in artificial cognitive systems. Research program,
-two-paper output (framework C + ablation), 28-week cycle.
+two-paper output (framework C + ablation), 28-week cycle. Current
+version and active gate live in `STATUS.md` — read it first.
 
 ## What this repo is
 
@@ -21,6 +27,7 @@ two-paper output (framework C + ablation), 28-week cycle.
 |------|-----------|
 | Spec / axioms / invariants / glossary / proofs | `docs/` |
 | Substrate implementation (dream runtime, profiles, ops, guards) | `kiki_oniric/` |
+| Public axioms API (DR-0..DR-4, DR-2' ; frozen `Axiom` dataclasses) | `kiki_oniric/axioms/` |
 | Evaluation harness, benchmarks, run registry, matrix config | `harness/` |
 | Unit + conformance (axioms, invariants) tests | `tests/` |
 | Pilot scripts, milestone drivers (G-gates) | `scripts/` |
@@ -44,6 +51,46 @@ load-bearing :
 - `docs/glossary.md` — canonical terminology. Do not invent synonyms.
 - `docs/invariants/` — I/S/K families. Every runtime check cites one.
 - `STATUS.md` + `CHANGELOG.md` — current gate / version / open actions.
+
+## Common commands
+
+All invocations go through `uv` (no Makefile / justfile). Python ≥3.12.
+
+```bash
+# Install — pulls dev, fmri, teacher extras (MLX, hypothesis, nilearn, llama-cpp-python)
+uv sync --all-extras
+
+# Full test suite with coverage gate (fails under 90 %)
+uv run pytest
+
+# Narrow scopes
+uv run pytest tests/conformance/ -v                 # axioms + invariants
+uv run pytest tests/reproducibility/ -v --no-cov    # R1 bit-exact (MLX/Metal on Apple Silicon)
+uv run pytest tests/unit/test_foo.py::test_bar      # single test
+uv run pytest -k "dr2 and not slow"                 # keyword selection
+
+# Lint / type / format — must pass before commit (CI enforces)
+uv run ruff check .
+uv run mypy harness tests          # strict mode (pyproject.toml)
+
+# Harness CLI (entry point defined in pyproject.toml)
+uv run dream-harness --help
+
+# Pilot / gate drivers — one per G-gate, always pass explicit seed
+uv run python scripts/pilot_g2.py --profile P_equ --seed 42
+uv run python scripts/pilot_cycle3_sanity.py --seed 42
+uv run python scripts/conformance_matrix.py
+
+# Render paper figures from registered runs
+uv run python scripts/render_figures.py --gate G4
+```
+
+CI runs on push/PR : `ci.yml` (ubuntu-latest, ruff + mypy + pytest)
+and `r1-nightly.yml` (macos-14 Apple Silicon, nightly `tests/reproducibility/`
+with `golden_hashes.json` as failure artifact). A change that breaks
+R1 bit-exactness will only surface on the nightly macOS runner —
+run `tests/reproducibility/` locally on Apple Silicon before pushing
+harness changes.
 
 ## Working rules (research discipline)
 
@@ -77,6 +124,12 @@ load-bearing :
   no `.coverage` / run-registry leakage.
 - When unsure which axiom / invariant applies, search `docs/` first
   — the naming is standardized.
+- Commit rules are validator-enforced (see `CONTRIBUTING.md`) :
+  subject ≤50 chars, scope ≥3 chars (e.g. `paper1`, `dream`, `fr`),
+  body lines ≤72 chars, body required for functional changes, English
+  only, no AI attribution, no `--no-verify`. EN→FR propagation : any
+  change to an English paper/spec must update its FR counterpart under
+  `docs/specs-fr/` or `docs/papers/paper{1,2}-fr/` in the same PR.
 
 ## Paper-to-code mapping
 
