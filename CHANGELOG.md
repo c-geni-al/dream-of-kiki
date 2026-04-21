@@ -10,6 +10,62 @@ see `docs/specs/2026-04-17-dreamofkiki-framework-C-design.md` §12).
 
 ---
 
+## [C-v0.9.0+PARTIAL] — 2026-04-22
+
+### Added — micro-kiki LoRA substrate (FC-MINOR bump)
+
+Third substrate for framework C, wrapping the
+[`micro-kiki`](https://github.com/kxkm-ai/micro-kiki) project's Qwen
+MoE + LoRA adapter training output. Extends the DR-3 Conformance
+Criterion surface from 2 substrates (MLX kiki-oniric + E-SNN
+thalamocortical/Norse) to 3, adding a transformer-LoRA leg
+alongside the SNN legs. Substrate-internal version:
+`C-v0.8.0+PARTIAL`.
+
+**Handlers backed (3/4)**
+
+- `replay_handler_factory` + `downscale_handler_factory` operate
+  over numpy tensors (CI fallback) and LoRA tensors (Apple Silicon
+  path, env-gated on `mlx_lm`).
+- `restructure_handler_factory` wires OPLoRA (Du et al., arXiv
+  2510.13003): projects new adapter deltas onto the orthogonal
+  complement of the prior subspace via numpy SVD. Module-level
+  helper `_oplora_projector(prior_deltas, rank_thresh=1e-4)`.
+  Guards: empty priors reject (caller handles no-op leg via
+  handler), shape-mismatch across priors raises, rank collapse
+  falls back to identity projector with a warning, **and
+  full-rank saturation logs a warning** (priors spanning the
+  full output space silently zero new adapters — the warning
+  makes that visible to the curriculum scheduler). Read-only
+  `MicroKikiRestructureState` dataclass exposed via
+  `MicroKikiSubstrate.restructure_state` records DR-0 completion
+  flag + operation label and DR-1 `episode_id` stamps.
+
+**Stub deferred to phase 3 (1/4)**
+
+- `recombine_handler_factory` (TIES-merge, Yadav et al., arXiv
+  2306.01708) raises `NotImplementedError` with explicit
+  citation. Surfaced rather than silently no-op'd so the gap
+  stays visible in the cycle-3 conformance matrix. Unblocks once
+  the 32-expert micro-kiki curriculum stabilises.
+
+**Persistence + tests**
+
+- `snapshot` / `load_snapshot` round-trip the accumulator delta
+  via numpy `.npz` (portable across the 3-substrate test matrix).
+- 30 tests across three files: `test_micro_kiki_substrate.py`
+  (7 unit tests : manifest shape, handler signatures, DR-1 shape
+  preservation on downscale, snapshot round-trip, OPLoRA-wired
+  assertion replacing the phase-1 `NotImplementedError` gate),
+  `test_micro_kiki_restructure.py` (13 unit tests : projector
+  orthogonality, idempotence, symmetry, rank-collapse fallback,
+  full-rank saturation warning, shape-mismatch guard, DR-0
+  counters, DR-1 stamping, op-vocabulary guard, missing-key guard,
+  projector shape guard) and
+  `tests/conformance/axioms/test_dr3_micro_kiki_substrate.py` (10
+  conformance tests covering the 3 DR-3 conditions for the
+  substrate, parametrising the cycle-3 matrix entry).
+
 ## [C-v0.8.0+PARTIAL] — 2026-04-21
 
 ### Added — kiki_oniric.axioms public API (FC-MINOR bump)
