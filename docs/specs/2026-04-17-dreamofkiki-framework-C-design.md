@@ -389,7 +389,7 @@ This is weaker but sufficient for the canonical DE composition defined in 4.3.
 ∀ substrate S, if S satisfies the Conformance Criterion below,
 then DR-0, DR-1, DR-2 (or DR-2') are **empirically validated** on S
 (operational sense, see §6.2 "Operational statement" ; not a formal
-implication — DR-2 itself remains an unproven working axiom, §5.1).
+implication — DR-2 itself remains an unproven working axiom, §6.2).
 ```
 
 **Interpretation** : kiki-oniric and hypothetical E-SNN are both valid

@@ -2,7 +2,7 @@
 
 **This does NOT constitute a proof of DR-2.** The spec explicitly
 labels DR-2 an *unproven working axiom* (see
-``docs/specs/2026-04-17-dreamofkiki-framework-C-design.md`` §5.1).
+``docs/specs/2026-04-17-dreamofkiki-framework-C-design.md`` §6.2).
 The canonical-order fallback DR-2' is covered by
 :mod:`tests.conformance.axioms.test_dr2_prime_canonical_order`.
 
@@ -12,7 +12,7 @@ which DR-2 sub-claims hold empirically. Failure to falsify is
 evidence, not proof. A single failing case, however, is a refutation
 of the claim as stated.
 
-What the spec actually claims (§5.1, verbatim) :
+What the spec actually claims (§6.2, verbatim) :
 
     ∀ op_1, op_2 ∈ Op,
       op_2 ∘ op_1 ∈ Op                                       (closure)
@@ -39,10 +39,10 @@ Empirical findings encoded below
    the invariants.
 
 3. **Commutativity is NOT asserted.** The spec disclaims it
-   (§5.1 final paragraph). We verify the disclaimer is materially
+   (§6.2 final paragraph). We verify the disclaimer is materially
    necessary (non-commutativity is observable) in a dedicated test.
 
-Reference : docs/specs/2026-04-17-dreamofkiki-framework-C-design.md §5.1
+Reference : docs/specs/2026-04-17-dreamofkiki-framework-C-design.md §6.2
 """
 from __future__ import annotations
 
@@ -263,7 +263,7 @@ def test_dr2_empirical_budget_additivity_and_bookkeeping_under_permutation(
         "kiki_oniric real-weight substrate : RESTRUCTURE before "
         "REPLAY breaks the forward pass (MLX addmm shape mismatch) "
         "because the layer swap invalidates the MLP input dim. "
-        "Spec §5.1 already flags DR-2 as unproven and retains "
+        "Spec §6.2 already flags DR-2 as unproven and retains "
         "DR-2' (canonical order only). These cases document the "
         "refutation in CI so the gap stays visible."
     ),
@@ -275,7 +275,7 @@ def test_dr2_empirical_closure_falsified_restructure_then_replay(
     """XFAIL : closure collapses whenever RESTRUCTURE precedes REPLAY.
 
     These five permutations are an empirical counter-example to the
-    closure sub-claim of DR-2 as stated in spec §5.1 (``op_2 ∘ op_1
+    closure sub-claim of DR-2 as stated in spec §6.2 (``op_2 ∘ op_1
     ∈ Op``). They xfail rather than pass so the refutation remains
     visible on every CI run — a green bar would hide the gap.
     """
@@ -283,12 +283,12 @@ def test_dr2_empirical_closure_falsified_restructure_then_replay(
 
 
 # ---------------------------------------------------------------------------
-# Non-commutativity sanity check (spec §5.1 final paragraph)
+# Non-commutativity sanity check (spec §6.2 final paragraph)
 # ---------------------------------------------------------------------------
 
 
 def test_dr2_empirical_does_not_claim_commutativity() -> None:
-    """Documents the spec §5.1 caveat that commutativity is NOT claimed.
+    """Documents the spec §6.2 caveat that commutativity is NOT claimed.
 
     This test intentionally exhibits *observable drift* : for at
     least one non-canonical permutation, the emitted latent sample

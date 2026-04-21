@@ -3,12 +3,12 @@
 - **Date**: 2026-04-21
 - **Status**: Draft — pending review before merge into main spec
 - **Target**: `docs/specs/2026-04-17-dreamofkiki-framework-C-design.md`
-  §5.1 (DR-2 compositionality)
+  §6.2 (DR-2 compositionality)
 - **Evidence**: `tests/conformance/axioms/test_dr2_compositionality_empirical.py`
 
 ## Context
 
-DR-2 as stated in the framework-C design spec §5.1 asserts
+DR-2 as stated in the framework-C design spec §6.2 asserts
 compositionality for any ordering of operations:
 
 ```
@@ -20,7 +20,7 @@ compositionality for any ordering of operations:
 
 with the caveat *"Commutativity is NOT claimed"*. DR-2 was flagged
 as an **unproven working axiom**, with DR-2' (canonical-order
-compositionality) adopted as the operational fallback (see §5.1
+compositionality) adopted as the operational fallback (see §6.2
 addendum and `test_dr2_prime_canonical_order.py`).
 
 ## Empirical result
@@ -62,13 +62,13 @@ Scope of the falsification:
    effect-chaining. Closure is the first conjunct of DR-2's
    conjunction; its failure refutes the whole claim as stated.
 
-## Proposed amendment to §5.1
+## Proposed amendment to §6.2
 
 Three options, ordered by conservatism:
 
 ### Option A — Annotation only
 
-Add a footnote to §5.1 citing the empirical finding:
+Add a footnote to §6.2 citing the empirical finding:
 
 > **Note** (2026-04-21). The closure clause of DR-2 has been shown
 > empirically to fail for the real-weight substrate in the class of
@@ -109,6 +109,6 @@ of substrate-dependency is clearer.
   — the 12 xfailing cases and the closure-safe passing cases.
 - `tests/conformance/axioms/test_dr2_prime_canonical_order.py` —
   DR-2' (fallback, still enforceable).
-- `docs/specs/2026-04-17-dreamofkiki-framework-C-design.md` §5.1 —
+- `docs/specs/2026-04-17-dreamofkiki-framework-C-design.md` §6.2 —
   DR-2 canonical statement.
 - `docs/axioms/AXIOMS.md` — compiled axiom reference (2026-04-21).

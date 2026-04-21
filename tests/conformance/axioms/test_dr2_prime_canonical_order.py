@@ -1,7 +1,7 @@
 """DR-2' Canonical-order compositionality — determinism conformance test.
 
 DR-2' (fallback, DR-2 unproven — see
-docs/specs/2026-04-17-dreamofkiki-framework-C-design.md §5.1) states
+docs/specs/2026-04-17-dreamofkiki-framework-C-design.md §6.2) states
 that operations applied in the canonical order are compositional
 within the operation set :
 
@@ -14,7 +14,7 @@ two independent runs. This is the empirical contract retained by
 the G2/G4 pilots until a strict DR-2 proof is available.
 
 Reference :
-  docs/specs/2026-04-17-dreamofkiki-framework-C-design.md §5.1
+  docs/specs/2026-04-17-dreamofkiki-framework-C-design.md §6.2
   (DR-2 unproven working axiom) and the DR-2' fallback definition
   in the same section.
 """
@@ -44,7 +44,7 @@ _CANONICAL_OPS: tuple[Operation, ...] = (
 
 
 def test_dr2_prime_canonical_order_is_deterministic() -> None:
-    """DR-2' (fallback, DR-2 unproven — see spec §5.1).
+    """DR-2' (fallback, DR-2 unproven — see spec §6.2).
 
     Applying REPLAY → DOWNSCALE → RESTRUCTURE → RECOMBINE in a single
     DE under identical initial conditions (same seed, same input
