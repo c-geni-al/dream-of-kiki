@@ -1,0 +1,38 @@
+name: R1 Nightly
+
+on:
+  schedule:
+    # 03:00 UTC every day — off-peak for the macos-14 runner pool.
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+jobs:
+  r1-bit-exact:
+    # macos-14 = Apple Silicon (M1) — required for MLX / Metal backend.
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Install dependencies
+        run: uv sync --all-extras
+
+      - name: Export git commit for golden-hash metadata
+        run: echo "GIT_COMMIT=${GITHUB_SHA}" >> "$GITHUB_ENV"
+
+      - name: Run R1 bit-exact suite
+        run: uv run pytest tests/reproducibility/ -v --no-cov
+
+      - name: Upload golden_hashes.json on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: golden-hashes-r1-${{ github.run_id }}
+          path: tests/reproducibility/golden_hashes.json
+          if-no-files-found: warn
+          retention-days: 30
