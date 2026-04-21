@@ -21,18 +21,30 @@ with a compositionality axiom (DR-2) that's central to the
 framework's substrate-agnosticism claim (DR-3).
 
 I'm reaching out because I'd value a formal reviewer's eye on the
-DR-2 compositionality proof before we submit the paper to Nature
-Human Behaviour. The proof sketch is in place (closure + budget
-additivity + functional composition + associativity), but I'd like
-an external pair of eyes on the case analysis for non-commutative
+DR-2 compositionality proof before we submit the paper to **PLOS
+Computational Biology** (Paper 1 v0.2 draft, 22 pages, rendered
+2026-04-20 — Nature HB retired as primary target on the same date).
+The proof sketch is in place (closure + budget additivity +
+functional composition + associativity) and now carries an
+empirically-motivated precondition excluding `RESTRUCTURE ≺ REPLAY`
+permutations (DualVer FC-PATCH, 2026-04-21). I'd value an external
+pair of eyes on the case analysis for the remaining non-commutative
 op pairs (in particular `recombine ∘ downscale` vs
-`downscale ∘ recombine`).
+`downscale ∘ recombine`), and on the DR-2' canonical-order fallback.
 
 **Time estimate** : 2-3 hours of your time.
 
-**In return** : courtesy co-authorship on the paper + credit in
-CONTRIBUTORS.md for the research program. The paper is scheduled to
-be submitted around S20 (June 2026 in our calendar).
+**In return** : Acknowledgements credit in the paper and in the
+project's CONTRIBUTORS.md. **No authorship offered** — per
+ICMJE / COPE / PLOS policy, a formal proof review does not cross
+the substantive-contribution bar for authorship, and we want to
+avoid any gift-authorship exposure. **No quid pro quo** : if
+PLOS CB later invites you to formally peer-review this
+manuscript, please decline this informal request and respond to
+the formal invitation instead (don't double-dip). Paper 1 v0.2 is
+already rendered (22 pages) and we are targeting a PLOS CB
+submission window over the coming weeks, so your feedback would
+land on a near-final manuscript.
 
 **Materials I can share** : draft proof (~3 pages), framework spec
 section 6 (axioms DR-0..DR-4), context on the monoid construction.
@@ -48,5 +60,6 @@ clement@saillant.cc
 
 ---
 
-**Footer note** : link to preprint once arXiv'd at S18, link to OSF
-pre-registration once locked at S3.
+**Footer note** : OSF pre-registration locked at
+`10.17605/OSF.IO/Q6JYN` (https://osf.io/q6jyn, minted 2026-04-20) ;
+arXiv preprint link to be added post-deposit (Paper 1 v0.2 window).
