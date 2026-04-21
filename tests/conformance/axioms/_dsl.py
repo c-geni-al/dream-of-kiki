@@ -138,6 +138,36 @@ _PROFILE_CHANNELS: dict[str, tuple[OutputChannel, ...]] = {
 }
 
 
+def profile_channels(profile: str) -> tuple[OutputChannel, ...]:
+    """Return the OutputChannel tuple for a named profile.
+
+    Raises :exc:`KeyError` for unknown profiles — forces deliberate DSL
+    extension when a new profile (e.g. P_max) lands.
+
+    Parameters
+    ----------
+    profile :
+        Profile name, e.g. ``"P_min"`` or ``"P_equ"``.
+    """
+    return _PROFILE_CHANNELS[profile]
+
+
+def registered_ops(profile: str) -> set[Operation]:
+    """Return the set of Operations wired by a fresh runtime for *profile*.
+
+    Introspects the private handler registry (``runtime._handlers``) of a
+    freshly seeded runtime. Used by DR-4 profile-inclusion tests.
+
+    Parameters
+    ----------
+    profile :
+        Profile name forwarded to :func:`seeded_runtime`. The returned
+        set reflects whichever operations the wiring installs.
+    """
+    wired = seeded_runtime(seed=0, profile=profile)
+    return set(wired.runtime._handlers.keys())
+
+
 def _default_input_slice() -> dict[str, Any]:
     """Minimal input-slice that every real-weight handler will accept.
 
@@ -247,7 +277,7 @@ class WiredRuntime:
         self.recombine_state = recombine_state
 
 
-def seeded_runtime(seed: int) -> WiredRuntime:
+def seeded_runtime(seed: int, profile: str = "P_min") -> WiredRuntime:
     """Seed MLX, build fresh substrate, wire all 4 real-weight handlers.
 
     The process-wide MLX RNG is reset via ``mx.random.seed(seed)`` so
@@ -257,6 +287,16 @@ def seeded_runtime(seed: int) -> WiredRuntime:
 
     The recombine handler is built with ``seed=seed`` as well, so its
     per-episode RNG key derivation is deterministic too.
+
+    Parameters
+    ----------
+    seed :
+        Integer used to seed ``mx.random`` and the recombine handler.
+    profile :
+        Profile name forwarded to callers that introspect the wired
+        runtime (e.g. :func:`registered_ops`). Currently all four
+        canonical handlers are always wired regardless of profile.
+        Defaults to ``"P_min"`` for backward compatibility.
     """
     import mlx.core as mx
 
@@ -401,6 +441,8 @@ __all__ = [
     "make_tiny_decoder",
     "make_tiny_encoder",
     "make_tiny_mlp",
+    "profile_channels",
+    "registered_ops",
     "seeded_runtime",
     "snapshot_state",
 ]
