@@ -21,6 +21,8 @@ Micro-isolation of the four canonical operators (replay, downscale, **restructur
 
 **Preliminary — pending critical validation.** The claim rests on **two data points (1.5B, 7B)** and a p-value (0.055) at the conventional threshold boundary. A 3rd data point (3B or 14B substrate) is required to confirm monotonicity, and a numerical audit is needed to verify that the 15-order-of-magnitude `p_max` figure is not a floating-point underflow artefact near machine precision. Paper 2 submission is gated on these two checks.
 
+**Lesson from sister project `bouba_sens` v0.5.0** (2026-04-21, `github.com/hypneum-lab/bouba_sens`) — three pre-registered findings in that programme were all **downgraded to null results** by critical validation (null-model partition control, bootstrap CIs, multi-estimator MI). The `p_max` 15-OOM claim must pass analogous scrutiny before Paper 2 submission: (a) bootstrap CI on the per-seed p-value distribution, (b) the 3rd scale point, (c) numerical-precision audit on the p-value tail. The `bouba_sens` paper (`papers/paper1/main.md`) articulates the three recommendations this repo now adopts as a submission pre-requisite.
+
 ---
 
 ## What this repo is
