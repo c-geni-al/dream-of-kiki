@@ -72,6 +72,15 @@ MICRO_KIKI_SUBSTRATE_VERSION = "C-v0.9.1+PARTIAL"
 # :meth:`awake` subsequently rate-codes.
 _REAL_BACKEND_ENV_VAR = "DREAM_MICRO_KIKI_REAL"
 
+# Companion env var for :data:`_REAL_BACKEND_ENV_VAR`. When set, its
+# value is used as the default ``real_backend_path`` for any
+# :class:`MicroKikiSubstrate` constructed without an explicit
+# ``real_backend_path`` keyword. Lets callers wire the real backend
+# purely through environment (shell / launch script) without having
+# to edit Python. Explicit constructor arg wins when both are set
+# (standard precedence).
+_REAL_BACKEND_PATH_ENV_VAR = "DREAM_MICRO_KIKI_REAL_BACKEND_PATH"
+
 
 def _real_backend_enabled() -> bool:
     """Return True when the real-backend env flag is set truthy.
@@ -82,6 +91,18 @@ def _real_backend_enabled() -> bool:
     """
     raw = os.environ.get(_REAL_BACKEND_ENV_VAR, "").strip().lower()
     return raw in {"1", "true", "yes", "on"}
+
+
+def _real_backend_path_from_env() -> str | None:
+    """Return the ``real_backend_path`` value from env, or ``None``.
+
+    Callers use this as a default in ``__post_init__`` so the
+    substrate picks up a Studio-local artifact path without
+    needing Python-side wiring. Empty / unset env returns
+    ``None`` (stub mode).
+    """
+    raw = os.environ.get(_REAL_BACKEND_PATH_ENV_VAR, "").strip()
+    return raw or None
 
 
 # -----------------------------------------------------------------
@@ -563,6 +584,13 @@ class MicroKikiSubstrate:
         if self.rank <= 0:
             raise ValueError(f"rank must be > 0, got {self.rank}")
         self._rng = np.random.default_rng(self.seed)
+        # Fallback : when the constructor did not receive a
+        # ``real_backend_path``, fall back to the env-provided path
+        # (``DREAM_MICRO_KIKI_REAL_BACKEND_PATH``). Explicit arg wins.
+        if self.real_backend_path is None:
+            env_path = _real_backend_path_from_env()
+            if env_path is not None:
+                self.real_backend_path = env_path
 
     # ----- lazy model / adapter load -----
 

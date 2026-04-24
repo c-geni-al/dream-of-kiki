@@ -85,6 +85,7 @@ PROFILES: tuple[str, ...] = ("p_min", "p_equ", "p_max")
 SUBSTRATES: tuple[str, ...] = (
     "mlx_kiki_oniric",
     "esnn_thalamocortical",
+    "micro_kiki",
 )
 SEEDS: tuple[int, ...] = tuple(range(60))
 

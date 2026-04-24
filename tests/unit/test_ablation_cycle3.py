@@ -4,7 +4,8 @@ Validates :
 
 1. ``enumerate_configs()`` yields the full cartesian product
    ``scale × profile × substrate × seed`` in deterministic order
-   with exactly ``3 × 3 × 2 × 60 = 1080`` tuples.
+   with exactly ``3 × 3 × 3 × 60 = 1620`` tuples (Qwen2.5-Q4
+   scale axis × 3 substrates post-micro_kiki wiring).
 2. ``resume_from(registry)`` skips already-completed configs by
    matching ``run_id`` in a provided ``RunRegistry``.
 3. Every config's ``run_id`` lineage tracks the current
@@ -32,28 +33,41 @@ from scripts.ablation_cycle3 import (
 )
 
 
-def test_enumerate_configs_yields_1080_tuples() -> None:
-    """Full cartesian product : 3 scales × 3 profiles × 2 substrates
-    × 60 seeds = 1080 unique ``AblationConfig`` entries, in
-    deterministic iteration order."""
-    configs = list(enumerate_configs())
-    assert len(configs) == 1080
+def test_enumerate_configs_yields_1620_tuples() -> None:
+    """Full cartesian product : 3 scales × 3 profiles × 3 substrates
+    × 60 seeds = 1620 unique ``AblationConfig`` entries (post
+    micro_kiki wiring), in deterministic iteration order.
+
+    Restricted to the Qwen2.5-Q4 scale axis — fp16 + local
+    exploratory slots are excluded from the full matrix contract
+    (they live in the registry but are outside the 3-scale lock
+    per ``SCALES`` filter in the runner module)."""
+    configs = list(
+        enumerate_configs(
+            scales=("qwen3p5-1p5b", "qwen3p5-7b", "qwen3p5-35b"),
+        )
+    )
+    assert len(configs) == 1620
     # Uniqueness on the four-axis tuple
     unique_keys = {
         (c.scale, c.profile, c.substrate, c.seed) for c in configs
     }
-    assert len(unique_keys) == 1080
+    assert len(unique_keys) == 1620
     # Axis coverage
     assert {c.scale for c in configs} == {
         "qwen3p5-1p5b", "qwen3p5-7b", "qwen3p5-35b",
     }
     assert {c.profile for c in configs} == {"p_min", "p_equ", "p_max"}
     assert {c.substrate for c in configs} == {
-        "mlx_kiki_oniric", "esnn_thalamocortical",
+        "mlx_kiki_oniric", "esnn_thalamocortical", "micro_kiki",
     }
     assert {c.seed for c in configs} == set(range(60))
     # Determinism : two back-to-back enumerations match exactly
-    second = list(enumerate_configs())
+    second = list(
+        enumerate_configs(
+            scales=("qwen3p5-1p5b", "qwen3p5-7b", "qwen3p5-35b"),
+        )
+    )
     assert [
         (c.scale, c.profile, c.substrate, c.seed) for c in configs
     ] == [
