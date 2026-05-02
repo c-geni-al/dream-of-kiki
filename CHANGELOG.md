@@ -35,6 +35,67 @@ see `docs/specs/2026-04-17-dreamofkiki-framework-C-design.md` §12).
 
 ---
 
+## [C-v0.12.0+PARTIAL] — 2026-05-03 — Wake-Sleep CL ablation baseline
+
+### Formal axis (FC) — MINOR (v0.11.0 → v0.12.0)
+
+- **Eval-matrix schema additive change.**
+  `docs/interfaces/eval-matrix.yaml` gains a top-level
+  `baselines:` block (additive, no breaking change). The first
+  registered baseline is `wake_sleep_cl` per Alfarano 2024
+  [IEEE TNNLS, arXiv 2401.08623], the closest published
+  NREM/REM dual-phase analog and Paper 2's primary ablation
+  comparator (Paper 1 §3 introduction.md L94, L108).
+- New module
+  `kiki_oniric/substrates/wake_sleep_cl_baseline.py` — adapter
+  exposing
+  `WakeSleepCLBaseline.evaluate_continual(seed, task_split)`.
+  Variant `c` (default, fixture-stub): published reference
+  values frozen at `forgetting_rate=0.082`,
+  `avg_accuracy=0.847`. **PLACEHOLDER values** pending
+  cross-check against Alfarano 2024 Tables 2-3 PDF (deferred
+  to follow-up).
+- New gate-style driver `scripts/baseline_wake_sleep_cl.py`
+  emits `docs/milestones/wake-sleep-baseline-2026-05-03.{md,
+  json}` with R1 run_ids on the seed grid `[42, 123, 7]`.
+- Loader extension: `harness.config.eval_matrix.EvalMatrix`
+  gains `baselines: dict[str, dict[str, Any]]` (default-empty
+  for back-compat with legacy yamls). Required fields per
+  entry: `bibkey`, `scores_on`, `variant`.
+- Paper 2 §5.8 (architecture.md) + §6.3 (methodology.md) +
+  §7.7 (results.md) updated with the new row, EN ↔ FR
+  mirrored per `docs/papers/CLAUDE.md`. Bibkey
+  `alfarano2024wakesleep` mirrored from `paper1/references.bib`
+  into `paper2/references.bib`. Glossary entry under new
+  "Baselines" section.
+
+### Empirical axis (EC) — UNCHANGED (PARTIAL)
+
+- The baseline row is variant-c (published-reference values,
+  not a re-run). It is **not** an empirical claim ; it
+  validates the comparator pipeline and the schema. Paper 2's
+  EC stays at `+PARTIAL` (cycle-3 deferred Phase 2 cells
+  unchanged).
+- DR-3 conformance unaffected : the baseline does not
+  implement the 4 op factories ; it is registered as a
+  *baseline*, not a substrate. The DR-3 conformance matrix
+  (`scripts/conformance_matrix.py`) is not extended. New test
+  `tests/conformance/test_baseline_registration.py` pins the
+  exemption.
+
+### Notes
+
+- FC bump magnitude (MINOR vs PATCH) follows framework-C
+  spec §12.2 : "addition of new optional primitive / new
+  derived constraint" — the `baselines:` key is the new
+  optional primitive.
+- No OSF amendment triggered : adding a published-reference
+  baseline does not introduce a new pre-registered hypothesis
+  (Paper 2 §6.1 H1-H4 inherited from Paper 1 OSF lock
+  `10.17605/OSF.IO/Q6JYN`).
+
+---
+
 ## [C-v0.11.0+PARTIAL] — 2026-05-02 — K2 phase-coupling invariant
 
 ### Formal axis (FC) — MINOR (v0.10.0 → v0.11.0)
