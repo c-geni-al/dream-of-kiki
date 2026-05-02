@@ -71,3 +71,37 @@ def test_sharon_2025_anchor_constants() -> None:
     assert math.isclose(SHARON_2025_HEALTHY_OLDER_ANCHOR, 1.0)
     assert math.isclose(SHARON_2025_AMCI_MIDPOINT, 0.45)
     assert math.isclose(SHARON_2025_AD_FLOOR, 0.20)
+
+
+def test_so_amplitude_proxy_monotonic_p_max_p_equ_p_min() -> None:
+    """Monotone ordering: proxy(P_max) >= proxy(P_equ) >= proxy(P_min).
+
+    Aligns with DR-4 Lemma DR-4.L (capacity-monotone metric across the
+    profile chain): SO-trough amplitude is a substrate-health proxy
+    that is monotone in capacity. The healthy anchors P_max and P_equ
+    tie at 1.0 (Sharon 2025 healthy-older arm); P_min sits below at
+    0.45 (aMCI midpoint placeholder).
+    """
+    proxy_max = compute_so_amplitude_proxy(PMaxProfile())
+    proxy_equ = compute_so_amplitude_proxy(PEquProfile())
+    proxy_min = compute_so_amplitude_proxy(PMinProfile())
+    assert proxy_max >= proxy_equ, (
+        f"SO-trough monotonicity broken: P_max={proxy_max} < P_equ={proxy_equ}"
+    )
+    assert proxy_equ >= proxy_min, (
+        f"SO-trough monotonicity broken: P_equ={proxy_equ} < P_min={proxy_min}"
+    )
+
+
+def test_so_amplitude_proxy_p_min_strictly_below_p_equ() -> None:
+    """P_min sits *strictly* below the healthy anchor (degraded substrate).
+
+    A strict-inequality assertion guards against accidental upward
+    drift of the P_min default (e.g. someone copy-pasting from P_equ).
+    The 1e-6 margin is paranoid — values are explicit floats not RNG.
+    """
+    proxy_equ = compute_so_amplitude_proxy(PEquProfile())
+    proxy_min = compute_so_amplitude_proxy(PMinProfile())
+    assert proxy_min < proxy_equ - 1e-6, (
+        "P_min must be strictly degraded vs P_equ on SO-trough proxy"
+    )
