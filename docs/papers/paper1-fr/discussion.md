@@ -142,6 +142,52 @@ est la revendication architecturale de DR-3. Une réplication à
 prédicteurs divergents sur données biologiques ou neuromorphiques
 réelles constitue la cible du cycle 3.
 
+## 8.6 Ancrages et limites empiriques
+
+Le Framework C formule des assertions sur des invariants de
+consolidation indépendants du substrat, mais son ancrage
+biologique repose sur une littérature dont la **traduction
+clinique reste fragile**. L'essai 2025 sham-contrôlé le plus
+robuste de stimulation auditive en boucle fermée (CLAS) dans
+l'insomnie chronique (N = 27, plan croisé) rapporte un gain aigu
+d'amplitude d'oscillation lente sans bénéfice comportemental
+mnésique ni amélioration des paramètres de sommeil [medRxiv 2025
+CLAS insomnie], une infirmation critique du récit simpliste
+« plus d'OS ⇒ plus de consolidation ». Les interventions
+multi-nuits à domicile dans la maladie d'Alzheimer exposent un
+artefact dose-réponse délétère : les patients avec le moins de
+sommeil lent à l'inclusion — la population qui en aurait le plus
+besoin — reçoivent le moins de stimulations [AJGP 2024 CLAS
+home], un effet de plancher que nous traitons comme exogène à
+l'invariant K1 de budget fini du framework.
+
+Au niveau mécanistique, seuls ~10–30 % des sharp-wave ripples du
+sommeil portent un contenu de réactivation détectable [Annu.
+Rev. 2025 replay], une sélectivité que DR-2 (downscaling) et le
+récit plus large piloté par la réactivation ne doivent pas
+surclamer. Schreiner et al. [Schreiner et al. 2024 J. Neurosci.]
+montrent en outre que la réactivation mnésique ciblée n'agit
+**pas** holistiquement sur la mémoire des objets pendant le
+sommeil, alimentant le débat encore ouvert sur quelles
+caractéristiques mnésiques sont sensibles au sommeil. Le paysage
+de réplication CLAS lui-même est hétérogène et atténué par
+l'âge, avec des effets plus faibles sur les tâches procédurales
+[npj Sci. Learn. 2025 CLAS].
+
+La critique de Cordi & Rasch 2021 [Cordi & Rasch 2021] reste le
+contrepoids portant aux récits enthousiastes — les effets du
+sommeil sur la mémoire sont plus petits, plus dépendants de la
+tâche, moins liés au SWS, moins robustes et moins durables que
+ne le supposait la littérature antérieure. Tout futur travail
+empirique dans ce programme adoptera la check-list méthodologique
+de référence de *Nature Reviews Psychology* 2023 [Nat. Rev.
+Psychol. 2023 méthodologie] (plans sham-contrôlés, rapport
+dose-réponse, attention au confondage plan-séquentiel /
+récupération-vs-restudy). Ces conditions limites resserrent le
+périmètre de toute revendication empirique que le framework peut
+porter, ainsi que le type de validation de substrat du cycle 3
+qui compterait comme confirmatif.
+
 ---
 
 ## Notes pour révision

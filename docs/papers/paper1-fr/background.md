@@ -10,15 +10,35 @@ La consolidation mnésique dépendante du sommeil désigne le
 phénomène établi empiriquement selon lequel les souvenirs
 nouvellement encodés sont sélectivement renforcés, abstraits et
 intégrés au stockage à long terme pendant le sommeil [Walker &
-Stickgold 2004, Stickgold 2005]. La réactivation hippocampique
-durant le sommeil lent NREM est le substrat neural le plus
-directement impliqué. Le propos fonctionnel est que la réactivation
-effectue des **mises à jour de type gradient** sur les
-représentations corticales, biaisées vers la rétention des épisodes
-rejoués — ce qui équivaut dans notre framework à l'opération
-`replay` : échantillonner des épisodes du tampon β, les propager
-en avant à travers les paramètres courants, appliquer des mises à
-jour par gradient contre un objectif de rétention.
+Stickgold 2004, Stickgold 2005]. La littérature intégrative 2025
+re-cadre désormais ce processus comme « consolidation systémique
+active enchâssée dans une régulation à la baisse synaptique
+globale », réconciliant partiellement les traditions
+Born/Diekelmann [Klinzing et al. 2019] et Tononi/Cirelli [PMC
+2025]. La réactivation hippocampique durant le sommeil lent NREM
+est le substrat neural le plus directement impliqué, conditionnée
+par l'imbrication temporellement précise des oscillations lentes,
+des fuseaux thalamocorticaux et des sharp-wave ripples [Trends
+2024 coupled]. Une méta-analyse bayésienne portant sur 297 tailles
+d'effet établit le couplage de phase oscillation lente / fuseau
+rapide comme prédicteur quantitativement étayé du bénéfice
+mnésique (couplage = 0,33 [0,27 ; 0,39] ; BF > 58 vs nul ; aucun
+biais de publication détecté sur la branche phase) [eLife 2025
+bayesian]. Le boosting optogénétique en boucle fermée des grands
+sharp-wave ripples pendant le sommeil est *suffisant* pour
+convertir un apprentissage sous-seuil en rappel réussi le
+lendemain, faisant passer le champ d'une preuve corrélationnelle
+à une preuve interventionnelle [Neuron 2025 large SWR]. Le propos
+fonctionnel est que la réactivation effectue des **mises à jour
+de type gradient** sur les représentations corticales, biaisées
+vers la rétention des épisodes rejoués — ce qui équivaut dans
+notre framework à l'opération `replay` : échantillonner des
+épisodes du tampon β, les propager en avant à travers les
+paramètres courants, appliquer des mises à jour par gradient
+contre un objectif de rétention. Seuls ~10–30 % des SWR du
+sommeil portent un contenu de réactivation détectable ; le
+framework ne doit donc pas surclamer la densité d'événements
+[Annu. Rev. 2025 replay].
 
 ## 3.2 Pilier B — Homéostasie synaptique SHY de Tononi
 
@@ -47,7 +67,19 @@ matériel émotionnellement significatif [Hobson 2009, Solms 2021].
 Le mécanisme est hypothéquement un échantillonnage de style
 modèle génératif à partir d'une représentation latente des
 expériences récentes, produisant des combinaisons nouvelles qui
-sondent les frontières de la structure apprise. Dans notre
+sondent les frontières de la structure apprise — opérationnalisé
+dans le modèle de consolidation générative de Spens & Burgess
+sous la forme d'une réactivation autoassociative hippocampique
+qui entraîne des autoencodeurs variationnels néocorticaux,
+rendant compte du rappel épisodique, de l'imagination et des
+distorsions de schéma dans un seul espace latent indépendant du
+substrat [Spens & Burgess 2024]. La dichotomie nette « REM =
+émotionnel / NREM = déclaratif » s'effondre : le cueing TMR en
+NREM renforce déjà la mémoire des items émotionnels, le REM
+contribuant de manière complémentaire [CommsBio 2025
+emotional], et la synthèse 2025 de *Nature Reviews Neuroscience*
+soutient un modèle **séquentiel** SWS-puis-REM plutôt qu'une
+partition compétitive [Robertson 2025 NRN]. Dans notre
 framework, ceci se projette sur l'opération `recombine` :
 échantillonner les latents du snapshot δ, appliquer un VAE allégé
 ou un noyau d'interpolation, émettre de nouveaux échantillons
@@ -78,9 +110,13 @@ la référence de garde S3 dans
 Les travaux existants en IA ont implémenté un ou deux des quatre
 piliers (notamment A via van de Ven 2020 replay génératif et B
 via Kirkpatrick 2017 EWC, traité comme régulateur adjacent à SHY).
-Cependant, aucun travail antérieur n'a **formalisé la composition**
-des quatre opérations comme structure algébrique unifiée à
-propriétés prouvables.
+Un substrat computationnel à deux réseaux alternant réactivation
+hors ligne NREM et REM a été montré comme produisant un transfert
+autonome hippocampe → cortex avec rétention, faisant le pont
+mécanistique entre les comptes de consolidation systémique active
+et SHY [PNAS 2022 dual-stage]. Cependant, aucun travail antérieur
+n'a **formalisé la composition** des quatre opérations comme
+structure algébrique unifiée à propriétés prouvables.
 
 La lacune compositionnelle importe empiriquement, car notre
 analyse des paires d'opérations

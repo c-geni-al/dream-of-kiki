@@ -11,10 +11,19 @@ Framework (OSF) avant toute exécution empirique, selon le gabarit
 Standard Pre-Data Collection. Le pré-enregistrement a été
 verrouillé à S3 du cycle (référence calendaire) ; le DOI OSF est
 cité dans les pages liminaires de l'article et se résout en un
-enregistrement horodaté immuable.
+enregistrement horodaté immuable. Cette discipline s'aligne sur
+la pratique standard désormais explicitement recommandée pour les
+méta-analyses de consolidation mnésique liée au sommeil [eLife
+2025 bayesian] et reflète le protocole suivi par le projet sœur
+`bouba_sens` (DOI 10.17605/OSF.IO/Q6JYN).
 
 - **H1 — Réduction de l'oubli** : `mean(forgetting_P_equ) <
   mean(forgetting_baseline)`. Test : t de Welch, unilatéral.
+  *Plancher de taille d'effet* : la méta-analyse de la
+  réactivation mnésique ciblée [Hu et al. 2020 TMR] rapporte un
+  Hedges' g global de 0,29 (NREM2 g = 0,32 ; SWS g = 0,27) comme
+  plancher empirique canonique pour les gains de consolidation
+  de type `P_equ`.
 - **H2 — Équivalence P_max** : `|mean(acc_P_max) -
   mean(acc_P_equ)| < 0.05`. Test : deux tests unilatéraux (TOST).
   *Statut cycle 1* : test de fumée d'auto-équivalence uniquement
@@ -22,7 +31,11 @@ enregistrement horodaté immuable.
 - **H3 — Alignement monotone** : `mean(acc_P_min) <
   mean(acc_P_equ) < mean(acc_P_max)`. Test :
   Jonckheere-Terpstra. *Statut cycle 1* : deux groupes
-  (P_min ↔ P_equ) uniquement.
+  (P_min ↔ P_equ) uniquement. *Plancher de taille d'effet pour
+  le bras P_min* : la méta-analyse sur la restriction de sommeil
+  [Javadi et al. 2024 sleep restriction] rapporte g = 0,29 [0,13 ;
+  0,44] sans biais de publication détecté comme magnitude
+  attendue du décrément de substrat dégradé.
 - **H4 — Budget énergétique** : `mean(energy_dream / energy_awake)
   < 2.0`. Test : t à un échantillon contre seuil.
 
@@ -109,6 +122,24 @@ EC) tague chaque artefact avec la version du framework sous
 laquelle il a été produit. Les résultats empiriques ne sont
 valides que contre le `c_version` déclaré ; un bump FC-MAJOR
 invalide EC et nécessite de réexécuter la matrice affectée.
+
+## 6.6 Ancrage biologique des profils et de DR-2'
+
+Les trois profils sont calibrés sur des biomarqueurs de niveau
+substrat rapportés dans la littérature du sommeil humain.
+`P_min` (substrat dégradé) est ancré sur l'amplitude du creux de
+l'oscillation lente et sur le gradient de synchronisation
+fronto-central documentés à travers les groupes de sujets âgés
+sains / aMCI / MA (N = 55 hd-EEG) [Sharon et al. 2025 Alzheimer
+Dementia], où la performance cognitive décroît de façon monotone
+avec la perte de cohérence de l'onde lente. `P_equ` (substrat
+canonique) est calibré pour reproduire la bande de tailles
+d'effet NREM2/SWS rapportée dans [Hu et al. 2020 TMR]. L'axiome
+falsifié-puis-amendé DR-2' (réactivation entrelacée
+nouveau-hippocampique + familier-cortical, voir
+`docs/specs/amendments/`) hérite son ancrage biologique du
+résultat d'entrelacement up-state SWS de [bioRxiv 2025
+thalamocorticale].
 
 ---
 
