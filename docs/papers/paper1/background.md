@@ -9,23 +9,40 @@
 Sleep-dependent memory consolidation refers to the empirically
 established phenomenon that newly encoded memories are
 selectively strengthened, abstracted, and integrated into long-
-term storage during sleep [Walker & Stickgold 2004, Stickgold
-2005]. Hippocampal replay during NREM slow-wave sleep is the
-neural substrate most directly implicated. The functional claim
-is that replay performs **gradient-like updates** on cortical
-representations, biased toward retention of the replayed
-episodes — equivalent in our framework to the `replay`
-operation : sample β-buffer episodes, forward through the
-current parameters, apply gradient updates against a retention
-objective.
+term storage during sleep [@walker2004sleep; @stickgold2005sleep].
+The 2025 integrative literature now reframes this process as
+"active systems consolidation embedded in global synaptic
+downscaling," partially reconciling the Born/Diekelmann
+[@klinzing2019mechanisms] and Tononi/Cirelli traditions
+[@pmc2025systems]. Hippocampal replay during NREM slow-wave
+sleep is the neural substrate most directly implicated, gated by
+the temporally precise nesting of slow oscillations,
+thalamocortical spindles, and sharp-wave ripples
+[@trends2024coupled]. A Bayesian meta-analysis of 297 effect
+sizes establishes SO-fast-spindle phase coupling as a
+quantitatively grounded predictor of memory benefit
+(coupling = 0.33 [0.27, 0.39], BF > 58 vs. null, no detected
+publication bias on the phase branch) [@elife2025bayesian].
+Closed-loop optogenetic boosting of large sharp-wave ripples
+during sleep is *sufficient* to convert sub-threshold learning
+into successful next-day recall, moving the field from
+correlational to interventional grade evidence
+[@neuron2025largeswr]. The functional claim is that replay
+performs **gradient-like updates** on cortical representations,
+biased toward retention of the replayed episodes — equivalent in
+our framework to the `replay` operation : sample β-buffer
+episodes, forward through the current parameters, apply gradient
+updates against a retention objective. Only ~10–30 % of sleep
+SWRs carry detectable replay content, so the framework should
+not over-claim event density [@annurev2025replay].
 
 ## 3.2 Pillar B — Tononi SHY synaptic homeostasis
 
 The Synaptic Homeostasis Hypothesis (SHY) posits that wakefulness
 drives net synaptic potentiation, and sleep enforces global
 synaptic downscaling that restores signal-to-noise ratio without
-erasing the differential strengthening pattern [Tononi & Cirelli
-2014]. The downscaling is empirically supported by ultrastructural
+erasing the differential strengthening pattern
+[@tononi2014sleep]. The downscaling is empirically supported by ultrastructural
 evidence (synapse size reductions during sleep) and by behavioral
 evidence (sleep-dependent improvement on previously trained
 tasks). In our framework, SHY corresponds to the `downscale`
@@ -40,20 +57,31 @@ canonical ordering choices.
 
 REM dreaming is associated with creative recombination,
 counterfactual scenario generation, and integration of
-emotionally significant material [Hobson 2009, Solms 2021]. The
-mechanism is hypothesized to be a generative-model-style
+emotionally significant material [@hobson2009rem; @solms2021revising].
+The mechanism is hypothesized to be a generative-model-style
 sampling from a latent representation of recent experiences,
 producing novel combinations that probe the boundaries of
-learned structure. In our framework, this maps to the
+learned structure — operationalized in the Spens-Burgess
+generative-consolidation model as hippocampal autoassociative
+replay training neocortical variational autoencoders, which
+account for episodic recall, imagination, and schema-based
+distortions in a single substrate-agnostic latent space
+[@spens2024generative]. The clean "REM = emotional /
+NREM = declarative" dichotomy is collapsing : NREM TMR cueing
+already enhances emotional-item memory with REM contributing
+complementarily [@commsbio2025emotional], and the 2025
+*Nature Reviews Neuroscience* synthesis supports a **sequential**
+SWS-then-REM model rather than a competitive split
+[@robertson2025nrn]. In our framework, this maps to the
 `recombine` operation : sample latents from the δ snapshot,
 apply a VAE-light or interpolation kernel, emit new latent
 samples on canal 2.
 
 ## 3.4 Pillar D — Friston Free Energy Principle
 
-The Free Energy Principle (FEP) [Friston 2010] frames perception,
-action, and learning as the minimization of variational free
-energy under a hierarchical generative model. Within FEP, sleep
+The Free Energy Principle (FEP) [@friston2010free] frames
+perception, action, and learning as the minimization of
+variational free energy under a hierarchical generative model. Within FEP, sleep
 is interpreted as an offline phase that **restructures** the
 generative model to better minimize expected free energy on the
 distribution of waking inputs. In our framework, this corresponds
@@ -70,8 +98,13 @@ the S3 guard reference in
 ## 3.5 The compositional gap
 
 Existing AI work has implemented one or two of the four pillars
-(notably A via van de Ven 2020 generative replay and B via
-Kirkpatrick 2017 EWC, treated as a SHY-adjacent regularizer).
+(notably A via van de Ven 2020 generative replay
+[@vandeven2020brain] and B via Kirkpatrick 2017 EWC
+[@kirkpatrick2017overcoming], treated as a SHY-adjacent
+regularizer). A two-network computational substrate alternating
+NREM and REM offline replay has been shown to produce autonomous
+hippocampus → cortex transfer with retention, mechanistically
+bridging active-systems and SHY accounts [@pnas2022dualstage].
 However, no prior work has **formalized the composition** of all
 four operations as a unified algebraic structure with provable
 properties.
@@ -109,7 +142,7 @@ contract for substrate-agnosticism.
 ## Notes for revision
 
 - Insert proper bibtex citations (S19.3 references.bib) using
-  `\cite{walker2004sleep}` etc. once full draft is rendered
+  `[@walker2004sleep]` etc. once full draft is rendered
 - Tighten §3.5 to ~300 words for Nature HB main-text discipline
 - Add Background supplementary figure : conceptual diagram
   of the four pillars with their dreamOfkiki op mappings

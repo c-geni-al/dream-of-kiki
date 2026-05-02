@@ -11,16 +11,27 @@ Four hypotheses were pre-registered on the Open Science Framework
 Collection template. Pre-registration was locked at S3 of the
 cycle (calendar reference) ; the OSF DOI is cited in the paper
 front matter and resolves to an immutable timestamp record.
+This discipline aligns with the standard practice now explicitly
+recommended for sleep-consolidation meta-analyses
+[@elife2025bayesian] and mirrors the protocol followed by the
+sister project `bouba_sens` (DOI 10.17605/OSF.IO/Q6JYN).
 
 - **H1 — Forgetting reduction** : `mean(forgetting_P_equ) <
   mean(forgetting_baseline)`. Test : Welch's t-test, one-sided.
+  *Effect-size floor* : the targeted memory reactivation
+  meta-analysis [@hu2020tmr] reports overall Hedges' g = 0.29
+  (NREM2 g = 0.32, SWS g = 0.27) as the canonical empirical
+  floor for `P_equ`-style consolidation gains.
 - **H2 — P_max equivalence** : `|mean(acc_P_max) -
   mean(acc_P_equ)| < 0.05`. Test : two one-sided tests (TOST).
   *Cycle 1 status* : self-equivalence smoke only (P_max skeleton).
 - **H3 — Monotonic alignment** : `mean(acc_P_min) <
   mean(acc_P_equ) < mean(acc_P_max)`. Test :
   Jonckheere-Terpstra. *Cycle 1 status* : two-group (P_min ↔
-  P_equ) only.
+  P_equ) only. *Effect-size floor for the P_min arm* : the sleep
+  restriction meta-analysis [@javadi2024sleeprestriction] reports
+  g = 0.29 [0.13, 0.44] with no detected publication bias as the
+  expected magnitude of the degraded-substrate decrement.
 - **H4 — Energy budget** : `mean(energy_dream / energy_awake)
   < 2.0`. Test : one-sample t-test against threshold.
 
@@ -100,6 +111,22 @@ EC) tags each artifact with the framework version under which
 it was produced. Empirical results are valid only against the
 declared `c_version` ; bumping FC-MAJOR invalidates EC and
 requires re-running the affected matrix.
+
+## 6.6 Biological grounding of profiles and DR-2'
+
+The three profiles are calibrated against substrate-level
+biomarkers reported in the human sleep literature.
+`P_min` (degraded substrate) is anchored on the slow-oscillation
+trough amplitude and frontocentral synchronization gradient
+documented across healthy older / aMCI / AD groups (N = 55
+hd-EEG) [@sharon2025alzdementia], where cognitive performance
+decreases monotonically with the loss of slow-wave coherence.
+`P_equ` (canonical substrate) is calibrated to reproduce the
+NREM2/SWS effect-size band reported in [@hu2020tmr]. The DR-2'
+falsified-and-amended axiom (interleaved novel-hippocampal +
+familiar-cortical replay, see `docs/specs/amendments/`) inherits
+its biological grounding from the SWS up-state interleaving
+result of [@biorxiv2025thalamocortical].
 
 ---
 

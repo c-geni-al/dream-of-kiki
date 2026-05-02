@@ -17,21 +17,27 @@ License : Creative Commons Attribution 4.0 International (CC-BY-4.0)
 
 Modern artificial cognitive systems excel at single-task learning
 but degrade rapidly when trained sequentially across tasks — a
-phenomenon known as **catastrophic forgetting** [McCloskey & Cohen
-1989, French 1999]. Despite two decades of mitigation strategies
-(elastic weight consolidation [Kirkpatrick et al. 2017], generative
-replay [Shin et al. 2017], rehearsal-based memory [Rebuffi et al.
-2017]), the field still lacks a *unified theoretical account* of
-why these mechanisms work and when they should compose.
+phenomenon known as **catastrophic forgetting**
+[@mccloskey1989catastrophic; @french1999catastrophic]. Despite two
+decades of mitigation strategies (elastic weight consolidation
+[@kirkpatrick2017overcoming], generative replay
+[@shin2017continual], rehearsal-based memory [@rebuffi2017icarl]),
+the field still lacks a *unified theoretical account* of why these
+mechanisms work and when they should compose. Recent surveys of
+the continual-learning literature identify latent replay as the
+emerging consensus mechanism across five years of methods
+[@vandeven2024clmonograph], yet do not derive that consensus from
+first principles.
 
 Biological cognition solves this problem during **sleep**.
 Hippocampal replay during NREM, synaptic downscaling, predictive
 restructuring of cortical representations, and creative
 recombination during REM together form a multi-stage
-consolidation pipeline [Diekelmann & Born 2010, Tononi & Cirelli
-2014]. Yet existing AI work has integrated only fragments of this
-biology, typically focusing on a single mechanism (e.g., replay
-alone) without a principled account of how mechanisms interact.
+consolidation pipeline [@diekelmann2010memory; @tononi2014sleep;
+@robertson2025nrn]. Yet existing AI work has integrated only
+fragments of this biology, typically focusing on a single
+mechanism (e.g., replay alone) without a principled account of
+how mechanisms interact.
 
 ## 2. Four pillars of dream-based consolidation
 
@@ -39,18 +45,19 @@ We identify four theoretical pillars that any complete
 dream-inspired AI consolidation framework must address :
 
 - **A — Walker/Stickgold consolidation** : episodic-to-semantic
-  transfer via replay [Walker & Stickgold 2004, Stickgold 2005].
+  transfer via replay [@walker2004sleep; @stickgold2005sleep].
 - **B — Tononi SHY** : synaptic homeostasis renormalizing weights
-  during sleep [Tononi & Cirelli 2014].
+  during sleep [@tononi2014sleep].
 - **C — Hobson/Solms creative dreaming** : recombination and
-  abstraction during REM [Hobson 2009, Solms 2021].
+  abstraction during REM [@hobson2009rem; @solms2021revising].
 - **D — Friston FEP** : minimization of free energy as a unifying
-  account of inference and consolidation [Friston 2010].
+  account of inference and consolidation [@friston2010free].
 
-Prior AI work has implemented A (van de Ven et al. 2020), B
-(Kirkpatrick et al. 2017 as a SHY-adjacent regularization), and
-elements of D (Rao & Ballard 1999, Whittington & Bogacz 2017),
-but **no work has formalized how the four pillars compose** in a
+Prior AI work has implemented A [@vandeven2020brain;
+@spens2024generative], B [@kirkpatrick2017overcoming as a
+SHY-adjacent regularization], and elements of D
+[@rao1999predictive; @whittington2017approximation], but **no work
+has formalized how the four pillars compose** in a
 substrate-agnostic manner amenable to ablation and proof.
 
 ## 3. The compositional gap
@@ -71,6 +78,38 @@ make explicit which compositions are valid, (iii) provide an
 **executable** account that any compliant substrate can implement,
 and (iv) support empirical ablation comparing different operation
 profiles. None of the prior art does all four.
+
+Three research communities have converged on the same architectural
+pattern from independent directions. **Continual learning** has
+settled on latent replay as the dominant mitigation for catastrophic
+forgetting [@vandeven2024clmonograph]. **Industry LLM research** is
+reinventing the construct as a metaphor: Berkeley's *sleep-time
+compute* reports +13–18 % accuracy and 5× compute amortisation by
+pre-processing context offline, but makes no explicit reference to
+biological sleep [@berkeley2025sleeptimecompute]; Google Research's
+Titans introduces a test-time neural memory module learnt at
+inference up to 2 M tokens, without principled grounding in
+consolidation theory [@behrouz2024titans]. **Concurrent academic
+proposals** are beginning to close that gap — *Wake-Sleep
+Consolidated Learning* [@alfarano2024wakesleep] is, to our
+knowledge, the closest published NREM/REM dual-phase analog, and
+the contemporaneous *Language Models Need Sleep* proposal couples
+RL-based upward distillation with intentional forgetting
+[@iclr2026lmsleep]. Neuromorphic substrates show the same
+convergence: CLP-SNN on Loihi 2 reports 70× speed and 5,600×
+energy efficiency over GPU baselines for offline replay
+[@hajizada2025clpsnn]. Three communities, one architectural
+shape, and **no published 2024–2026 work formally maps the
+SO–spindle–ripple triad onto a substrate-agnostic computational
+invariant** : neuroscience has the mechanism, AI has the function
+(replay → no-forgetting), neither yet has the axiomatic bridge.
+Framework C is positioned at that bridge, with the four pillars
+above as conceptual anchors, the closest empirical analog
+[@alfarano2024wakesleep] retained as Paper 2's primary ablation
+comparator, and the concurrent proposals
+[@iclr2026lmsleep; @berkeley2025sleeptimecompute] read as
+independent corroboration of the underlying need rather than as
+prior art on the formal contribution.
 
 ## 4. Contribution roadmap
 

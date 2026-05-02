@@ -133,6 +133,46 @@ a structurally independent second substrate registration, which is
 the architectural claim of DR-3. A divergent-predictor replication
 on real biological or neuromorphic data is the cycle-3 target.
 
+## 8.6 Empirical anchors and limits
+
+Framework C makes claims about substrate-agnostic consolidation
+invariants, but its biological grounding rests on a literature
+whose **clinical translation remains fragile**. The strongest
+2025 sham-controlled trial of closed-loop auditory stimulation
+(CLAS) in chronic insomnia (N=27, crossover) reported acute
+slow-oscillation amplitude gain without behavioural memory or
+sleep-outcome benefit [@medrxiv2025clasinsomnia], a critical
+disconfirmation of the simplistic "more SO ⇒ more consolidation"
+narrative. Multi-night home interventions in Alzheimer's disease
+expose a damaging dose-response artifact : patients with the
+lowest baseline slow-wave sleep — the population most needing the
+intervention — receive the fewest stimulations
+[@ajgp2024clashome], a floor effect we treat as exogenous to the
+framework's finite-budget invariant K1.
+
+At the mechanism level, only ~10–30 % of sleep sharp-wave ripples
+carry detectable replay content [@annurev2025replay], a
+selectivity that DR-2 (downscaling) and the wider replay-driven
+narrative must not over-claim. Schreiner et al. [@schreiner2024jneurosci]
+further show that targeted memory reactivation does **not** act
+holistically on object memory during sleep, fuelling the still-open
+debate about which memory features are sleep-sensitive. The CLAS
+replication landscape itself is heterogeneous and age-attenuated,
+with weaker effects on procedural tasks [@npjscilearn2025clas].
+
+Cordi & Rasch's 2021 critique [@cordi2021robust] remains the
+load-bearing counterweight to enthusiastic narratives — sleep
+effects on memory are smaller, more task-dependent, less
+SWS-related, less robust and less long-lasting than previously
+assumed. Any future empirical work in this programme will adopt
+the gold-standard methodology checklist of *Nature Reviews
+Psychology* 2023 [@natrevpsych2023methodology] (sham-controlled
+designs, dose-response reporting, awareness of the
+sequential-design / retrieval-vs-restudy confound). These
+boundary conditions tighten the scope of every empirical claim
+the framework can support and the kind of cycle-3 substrate
+validation that would count as confirmatory.
+
 ---
 
 ## Notes for revision
