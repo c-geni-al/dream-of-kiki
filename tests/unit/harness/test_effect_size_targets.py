@@ -114,3 +114,23 @@ def test_hu2020_sws_matches_published() -> None:
     assert HU_2020_SWS.ci_high == 0.35
     assert HU_2020_SWS.stratum == "SWS"
     assert HU_2020_SWS.profile_target == "P_equ"
+
+
+# ----------------------------------------------------------------------
+# Javadi 2024 sleep-restriction meta-analysis constants
+# ----------------------------------------------------------------------
+
+
+def test_javadi2024_overall_matches_published() -> None:
+    """[@javadi2024sleeprestriction] g = 0.29 [0.13, 0.44], k=39, N=1234."""
+    from harness.benchmarks.effect_size_targets import JAVADI_2024_OVERALL
+
+    assert JAVADI_2024_OVERALL.hedges_g == 0.29
+    assert JAVADI_2024_OVERALL.ci_low == 0.13
+    assert JAVADI_2024_OVERALL.ci_high == 0.44
+    assert JAVADI_2024_OVERALL.k_studies == 39
+    assert JAVADI_2024_OVERALL.sample_size_n == 1234
+    assert JAVADI_2024_OVERALL.source_bibtex_key == "javadi2024sleeprestriction"
+    # P_min : sleep restriction = degraded substrate decrement floor
+    assert JAVADI_2024_OVERALL.profile_target == "P_min"
+    assert JAVADI_2024_OVERALL.stratum is None

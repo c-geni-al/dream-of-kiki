@@ -104,3 +104,22 @@ HU_2020_SWS: EffectSizeTarget = EffectSizeTarget(
     profile_target="P_equ",
     stratum="SWS",
 )
+
+
+# ----------------------------------------------------------------------
+# Javadi et al. 2024 sleep-restriction meta (Neurosci Biobehav Rev)
+# 39 reports, 125 effect sizes, N = 1234, no detected pub bias
+# Source : docs/papers/paper1/references.bib :: javadi2024sleeprestriction
+# ----------------------------------------------------------------------
+
+JAVADI_2024_OVERALL: EffectSizeTarget = EffectSizeTarget(
+    name="javadi2024_overall",
+    hedges_g=0.29,
+    ci_low=0.13,
+    ci_high=0.44,
+    sample_size_n=1234,
+    k_studies=39,
+    source_bibtex_key="javadi2024sleeprestriction",
+    profile_target="P_min",
+    stratum=None,
+)
