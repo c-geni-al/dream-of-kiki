@@ -148,7 +148,7 @@ def test_estimator_one_for_perfect_coupling() -> None:
 
 
 @given(seed=st.integers(min_value=0, max_value=2**31 - 1))
-@settings(deadline=None, max_examples=50)
+@settings(deadline=None, max_examples=50, derandomize=True)
 def test_k2_property_synthetic_in_window(seed: int) -> None:
     """K2: synthetic substrate's MVL falls inside eLife 2025 95 % CI.
 
