@@ -63,7 +63,7 @@ def test_compute_so_amplitude_proxy_rejects_non_profile() -> None:
         pass
 
     with pytest.raises(TypeError, match="so_trough_amplitude_factor"):
-        compute_so_amplitude_proxy(_NotAProfile())  # type: ignore[arg-type]
+        compute_so_amplitude_proxy(_NotAProfile())
 
 
 def test_sharon_2025_anchor_constants() -> None:
@@ -148,3 +148,24 @@ def test_so_amplitude_proxy_independent_of_p_max_rng_seed() -> None:
         compute_so_amplitude_proxy(profile_a)
         == compute_so_amplitude_proxy(profile_b)
     )
+
+
+def test_so_calibration_coexists_with_dr4_chain_inclusion() -> None:
+    """SO calibration field must not perturb DR-4 ops/channels chain.
+
+    Cross-check: instantiate all three profiles, verify their op-handler
+    registries still satisfy DR-4 chain inclusion in the presence of
+    the new calibration field. This is a regression guard, not the
+    axiom test (cf. tests/conformance/axioms/test_dr4_profile_inclusion.py).
+    """
+    p_min = PMinProfile()
+    p_equ = PEquProfile()
+    p_max = PMaxProfile()
+    ops_min = set(p_min.runtime._handlers.keys())
+    ops_equ = set(p_equ.runtime._handlers.keys())
+    assert ops_min <= ops_equ, "DR-4 ops chain regressed under SO calibration"
+    assert ops_equ <= p_max.target_ops, "DR-4 P_equ subset P_max regressed"
+    # And the SO proxy still evaluates on each — no AttributeError.
+    _ = compute_so_amplitude_proxy(p_min)
+    _ = compute_so_amplitude_proxy(p_equ)
+    _ = compute_so_amplitude_proxy(p_max)
