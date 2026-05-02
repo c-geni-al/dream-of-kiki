@@ -132,7 +132,15 @@ l'oscillation lente et sur le gradient de synchronisation
 fronto-central documentés à travers les groupes de sujets âgés
 sains / aMCI / MA (N = 55 hd-EEG) [Sharon et al. 2025 Alzheimer
 Dementia], où la performance cognitive décroît de façon monotone
-avec la perte de cohérence de l'onde lente. `P_equ` (substrat
+avec la perte de cohérence de l'onde lente. La calibration est
+implémentée comme un champ `so_trough_amplitude_factor` sur la
+dataclass de profil (`kiki_oniric/profiles/p_min.py`), avec la
+valeur ratio sans-unité `0,45` pour `P_min` (placeholder médian
+aMCI) et `1,0` pour les ancres saines `P_equ` / `P_max`. Sharon
+2025 rapporte le gradient qualitativement (pas d'amplitude
+SO-trough absolue en µV) ; la valeur placeholder sera affinée
+empiriquement lors du pilote G2 P_min
+(`scripts/pilot_g2.py`). `P_equ` (substrat
 canonique) est calibré pour reproduire la bande de tailles
 d'effet NREM2/SWS rapportée dans [Hu et al. 2020 TMR]. L'axiome
 falsifié-puis-amendé DR-2' (réactivation entrelacée

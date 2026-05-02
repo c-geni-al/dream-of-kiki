@@ -121,6 +121,14 @@ trough amplitude and frontocentral synchronization gradient
 documented across healthy older / aMCI / AD groups (N = 55
 hd-EEG) [@sharon2025alzdementia], where cognitive performance
 decreases monotonically with the loss of slow-wave coherence.
+The calibration is realised in code as a
+`so_trough_amplitude_factor` field on the profile dataclass
+(`kiki_oniric/profiles/p_min.py`), with the unit-arbitrary ratio
+`0.45` for `P_min` (aMCI midpoint placeholder) and `1.0` for the
+healthy anchors `P_equ` / `P_max`. Sharon 2025 reports the
+gradient qualitatively (no absolute SO-trough amplitude in µV);
+the placeholder ratio will be refined to an empirical value at
+the G2 P_min pilot (`scripts/pilot_g2.py`).
 `P_equ` (canonical substrate) is calibrated to reproduce the
 NREM2/SWS effect-size band reported in [@hu2020tmr]. The DR-2'
 falsified-and-amended axiom (interleaved novel-hippocampal +
