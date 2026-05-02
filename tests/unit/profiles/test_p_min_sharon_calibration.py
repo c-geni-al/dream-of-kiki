@@ -105,3 +105,46 @@ def test_so_amplitude_proxy_p_min_strictly_below_p_equ() -> None:
     assert proxy_min < proxy_equ - 1e-6, (
         "P_min must be strictly degraded vs P_equ on SO-trough proxy"
     )
+
+
+def test_so_amplitude_proxy_deterministic_across_instances() -> None:
+    """Two independent P_min instances yield identical proxy values.
+
+    Calibration must be a constant of the profile class, not RNG-driven.
+    R1 reproducibility contract: same (c_version, profile, seed) ->
+    same proxy value.
+    """
+    assert (
+        compute_so_amplitude_proxy(PMinProfile())
+        == compute_so_amplitude_proxy(PMinProfile())
+    )
+
+
+def test_so_amplitude_proxy_independent_of_p_equ_rng_seed() -> None:
+    """Seeding the P_equ rng field does not perturb the SO proxy.
+
+    Guards against accidental future coupling between the recombine_light
+    RNG (P_equ.rng) and the calibration field.
+    """
+    import random
+
+    rng_a = random.Random(0)
+    rng_b = random.Random(424242)
+    profile_a = PEquProfile(rng=rng_a)
+    profile_b = PEquProfile(rng=rng_b)
+    assert (
+        compute_so_amplitude_proxy(profile_a)
+        == compute_so_amplitude_proxy(profile_b)
+    )
+
+
+def test_so_amplitude_proxy_independent_of_p_max_rng_seed() -> None:
+    """Seeding the P_max rng field does not perturb the SO proxy."""
+    import random
+
+    profile_a = PMaxProfile(rng=random.Random(0))
+    profile_b = PMaxProfile(rng=random.Random(424242))
+    assert (
+        compute_so_amplitude_proxy(profile_a)
+        == compute_so_amplitude_proxy(profile_b)
+    )
