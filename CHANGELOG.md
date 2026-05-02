@@ -10,6 +10,31 @@ see `docs/specs/2026-04-17-dreamofkiki-framework-C-design.md` §12).
 
 ---
 
+## [Unreleased]
+
+### Added
+- `kiki_oniric.profiles.so_calibration` module with
+  `compute_so_amplitude_proxy()` reader and Sharon 2025 anchor
+  constants (HEALTHY_OLDER=1.0, AMCI_MIDPOINT=0.45, AD_FLOOR=0.20).
+  Reference: docs/papers/paper1/methodology.md §6.6.
+- `so_trough_amplitude_factor: float` field on `PMinProfile` (default
+  `0.45`, aMCI midpoint placeholder), `PEquProfile` (default `1.0`),
+  `PMaxProfile` (default `1.0`). Sharon et al. 2025
+  (sharon2025alzdementia) qualitative calibration; final empirical
+  value deferred to G2 P_min pilot.
+- `tests/unit/profiles/test_p_min_sharon_calibration.py` (13 tests):
+  default values, proxy reader, monotonicity P_max ≥ P_equ ≥ P_min,
+  seed-independence, DR-4 chain coexistence guard.
+
+### Versioning
+- **No DualVer bump.** Calibration is profile metadata, not an axiom
+  statement, primitive signature, channel set, or invariant ID
+  change. FC stays at v0.10.0; EC stays PARTIAL. Per framework-C
+  spec §12 (only spec/proof changes trigger FC; only gate results
+  trigger EC).
+
+---
+
 ## [C-v0.10.0+PARTIAL] — 2026-04-22 — micro-kiki recombine TIES-merge (PR #13)
 
 ### Added — `recombine_handler_factory` (FC-MINOR, repo 0.9.0 → 0.10.0)
