@@ -196,6 +196,39 @@ Article 2 est brouillonnée ; mais la force empirique de la
 revendication attend une réplication à prédicteur
 divergent du cycle-3.
 
+## 7.7 Ligne de base Wake-Sleep CL (Alfarano 2024)
+
+En plus de la grille 18-cellules substrat × profil × seed, la
+table de résultats inclut une quatrième ligne autonome tirée
+de [@alfarano2024wakesleep] (IEEE TNNLS, arXiv 2401.08623) —
+l'analogue NREM/REM dual-phase publié le plus proche
+(Article 1 §3, introduction.md L94, L108). La ligne est
+générée par `scripts/baseline_wake_sleep_cl.py` et dumpée
+vers `docs/milestones/wake-sleep-baseline-2026-05-03.json`.
+**(placeholder synthétique — variante c, valeurs de référence
+publiées.)**
+
+| seed | run_id | forgetting_rate | avg_accuracy |
+|------|--------|-----------------|--------------|
+| 42  | `60a86e833d477c69745393df9b1b8af1` | 0,0820 | 0,8470 |
+| 123 | `4b6b475e9efbeb38363cd4be2e8ddf6e` | 0,0820 | 0,8470 |
+| 7   | `fcd2873d5efc5141178a4173e667485b` | 0,0820 | 0,8470 |
+
+Les valeurs numériques ci-dessus sont des PLACEHOLDERS en
+attente de vérification PDF des Tables 2-3 d'Alfarano 2024 ;
+le dump Markdown porte la même précaution. L'identité du
+seed-round-trip (mêmes nombres sur tous les seeds) est
+**attendue** sous variante c — les variantes a/b
+produiraient des lignes dépendantes du seed.
+
+Un test d'équivalence TOST de style H2 contre P_equ est
+**délibérément omis** : la précaution prédicteur (§6.4) se
+compose avec la précaution variant-c valeurs-de-référence ;
+un TOST significatif requiert la réplication à prédicteur
+divergent du cycle-3 sur le même jeu de données. La ligne
+de base sert d'**ancre référence-publiée**, pas de test de
+significativité.
+
 ---
 
 ## Notes pour révision

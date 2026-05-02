@@ -74,7 +74,17 @@ reject_h0, statistic)` uniforme pour la gestion aval.
 La dimension de la matrice de l'Article 2 est nouvelle :
 l'Article 1 exécutait 3 profils × 3 seeds = 9 cellules.
 L'Article 2 croise les substrats, donnant **2 × 3 × 3 = 18
-cellules**. Chaque cellule produit :
+cellules**, plus une **quatrième ligne autonome** pour la
+ligne de base Wake-Sleep CL [@alfarano2024wakesleep, IEEE
+TNNLS, arXiv 2401.08623] scorée sur les mêmes 3 seeds
+(`[42, 123, 7]`) — voir §5.8 + dump
+`docs/milestones/wake-sleep-baseline-2026-05-03.json` (variante
+c, valeurs de référence publiées, la précaution §6.4 de
+l'Article 2 s'applique). La ligne de base ne score que sur
+les métriques M1.* (`forgetting_rate`, `avg_accuracy`) ; elle
+n'entre pas dans H2/H3/H4 parce qu'elle ne produit pas de
+groupement P_min/P_equ/P_max. Chaque cellule de substrat
+produit toujours :
 
 - accuracy (pour H1, H2, H3)
 - forgetting := 1 − accuracy (pour H1)

@@ -211,6 +211,33 @@ l'Article 2 : ingénierie-complet sur 2 substrats + 3 profils
 inter-substrats partagent un prédicteur. Un qualifieur
 `+STABLE` requiert une preuve à prédicteur réel du cycle 3.
 
+## 5.8 Ligne de base Wake-Sleep CL (Alfarano 2024)
+
+Le §7 de l'Article 2 inclut une quatrième ligne dans la table
+d'ablation : la **Wake-Sleep Consolidated Learning** d'Alfarano
+et al. 2024 [@alfarano2024wakesleep, IEEE TNNLS, arXiv
+2401.08623]. Le §3 de l'Article 1 désigne déjà ce travail comme
+« l'analogue NREM/REM dual-phase publié le plus proche » et le
+comparateur d'ablation naturel pour l'Article 2. La ligne de
+base est enregistrée dans l'espace de noms substrates via
+`kiki_oniric/substrates/wake_sleep_cl_baseline.py` pour la
+découvrabilité, mais elle n'est **pas conforme à DR-3** — elle
+n'implémente pas les 4 opérations oniriques. Son unique API
+de comparateur,
+`WakeSleepCLBaseline.evaluate_continual(seed, task_split)`,
+retourne les deux métriques M1.* (`forgetting_rate`,
+`avg_accuracy`) sur Split-FMNIST 5-tâches incrémental par
+classe — la même forme de jeu de données déjà utilisée dans
+`experiments/h1_split_mnist/`. Le schéma de l'eval-matrix
+gagne un bloc top-level `baselines:` (ajout additif FC-MINEUR,
+`C-v0.11.0+PARTIAL → C-v0.12.0+PARTIAL`) enregistrant la
+bibkey, l'arXiv id, la variante et les IDs de métriques
+scorées. La ligne de base est dumpée vers
+`docs/milestones/wake-sleep-baseline-2026-05-03.{md,json}` et
+chaque cellule porte un `run_id` R1. **Variante : c** (valeurs
+de référence publiées issues d'Alfarano 2024 Tables 2-3,
+gelées ; la précaution §6.4 de l'Article 2 s'applique).
+
 ---
 
 ## Notes pour révision
