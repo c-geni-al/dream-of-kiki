@@ -1,0 +1,36 @@
+{
+  "baseline": "wake_sleep_cl_baseline",
+  "bibkey": "alfarano2024wakesleep",
+  "commit_sha": "e3bdd74a83c9c4f928bfed87f16c2f58b37a8248",
+  "rows": [
+    {
+      "avg_accuracy": 0.847,
+      "forgetting_rate": 0.082,
+      "n_tasks": 5,
+      "run_id": "60a86e833d477c69745393df9b1b8af1",
+      "seed": 42,
+      "source": "published_reference_alfarano2024",
+      "task_split": "split_fmnist_5tasks"
+    },
+    {
+      "avg_accuracy": 0.847,
+      "forgetting_rate": 0.082,
+      "n_tasks": 5,
+      "run_id": "4b6b475e9efbeb38363cd4be2e8ddf6e",
+      "seed": 123,
+      "source": "published_reference_alfarano2024",
+      "task_split": "split_fmnist_5tasks"
+    },
+    {
+      "avg_accuracy": 0.847,
+      "forgetting_rate": 0.082,
+      "n_tasks": 5,
+      "run_id": "fcd2873d5efc5141178a4173e667485b",
+      "seed": 7,
+      "source": "published_reference_alfarano2024",
+      "task_split": "split_fmnist_5tasks"
+    }
+  ],
+  "task_split": "split_fmnist_5tasks",
+  "version": "C-v0.12.0+PARTIAL"
+}
