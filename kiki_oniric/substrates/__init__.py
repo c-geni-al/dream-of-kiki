@@ -29,6 +29,12 @@ from kiki_oniric.substrates.micro_kiki import (
     MicroKikiSubstrate,
     micro_kiki_substrate_components,
 )
+from kiki_oniric.substrates.wake_sleep_cl_baseline import (
+    WAKE_SLEEP_BASELINE_NAME,
+    WAKE_SLEEP_BASELINE_VERSION,
+    WakeSleepCLBaseline,
+    wake_sleep_substrate_components,
+)
 
 __all__ = [
     "MLX_SUBSTRATE_NAME",
@@ -43,4 +49,8 @@ __all__ = [
     "MICRO_KIKI_SUBSTRATE_VERSION",
     "MicroKikiSubstrate",
     "micro_kiki_substrate_components",
+    "WAKE_SLEEP_BASELINE_NAME",
+    "WAKE_SLEEP_BASELINE_VERSION",
+    "WakeSleepCLBaseline",
+    "wake_sleep_substrate_components",
 ]
