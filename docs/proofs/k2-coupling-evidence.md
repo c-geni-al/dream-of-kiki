@@ -1,11 +1,11 @@
 # K2 — SO × fast-spindle phase-coupling evidence
 
-**Version:** v0.1-draft (2026-05-02)
-**Supersedes:** —
-**Amendment pointer:** —
-**Target venue:** Paper 1 §5 (invariants), Paper 2 §3 (engineering
+**Version** : v0.1-draft (2026-05-02)
+**Supersedes** : —
+**Amendment pointer** : —
+**Target venue** : Paper 1 §5 (invariants), Paper 2 §3 (engineering
 evidence)
-**Executable counterpart:**
+**Executable counterpart** :
 `tests/conformance/invariants/test_k2_coupling.py`
 (`test_k2_property_synthetic_in_window`,
 `test_k2_property_smoke_known_seed`)

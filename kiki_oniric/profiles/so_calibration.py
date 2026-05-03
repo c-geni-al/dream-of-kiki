@@ -25,14 +25,26 @@ Calibration narrative: docs/papers/paper1/methodology.md §6.6.
 """
 from __future__ import annotations
 
-from typing import Any
+from typing import Protocol
 
 SHARON_2025_HEALTHY_OLDER_ANCHOR: float = 1.0
 SHARON_2025_AMCI_MIDPOINT: float = 0.45
 SHARON_2025_AD_FLOOR: float = 0.20
 
 
-def compute_so_amplitude_proxy(profile: Any) -> float:
+class _HasSOFactor(Protocol):
+    """Local structural type for objects exposing the SO-trough factor.
+
+    Defined inline to avoid a circular import with the concrete
+    ``PMinProfile`` / ``PEquProfile`` / ``PMaxProfile`` classes —
+    any duck-typed object with a numeric
+    ``so_trough_amplitude_factor`` attribute satisfies the contract.
+    """
+
+    so_trough_amplitude_factor: float
+
+
+def compute_so_amplitude_proxy(profile: _HasSOFactor) -> float:
     """Read ``so_trough_amplitude_factor`` from a profile instance.
 
     Substrate-agnostic accessor used by DR-4-adjacent monotonicity

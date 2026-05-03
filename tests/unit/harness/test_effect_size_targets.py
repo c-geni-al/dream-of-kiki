@@ -201,16 +201,36 @@ def test_references_bib_exists() -> None:
 
 def test_all_target_keys_resolve_in_references_bib() -> None:
     """Every EffectSizeTarget.source_bibtex_key must appear in references.bib."""
-    from harness.benchmarks.effect_size_targets import (
-        HU_2020_NREM2,
-        HU_2020_SWS,
-        JAVADI_2024_OVERALL,
-    )
+    from harness.benchmarks.effect_size_targets import ALL_TARGETS
 
     keys = _bibtex_keys(REFERENCES_BIB)
-    for target in (HU_2020_OVERALL, HU_2020_NREM2, HU_2020_SWS, JAVADI_2024_OVERALL):
+    for target in ALL_TARGETS:
         assert target.source_bibtex_key in keys, (
             f"target {target.name!r} cites bibtex key "
             f"{target.source_bibtex_key!r} but it is not in "
             f"{REFERENCES_BIB}"
         )
+
+
+def test_all_targets_tuple_contains_all_constants() -> None:
+    """ALL_TARGETS must contain every public EffectSizeTarget constant.
+
+    Guards against silent drift if a new published anchor is added
+    as a module-level constant but not appended to the aggregator.
+    """
+    from harness.benchmarks.effect_size_targets import (
+        ALL_TARGETS,
+        HU_2020_NREM2,
+        HU_2020_OVERALL,
+        HU_2020_SWS,
+        JAVADI_2024_OVERALL,
+    )
+
+    assert ALL_TARGETS == (
+        HU_2020_OVERALL,
+        HU_2020_NREM2,
+        HU_2020_SWS,
+        JAVADI_2024_OVERALL,
+    )
+    assert isinstance(ALL_TARGETS, tuple)
+    assert all(isinstance(t, EffectSizeTarget) for t in ALL_TARGETS)

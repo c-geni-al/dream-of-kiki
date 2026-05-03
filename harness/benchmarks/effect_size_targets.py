@@ -144,3 +144,18 @@ JAVADI_2024_OVERALL: EffectSizeTarget = EffectSizeTarget(
     profile_target="P_min",
     stratum=None,
 )
+
+
+# ----------------------------------------------------------------------
+# Aggregated tuple of all published targets.
+# Frozen tuple for iteration in conformance / bibtex-resolution tests
+# without re-listing every constant. Order is fixed (Hu overall,
+# Hu NREM2, Hu SWS, Javadi overall) — append-only if new anchors land.
+# ----------------------------------------------------------------------
+
+ALL_TARGETS: tuple[EffectSizeTarget, ...] = (
+    HU_2020_OVERALL,
+    HU_2020_NREM2,
+    HU_2020_SWS,
+    JAVADI_2024_OVERALL,
+)

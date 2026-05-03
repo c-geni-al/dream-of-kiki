@@ -17,6 +17,10 @@ Reference :
   docs/papers/paper1/references.bib `alfarano2024wakesleep`
   docs/papers/paper2/architecture.md §5.8
   docs/papers/paper2/methodology.md §6.3
+
+TODO : lift ``BaselineRow`` to ``harness/baselines/row.py`` when a
+second baseline driver is added (variants a/b). Kept inline today
+under YAGNI — single caller, single ablation row.
 """
 from __future__ import annotations
 
