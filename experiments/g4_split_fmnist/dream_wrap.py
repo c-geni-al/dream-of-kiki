@@ -20,8 +20,9 @@ Reference :
 from __future__ import annotations
 
 import random
+from collections import deque
 from dataclasses import dataclass, field
-from typing import Callable
+from typing import Callable, TypedDict
 
 import mlx.core as mx
 import mlx.nn as nn
@@ -39,6 +40,78 @@ from kiki_oniric.dream.episode import (
 from kiki_oniric.profiles.p_equ import PEquProfile
 from kiki_oniric.profiles.p_max import PMaxProfile
 from kiki_oniric.profiles.p_min import PMinProfile
+
+
+class BetaRecord(TypedDict):
+    """One curated episodic exemplar : flattened image + binary label.
+
+    Decision (Plan G4-bis Task 0.5) : raw-image replay over latent-
+    feature replay because the G4 classifier is a flat MLP with no
+    encoder. Matches van de Ven 2020 §3.2 stored-exemplar baseline.
+    The ``x`` value is a Python list of floats (JSON-serialisable per
+    the dream-runtime input_slice contract); ``y`` is an int class
+    index in ``{0, 1}`` — cross-entropy does not require one-hot.
+    """
+
+    x: list[float]
+    y: int
+
+
+class BetaBufferFIFO:
+    """Bounded curated episodic buffer (β channel input).
+
+    FIFO eviction at capacity. ``push`` appends one record per call
+    (raw-image + label, copied to JSON-serialisable lists so the dream
+    runtime input_slice contract is preserved). ``sample(n, seed)``
+    returns a deterministic random subsample sized ``min(n, len)``
+    via ``np.random.default_rng(seed)``.
+
+    The buffer is owned by the G4 pilot driver, not by the profile
+    (the kiki_oniric/profiles/ jalonné-rebase rule forbids adding
+    pilot-specific state to a profile).
+    """
+
+    def __init__(self, capacity: int) -> None:
+        if capacity <= 0:
+            raise ValueError(
+                f"capacity must be positive, got {capacity}"
+            )
+        self._capacity = capacity
+        self._records: deque[BetaRecord] = deque(maxlen=capacity)
+
+    def __len__(self) -> int:
+        return len(self._records)
+
+    def push(self, x: np.ndarray, y: int) -> None:
+        """Append one ``(x, y)`` exemplar (FIFO eviction at capacity)."""
+        self._records.append(
+            {"x": x.astype(np.float32).tolist(), "y": int(y)}
+        )
+
+    def snapshot(self) -> list[BetaRecord]:
+        """Return a list copy of every record currently in the buffer."""
+        return [
+            {"x": list(r["x"]), "y": int(r["y"])} for r in self._records
+        ]
+
+    def sample(self, n: int, seed: int) -> list[BetaRecord]:
+        """Return a deterministic sample of size ``min(n, len(self))``.
+
+        Uses ``np.random.default_rng(seed)`` for reproducibility under
+        R1. Returns ``[]`` on empty buffer (caller is responsible for
+        skipping the replay step in that case).
+        """
+        n_avail = len(self._records)
+        if n_avail == 0:
+            return []
+        rng = np.random.default_rng(seed)
+        n_take = min(n, n_avail)
+        indices = rng.choice(n_avail, size=n_take, replace=False)
+        snapshot = list(self._records)
+        return [
+            {"x": list(snapshot[i]["x"]), "y": int(snapshot[i]["y"])}
+            for i in sorted(indices.tolist())
+        ]
 
 
 # Type alias for the three concrete profile classes the G4 pilot
