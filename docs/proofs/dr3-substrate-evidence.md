@@ -116,3 +116,73 @@ substrate-agnosticism STABLE promotion.
 - Milestone : `docs/milestones/g5-bis-richer-esnn-2026-05-03.{json,md}`
 - Aggregate : `docs/milestones/g5-bis-aggregate-2026-05-03.{json,md}`
 - Paper : `docs/papers/paper2/results.md` §7.1.9
+
+
+## Empirical-evidence amendment — G5-ter (2026-05-03)
+
+**Context.** Following the G5-bis amendment above, Plan G5-ter
+ports the G4-quinto Step 2 small-CNN architecture onto the
+E-SNN substrate as a 4-layer spiking CNN
+(`EsnnG5TerSpikingCNN` : Conv2d-LIF + Conv2d-LIF + avg-pool + FC-LIF
++ Linear, STE backward, pure-numpy Conv2d) and tests whether
+convolutional inductive bias recovers the cross-arm positive
+effect that the LIF MLP failed to express. The pre-registered
+decision rule (LOCKED thresholds 0.5 / 1.0 / 2.0) maps the
+observed (`g_h8`, own-Welch outcome, `g_p_equ_cross`) tuple to
+H8-A (LIF non-linearity is the load-bearing washout), H8-B
+(architecture mismatch was the issue), or H8-C (partial — both
+contribute).
+
+**G5-ter findings (2026-05-03)** :
+
+- 4 arms × N=10 seeds × HP combo C5, 40 cells, 36 min wall on
+  M1 Max ; train shard subsampled to 1500 examples per task per
+  cell per `docs/osf-deviations-g5-ter-2026-05-03.md` (test
+  shard intact)
+- Own-substrate `g_h8 = -0.1093` (E-SNN spiking-CNN P_equ vs
+  baseline) ; Welch one-sided p = 0.5992 at α/4 = 0.0125 →
+  fail-to-reject H₀ ; H7B_G_THRESHOLD = 0.5 not reached
+- Cross-substrate aggregate vs G4-quinto Step 2 MLX small-CNN :
+  all 4 arms reject H₀ at α/4 = 0.0125 with `g_mlx_minus_esnn ∈
+  [+1.21, +1.32]` ; `g_p_equ_cross = +1.31` falls between the
+  H8-A floor (2.0) and the H8-B ceiling (1.0)
+- **Classification : H8-C (partial — both architecture and LIF
+  non-linearity contribute)**
+
+**Scope amendment.** DR-3 substrate-agnosticism at the
+positive-effect channel is now refuted at *two* architectural
+depths : (i) G5-bis H7-B for the 3-layer LIF MLP (`g_h7a =
++0.1043`, MLP washout) ; (ii) G5-ter H8-C for the 4-layer
+spiking CNN (`g_h8 = -0.1093`, CNN washout but with a
+~2/3-reduced cross-substrate level gap). Architectural inductive
+bias contributes partially — moving from a dense 3-layer head to
+a 4-layer convolutional stack closes about two thirds of the
+G5-bis cross-substrate retention level gap (`+4.02 → +1.31` at
+P_equ) but does **not** close the own-substrate gap : the
+cycle-3 positive effect remains absent on E-SNN regardless of
+whether the architecture is convolutional or fully connected.
+
+**Lemma DR-3 axiom-level guarantee** : preserved formally and
+empirically. Both substrates pass the axiom property tests
+DR-0/1/2'/4 at every architectural depth tested.
+
+**Empirical effect-size transferability** : refuted at this N
+across two architectural conditions. The H8-C verdict supports a
+"both mechanisms contribute" reading rather than the strong-form
+H8-A "LIF non-linearity is the load-bearing washout" reading.
+Per Critic precedent, fail-to-reject is read as
+absence-of-evidence at this N (Option B detection floor `g ≈
+1.27`), not evidence-of-absence. A confirmatory N=30 Option A
+follow-up is scheduled to tighten the H8-C reading ; the Option B
+detection floor would already have surfaced any g ≥ 1.27
+own-substrate effect at the chosen α. ImageNet-scale +
+transformer-substrate escalations remain on the future-work
+backlog before any DR-3 STABLE promotion at the
+positive-effect-channel level.
+
+**Citations** :
+- Pre-reg : `docs/osf-prereg-g5-ter-spiking-cnn.md`
+- Deviation log : `docs/osf-deviations-g5-ter-2026-05-03.md`
+- Milestone : `docs/milestones/g5-ter-spiking-cnn-2026-05-03.{json,md}`
+- Aggregate : `docs/milestones/g5-ter-aggregate-2026-05-03.{json,md}`
+- Paper : `docs/papers/paper2/results.md` §7.1.10
