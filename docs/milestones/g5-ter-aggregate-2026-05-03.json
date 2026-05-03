@@ -1,0 +1,47 @@
+{
+  "alpha_per_arm": 0.0125,
+  "esnn_milestone": "docs/milestones/g5-ter-spiking-cnn-2026-05-03.json",
+  "g_h8_esnn": -0.10929645964853829,
+  "g_h8_welch_p": 0.5992383560571412,
+  "g_h8_welch_reject_h0": false,
+  "g_p_equ_cross": 1.3125282680042902,
+  "h7b_g_threshold": 0.5,
+  "h8_classification": "H8-C",
+  "h8a_g_mlx_minus_esnn_min": 2.0,
+  "h8b_g_mlx_minus_esnn_max": 1.0,
+  "mlx_milestone": "docs/milestones/g4-quinto-step2-2026-05-03.json",
+  "per_arm": {
+    "P_equ": {
+      "consistency": false,
+      "hedges_g_mlx_minus_esnn": 1.3125282680042902,
+      "n_esnn": 10,
+      "n_mlx": 30,
+      "reject_h0": true,
+      "welch_p_two_sided": 0.0012451707457630905
+    },
+    "P_max": {
+      "consistency": false,
+      "hedges_g_mlx_minus_esnn": 1.3125282680042902,
+      "n_esnn": 10,
+      "n_mlx": 30,
+      "reject_h0": true,
+      "welch_p_two_sided": 0.0012451707457630905
+    },
+    "P_min": {
+      "consistency": false,
+      "hedges_g_mlx_minus_esnn": 1.3193266299947073,
+      "n_esnn": 10,
+      "n_mlx": 30,
+      "reject_h0": true,
+      "welch_p_two_sided": 0.0004140021289154071
+    },
+    "baseline": {
+      "consistency": false,
+      "hedges_g_mlx_minus_esnn": 1.2087272604082484,
+      "n_esnn": 10,
+      "n_mlx": 30,
+      "reject_h0": true,
+      "welch_p_two_sided": 0.0033918377865600493
+    }
+  }
+}
