@@ -12,6 +12,37 @@ see `docs/specs/2026-04-17-dreamofkiki-framework-C-design.md` §12).
 
 ## [Unreleased]
 
+### Empirical (G5-bis richer-head cross-substrate, 2026-05-03)
+
+- G5-bis pilot ported G4-ter MLX richer head to E-SNN
+  thalamocortical substrate (3-layer rate-coded LIF SNN, STE
+  backward, pure numpy). 40 cells × 4 arms × 10 seeds Option B,
+  ~16 min wall time on M1 Max. Pre-reg
+  `docs/osf-prereg-g5-bis-richer-esnn.md` locked at commit
+  `ae640a5` ; pilot run at commit `5168400`. Milestones :
+  `docs/milestones/g5-bis-richer-esnn-2026-05-03.{json,md}` +
+  aggregate `g5-bis-aggregate-2026-05-03.{json,md}`.
+- Own-substrate finding : `g_h7a = 0.1043` (E-SNN richer P_equ
+  vs baseline), Welch one-sided p = 0.4052 at α/4 = 0.0125 →
+  **fail-to-reject H0**. Below pre-registered
+  `H7B_G_THRESHOLD = 0.5`.
+- Cross-substrate aggregate vs G4-ter MLX richer head : all 4
+  arms reject H0 at α/4 = 0.0125. Baseline `g_mlx_minus_esnn
+  = 3.23` (p=6.4e-16) ; dream arms `g = 4.02` (p=2.3e-18) ;
+  P_min `g = 4.20` (p=7.4e-19). `consistency_ok = False`.
+- **Classification : H7-B (MLX-only artefact at this N)**.
+  G4-ter positive effect (g=+2.77) does NOT transfer to E-SNN
+  richer head. Spike-rate quantization, LIF non-linearity,
+  STE-backward approximation wash out the dream effect.
+- DR-3 evidence revised
+  (`docs/proofs/dr3-substrate-evidence.md` empirical-evidence
+  amendment 2026-05-03 G5-bis appended) : axiom-property-test-
+  level substrate-agnosticism guarantee preserved ; empirical
+  effect-size transferability refuted at this N. EC stays
+  PARTIAL. No FC bump.
+- Future work per pre-reg §6 row 6 : confirmatory N=30 Option
+  A, spiking-CNN G5-ter, ImageNet-scale escalation.
+
 ### Empirical (G4-quinto, 2026-05-03)
 
 - G4-quinto pilot completed 2026-05-03 — confirmatory N = 30

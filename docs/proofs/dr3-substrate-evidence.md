@@ -69,3 +69,50 @@ biological data.
 - E-SNN substrate : `kiki_oniric/substrates/esnn_thalamocortical.py`
 - C2 axiom suites : `tests/conformance/axioms/`
 - C3 invariant suites : `tests/conformance/invariants/`
+
+
+## Empirical-evidence amendment — G5-bis (2026-05-03)
+
+**Context.** The G5 binary-head pilot (§7.1.3 paper) found
+that absolute retention diverges between MLX and E-SNN at the
+spectator-baseline level. The G4-ter MLX richer head returned
+g_h2 = +2.77 (Welch p = 4.9e-14, N=30). The G5-bis pilot
+ports the richer head to E-SNN to test whether the positive
+effect transfers cross-substrate.
+
+**G5-bis findings (2026-05-03)** :
+- Own-substrate g_h7a = 0.1043 (E-SNN richer P_equ vs baseline)
+- Welch one-sided p = 0.4052 at α/4 = 0.0125 → fail-to-reject H0
+- H7B_G_THRESHOLD = 0.5 not reached
+- Cross-substrate aggregate : all 4 arms reject H0 with
+  g_mlx_minus_esnn ∈ [3.23, 4.20]
+- **Classification : H7-B (MLX-only artefact at this N)**
+
+**Scope amendment.** The DR-3 substrate-agnosticism guarantee
+provided by this evidence file covers **only the Conformance
+Criterion structural checks (axiom property tests + BLOCKING
+invariants)**. The guarantee does **not** extend to empirical
+effect-size transferability. At the scales tested
+(Split-FMNIST 5 binary tasks, N ≤ 30, MLX MLP/CNN + E-SNN
+LIF), the dream positive effect is empirically MLX-bound :
+spike-rate quantization, LIF non-linearity, and STE-backward
+approximation of the E-SNN substrate wash out the dream effect
+that emerged on MLX richer head.
+
+**Lemma DR-3 axiom-level guarantee** : preserved formally and
+empirically. Both substrates pass the axiom property tests
+DR-0/1/2'/4.
+
+**Empirical effect-size transferability** : refuted for the
+G4-ter / G5-bis comparison at this N. Future work : confirmatory
+N=30 G5-bis Option A, spiking-CNN G5-ter (testing whether the
+spike non-linearity is the load-bearing washout mechanism),
+and ImageNet-scale + transformer-substrate escalation are
+listed in pre-reg G5-bis §6 row 6 for any future
+substrate-agnosticism STABLE promotion.
+
+**Citations** :
+- Pre-reg : `docs/osf-prereg-g5-bis-richer-esnn.md`
+- Milestone : `docs/milestones/g5-bis-richer-esnn-2026-05-03.{json,md}`
+- Aggregate : `docs/milestones/g5-bis-aggregate-2026-05-03.{json,md}`
+- Paper : `docs/papers/paper2/results.md` §7.1.9
