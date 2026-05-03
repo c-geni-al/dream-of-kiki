@@ -376,6 +376,87 @@ Provenance:
 - Substrate : `experiments.g4_ter_hp_sweep.dream_wrap_hier.G4HierarchicalClassifier`
 - HP grid : `experiments.g4_ter_hp_sweep.hp_grid.HP_COMBOS`
 
+## 7.1.6 G4-quater pilot — RESTRUCTURE+RECOMBINE empirical-emptiness confirmed (2026-05-03)
+
+Following the G4-ter §7.1.5 finding that RESTRUCTURE+RECOMBINE
+remained spectator channels at the 3-layer scale, G4-quater
+ran a sequential 3-step confirmatory pilot to distinguish
+between three sub-hypotheses pre-registered in
+[`docs/osf-prereg-g4-quater-pilot.md`](../../osf-prereg-g4-quater-pilot.md) :
+H4-A substrate-depth, H4-B HP-calibration, H4-C theoretical-
+emptiness. Each step ships its own dated milestone with R1
+run_ids ; an aggregator emits a single verdict over the three.
+
+### Verdict table
+
+| sub-hypothesis | test | observed | verdict |
+|---|---|---|---|
+| H4-A substrate-depth (5-layer 64-32-16-8 head, 380 cells, N=95) | Jonckheere α = 0.0167 | J = 13511.5, p = 0.514 ; means P_min = 0.5959, P_equ = 0.5958, P_max = 0.5958 (within 1e-4) ; monotonic_observed = False | **NOT confirmed** — deepening the substrate alone does not recover the predicted DR-4 ordering at this N. The H_DR4 inversion observed at G4-ter persists at 5-layer depth. |
+| H4-B HP-calibration (3-layer head × RESTRUCTURE factor ∈ {0.85, 0.95, 0.99}, 360 cells, N=30) | per-factor Jonckheere α = 0.0056 (3 factors × 3 hypotheses) | every factor : `mean P_equ = mean P_max < mean P_min` ; J ∈ {1034, 1076, 1094}, p ∈ {0.971, 0.979, 0.990} ; monotonic_observed = False at all three factors | **NOT confirmed** — RESTRUCTURE HP-calibration alone does not recover the predicted DR-4 ordering ; RESTRUCTURE in fact *hurts* retention vs P_min REPLAY+DOWNSCALE only at every factor sampled. |
+| H4-C RECOMBINE empirical-emptiness (3-layer head × strategy ∈ {mog, ae, none}, 1140 cells, N=95) | Welch two-sided P_max(mog) vs P_max(none) at α = 0.0167 | mean P_max(mog) = 0.7007, mean P_max(none) = 0.7006 ; Welch t = 0.014, p = 0.989 ; Hedges' g (mog vs none) = 0.002 ; fail_to_reject_h0 = True. AE secondary : mean P_max(ae) = 0.7006, Welch p (ae vs none) = 1.000. | **CONFIRMED** — Welch fails to reject H0 between mog-RECOMBINE and the none-placebo arm at the multiplicity-adjusted α. The positive empirical claim "RECOMBINE adds nothing measurable beyond REPLAY+DOWNSCALE at this scale" holds. |
+
+Aggregate wall time : Step 1 13.2 min + Step 2 10.8 min + Step 3
+34.1 min ≈ 58 min on M1 Max.
+
+### Honest reading
+
+- **Welch fail-to-reject is the predicted outcome under H4-C.**
+  The H4-C pre-reg framing is "RECOMBINE channel is structurally
+  empty at this scale", operationalised as "Welch fails to reject
+  H0 between RECOMBINE=mog and RECOMBINE=none". The observed
+  p = 0.989 ≫ α = 0.0167, with means within 1e-4 and Hedges' g =
+  0.002, is therefore a **positive empirical claim** that the
+  channel is empty — not a Type-II detection failure. This is
+  the absence-of-evidence vs evidence-of-absence distinction
+  resolved on the absence-of-evidence side : at N = 95 per arm,
+  the 95 % CI on the mog-vs-none difference excludes any
+  practically meaningful effect.
+- **The partial refutation of DR-4 strengthens.** G4-ter §7.1.5
+  reported `P_min > P_equ = P_max` as a partial refutation of
+  the framework-C "richer ops yield richer consolidation" claim.
+  G4-quater rules out two of the three remaining escape clauses
+  (substrate-depth and HP-calibration of RESTRUCTURE) and
+  positively confirms the third (RECOMBINE empirically empty).
+  The framework-C claim, **at this benchmark scale**, is now an
+  empirically refuted hypothesis rather than an
+  insufficiently-tested one. The DR-4 lemma (capacity-monotone
+  metrics non-decrease) is **not** refuted — within-arm
+  retention differences are within ±0.001 — but the prediction
+  "richer profile retains *more*" loses empirical support at
+  this scale.
+- **What the verdict does not say.** G4-quater tests only one
+  benchmark (Split-FMNIST, MLP head). Future work pre-registered
+  in `docs/osf-prereg-g4-quater-pilot.md` §6 — testing CIFAR-10
+  / ImageNet / hierarchical E-SNN — could in principle reverse
+  the verdict at higher capacity ; until then, no STABLE
+  promotion of the framework-C "richer ops yield richer
+  consolidation" claim can occur.
+
+### DualVer impact
+
+Per pre-reg `docs/osf-prereg-g4-quater-pilot.md` §6 and §7, EC
+stays **PARTIAL** under the H4-C-confirmed outcome ; FC stays
+at **C-v0.12.0** (no formal-axis bump). The empirical evidence
+file `docs/proofs/dr4-profile-inclusion.md` is amended with a
+G4-quater addendum.
+
+Run-registry profile keys
+`g4-quater/{step1,step2,step3}/<arm>/<combo>/<seed>` identify
+each cell to satisfy R1.
+
+Provenance :
+- Pre-registration : [docs/osf-prereg-g4-quater-pilot.md](../../osf-prereg-g4-quater-pilot.md)
+- Step 1 milestone : `docs/milestones/g4-quater-step1-2026-05-03.{json,md}`
+- Step 2 milestone : `docs/milestones/g4-quater-step2-2026-05-03.{json,md}`
+- Step 3 milestone : `docs/milestones/g4-quater-step3-2026-05-03.{json,md}`
+- Aggregate : `docs/milestones/g4-quater-aggregate-2026-05-03.{json,md}`
+- Driver Step 1 : `experiments/g4_quater_test/run_step1_deeper.py`
+- Driver Step 2 : `experiments/g4_quater_test/run_step2_restructure_sweep.py`
+- Driver Step 3 : `experiments/g4_quater_test/run_step3_recombine_strategies.py`
+- Substrate (5-layer) : `experiments.g4_quater_test.deeper_classifier.G4HierarchicalDeeperClassifier`
+- Substrate (3-layer) : `experiments.g4_ter_hp_sweep.dream_wrap_hier.G4HierarchicalClassifier`
+- RECOMBINE strategies : `experiments.g4_quater_test.recombine_strategies.sample_synthetic_latents`
+
 ## 7.2 Cross-substrate H1-H4 comparative table (synthetic substitute — not empirical claim)
 
 **Table 7.2 — MLX vs E-SNN hypotheses at Bonferroni α = 0.0125

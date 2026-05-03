@@ -412,6 +412,92 @@ Provenance :
 - Substrat : `experiments.g4_ter_hp_sweep.dream_wrap_hier.G4HierarchicalClassifier`
 - Grille HP : `experiments.g4_ter_hp_sweep.hp_grid.HP_COMBOS`
 
+## 7.1.6 Pilote G4-quater — vacuité empirique de RESTRUCTURE+RECOMBINE confirmée (2026-05-03)
+
+À la suite du résultat de G4-ter §7.1.5 selon lequel
+RESTRUCTURE+RECOMBINE restaient des canaux spectateurs à
+l'échelle 3 couches, G4-quater a exécuté un pilote
+confirmatoire séquentiel en 3 étapes pour distinguer entre
+trois sous-hypothèses pré-enregistrées dans
+[`docs/osf-prereg-g4-quater-pilot.md`](../../osf-prereg-g4-quater-pilot.md) :
+H4-A profondeur du substrat, H4-B calibration HP, H4-C
+vacuité théorique. Chaque étape produit son propre jalon
+daté avec des `run_id` R1 ; un agrégateur émet un verdict
+unique sur les trois.
+
+### Table de verdicts
+
+| sous-hypothèse | test | observé | verdict |
+|---|---|---|---|
+| H4-A profondeur du substrat (tête 5 couches 64-32-16-8, 380 cellules, N=95) | Jonckheere α = 0,0167 | J = 13511,5, p = 0,514 ; moyennes P_min = 0,5959, P_equ = 0,5958, P_max = 0,5958 (à 1e-4 près) ; monotonic_observed = False | **NON confirmée** — approfondir le substrat seul ne récupère pas l'ordre DR-4 prédit à ce N. L'inversion H_DR4 observée à G4-ter persiste à profondeur 5 couches. |
+| H4-B calibration HP (tête 3 couches × facteur RESTRUCTURE ∈ {0,85, 0,95, 0,99}, 360 cellules, N=30) | Jonckheere par facteur α = 0,0056 (3 facteurs × 3 hypothèses) | tous les facteurs : `mean P_equ = mean P_max < mean P_min` ; J ∈ {1034, 1076, 1094}, p ∈ {0,971, 0,979, 0,990} ; monotonic_observed = False aux trois facteurs | **NON confirmée** — la calibration HP de RESTRUCTURE seule ne récupère pas l'ordre DR-4 prédit ; RESTRUCTURE *dégrade* en fait la rétention par rapport à P_min REPLAY+DOWNSCALE seul à chaque facteur échantillonné. |
+| H4-C vacuité empirique de RECOMBINE (tête 3 couches × stratégie ∈ {mog, ae, none}, 1140 cellules, N=95) | Welch bilatéral P_max(mog) vs P_max(none) à α = 0,0167 | mean P_max(mog) = 0,7007, mean P_max(none) = 0,7006 ; Welch t = 0,014, p = 0,989 ; Hedges' g (mog vs none) = 0,002 ; fail_to_reject_h0 = True. AE secondaire : mean P_max(ae) = 0,7006, Welch p (ae vs none) = 1,000. | **CONFIRMÉE** — Welch échoue à rejeter H0 entre mog-RECOMBINE et le bras placebo none au seuil α multiplicité-ajusté. La revendication empirique positive « RECOMBINE n'apporte rien de mesurable au-delà de REPLAY+DOWNSCALE à cette échelle » tient. |
+
+Temps mur agrégé : Étape 1 13,2 min + Étape 2 10,8 min +
+Étape 3 34,1 min ≈ 58 min sur M1 Max.
+
+### Lecture honnête
+
+- **L'échec de Welch à rejeter est le résultat prédit sous
+  H4-C.** Le cadrage pré-enregistré de H4-C est « le canal
+  RECOMBINE est structurellement vide à cette échelle »,
+  opérationnalisé comme « Welch échoue à rejeter H0 entre
+  RECOMBINE=mog et RECOMBINE=none ». Le p = 0,989 ≫ α = 0,0167
+  observé, avec des moyennes à 1e-4 près et un Hedges' g =
+  0,002, est donc une **revendication empirique positive** que
+  le canal est vide — et non un échec de détection de Type-II.
+  C'est la distinction absence-d'évidence vs évidence-d'absence
+  résolue du côté absence-d'évidence : à N = 95 par bras, l'IC
+  95 % sur la différence mog-vs-none exclut tout effet
+  pratiquement signifiant.
+- **La réfutation partielle de DR-4 se renforce.** G4-ter
+  §7.1.5 rapportait `P_min > P_equ = P_max` comme une
+  réfutation partielle de la revendication framework-C
+  « ops plus riches → consolidation plus riche ». G4-quater
+  élimine deux des trois clauses d'échappement restantes
+  (profondeur du substrat et calibration HP de RESTRUCTURE) et
+  confirme positivement la troisième (RECOMBINE empiriquement
+  vide). La revendication framework-C, **à cette échelle de
+  benchmark**, est désormais une hypothèse empiriquement
+  réfutée plutôt qu'une hypothèse insuffisamment testée. Le
+  lemme DR-4 (métriques capacité-monotones non-décroissantes)
+  n'est **pas** réfuté — les écarts de rétention intra-bras
+  sont à ±0,001 près — mais la prédiction « profil plus riche
+  retient *plus* » perd son support empirique à cette échelle.
+- **Ce que le verdict ne dit pas.** G4-quater ne teste qu'un
+  benchmark (Split-FMNIST, tête MLP). Les travaux futurs
+  pré-enregistrés dans `docs/osf-prereg-g4-quater-pilot.md` §6 —
+  test sur CIFAR-10 / ImageNet / E-SNN hiérarchique — pourraient
+  en principe inverser le verdict à plus haute capacité ;
+  jusqu'à ces tests, aucune promotion STABLE de la revendication
+  framework-C « ops plus riches → consolidation plus riche »
+  ne peut survenir.
+
+### Impact DualVer
+
+Selon la pré-enregistration `docs/osf-prereg-g4-quater-pilot.md`
+§6 et §7, EC reste **PARTIAL** sous l'issue H4-C-confirmée ; FC
+reste à **C-v0.12.0** (pas de bump axe formel). Le fichier
+d'évidence empirique `docs/proofs/dr4-profile-inclusion.md` est
+amendé avec un addendum G4-quater.
+
+Les clés de profil du registre de runs
+`g4-quater/{step1,step2,step3}/<bras>/<combo>/<seed>`
+identifient chaque cellule pour satisfaire R1.
+
+Provenance :
+- Pré-enregistration : [docs/osf-prereg-g4-quater-pilot.md](../../osf-prereg-g4-quater-pilot.md)
+- Jalon Étape 1 : `docs/milestones/g4-quater-step1-2026-05-03.{json,md}`
+- Jalon Étape 2 : `docs/milestones/g4-quater-step2-2026-05-03.{json,md}`
+- Jalon Étape 3 : `docs/milestones/g4-quater-step3-2026-05-03.{json,md}`
+- Agrégat : `docs/milestones/g4-quater-aggregate-2026-05-03.{json,md}`
+- Pilote Étape 1 : `experiments/g4_quater_test/run_step1_deeper.py`
+- Pilote Étape 2 : `experiments/g4_quater_test/run_step2_restructure_sweep.py`
+- Pilote Étape 3 : `experiments/g4_quater_test/run_step3_recombine_strategies.py`
+- Substrat (5 couches) : `experiments.g4_quater_test.deeper_classifier.G4HierarchicalDeeperClassifier`
+- Substrat (3 couches) : `experiments.g4_ter_hp_sweep.dream_wrap_hier.G4HierarchicalClassifier`
+- Stratégies RECOMBINE : `experiments.g4_quater_test.recombine_strategies.sample_synthetic_latents`
+
 ## 7.2 Table comparative inter-substrats H1-H4 (substitution synthétique — pas de revendication empirique)
 
 **Table 7.2 — MLX vs E-SNN hypothèses à Bonferroni
