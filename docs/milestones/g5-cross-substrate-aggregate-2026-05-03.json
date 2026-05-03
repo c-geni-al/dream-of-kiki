@@ -1,0 +1,40 @@
+{
+  "alpha_per_arm": 0.0125,
+  "dr3_cross_substrate_consistency_ok": false,
+  "esnn_milestone": "docs/milestones/g5-cross-substrate-2026-05-03.json",
+  "mlx_milestone": "docs/milestones/g4-pilot-2026-05-03-bis.json",
+  "per_arm": {
+    "P_equ": {
+      "consistency": false,
+      "hedges_g_mlx_minus_esnn": 3.494193063650609,
+      "n_esnn": 5,
+      "n_mlx": 5,
+      "reject_h0": true,
+      "welch_p_two_sided": 0.0034952074392989685
+    },
+    "P_max": {
+      "consistency": false,
+      "hedges_g_mlx_minus_esnn": 3.494193063650609,
+      "n_esnn": 5,
+      "n_mlx": 5,
+      "reject_h0": true,
+      "welch_p_two_sided": 0.0034952074392989685
+    },
+    "P_min": {
+      "consistency": false,
+      "hedges_g_mlx_minus_esnn": 3.494193063650609,
+      "n_esnn": 5,
+      "n_mlx": 5,
+      "reject_h0": true,
+      "welch_p_two_sided": 0.0034952074392989685
+    },
+    "baseline": {
+      "consistency": false,
+      "hedges_g_mlx_minus_esnn": 9.976332469912702,
+      "n_esnn": 5,
+      "n_mlx": 5,
+      "reject_h0": true,
+      "welch_p_two_sided": 5.186601156883665e-05
+    }
+  }
+}
