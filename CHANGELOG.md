@@ -12,6 +12,67 @@ see `docs/specs/2026-04-17-dreamofkiki-framework-C-design.md` §12).
 
 ## [Unreleased]
 
+### Empirical (G4-quater, 2026-05-03)
+
+- G4-quater pilot completed 2026-05-03 — confirmatory N≥95
+  follow-up to the G4-ter H_DR4 inversion. Sequential 3-step
+  layout, total 1880 cells, ~58 min wall time on M1 Max. Pre-reg
+  `docs/osf-prereg-g4-quater-pilot.md` locked at commit `e7232b9`
+  before any pilot run (Tasks 4/5/6 commits land later).
+- Step 1 (H4-A substrate-depth) : 380 cells on a new 5-layer
+  `G4HierarchicalDeeperClassifier` (hidden 64-32-16-8) at the C5
+  anchor. Jonckheere J = 13511.5, p = 0.514 at α = 0.0167 ;
+  monotonic_observed = False ; means P_min = 0.5959, P_equ =
+  0.5958, P_max = 0.5958 (within 1e-4). **H4-A NOT confirmed** :
+  deepening alone does not recover the predicted DR-4 ordering ;
+  the H_DR4 inversion persists at 5-layer depth.
+- Step 2 (H4-B HP-calibration) : 360 cells on the existing 3-layer
+  head sweeping RESTRUCTURE factor in {0.85, 0.95, 0.99}.
+  Per-factor Jonckheere at multiplicity-adjusted α = 0.0056 (3
+  factors × 3 hypotheses). Every factor : `P_equ = P_max < P_min`,
+  J ∈ {1034, 1076, 1094}, p ∈ {0.971, 0.979, 0.990}. **H4-B NOT
+  confirmed** : RESTRUCTURE HP-calibration alone does not recover
+  the predicted ordering ; RESTRUCTURE in fact *hurts* retention
+  at every factor.
+- Step 3 (H4-C RECOMBINE empirical-emptiness) : 1140 cells on the
+  3-layer head sweeping RECOMBINE strategy in {mog, ae, none}.
+  H4-C operationalised as Welch two-sided P_max(mog) vs P_max(none)
+  failing to reject H0 at α = 0.0167. Result : Welch t = 0.014,
+  p = 0.989, Hedges' g (mog vs none) = 0.002. AE secondary :
+  Welch p (ae vs none) = 1.000. **H4-C CONFIRMED** : RECOMBINE
+  empirically empty at this scale (positive empirical claim
+  mog ≈ none).
+- Aggregate verdict : H4-A False, H4-B False, H4-C True. The DR-4
+  partial refutation from G4-ter §7.1.5 **strengthens** rather
+  than weakens — two of the three remaining escape clauses
+  (substrate-depth, HP-calibration of RESTRUCTURE) are ruled out
+  at confirmatory N, and the third (RECOMBINE empirically empty)
+  is positively confirmed. The framework-C claim "richer ops
+  yield richer consolidation at this scale" is now an
+  empirically refuted hypothesis at the Split-FMNIST 3-layer
+  scale rather than an insufficiently-tested one. Lemma DR-4.L
+  itself is **not** refuted (within-arm differences ≤ 0.001).
+- DualVer : EC stays **PARTIAL** per pre-reg §6 across all
+  outcomes ; FC stays at **C-v0.12.0** (no formal-axis bump).
+  `docs/proofs/dr4-profile-inclusion.md` carries an
+  empirical-evidence amendment block ; Paper 2 §7.1.6 reports
+  the verdicts honestly in EN + FR.
+- 1880 R1-bit-stable run_ids registered under
+  `(C-v0.12.0+PARTIAL, g4-quater/{step1,step2,step3}/<arm>/<combo>/<seed>)`
+  in `.run_registry.sqlite`. Honest reporting binding (pre-reg §7) :
+  Welch fail-to-reject is reported as the predicted outcome under
+  H4-C (positive empirical claim that RECOMBINE adds nothing),
+  not as evidence-of-absence laundered as evidence-of-presence.
+- Milestone artefacts :
+  `docs/milestones/g4-quater-step1-2026-05-03.{json,md}`,
+  `docs/milestones/g4-quater-step2-2026-05-03.{json,md}`,
+  `docs/milestones/g4-quater-step3-2026-05-03.{json,md}`,
+  `docs/milestones/g4-quater-aggregate-2026-05-03.{json,md}`.
+- Future work pre-registered in `docs/osf-prereg-g4-quater-pilot.md`
+  §6 : test on CIFAR-10 / ImageNet / hierarchical E-SNN before
+  any STABLE promotion ; the verdict is scoped to this benchmark
+  scale.
+
 ### Empirical (G5 cross-substrate, 2026-05-03)
 
 - G5 cross-substrate pilot on E-SNN thalamocortical (numpy LIF
