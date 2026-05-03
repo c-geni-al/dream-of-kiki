@@ -114,3 +114,44 @@ This proof is auxiliary to DR-2 (compositionality) — DR-4 is
 structurally simpler and does not require external formal review.
 Sub-agent `critic` review at draft time is sufficient. Final
 incorporation into Paper 1 §6 framework section.
+
+---
+
+## Empirical-evidence amendment — G4-quater (2026-05-03)
+
+The structural inclusions `ops(P_min) ⊆ ops(P_equ) ⊆ ops(P_max)`
+and `channels(P_min) ⊆ channels(P_equ) ⊆ channels(P_max)` remain
+proven. The Lemma DR-4.L statement (capacity-monotone metrics
+non-decrease) remains formally true under its construction
+proof above — at this scale, retention differences across
+profiles are within ±0.001, i.e. a tie not a regression.
+
+What G4-quater positively establishes is that the DR-4
+*prediction* "richer profile retains more on capacity-monotone
+metrics" is **empirically vacuous at this scale** for the
+RECOMBINE channel : at N = 95 per arm,
+`retention(P_max with RECOMBINE = mog) ≈
+retention(P_max with RECOMBINE = none)` (Welch p = 0.989,
+Hedges' g = 0.002). Under H4-C confirmation
+(`docs/osf-prereg-g4-quater-pilot.md` §6), the framework-C
+claim "richer ops yield richer consolidation at this scale"
+is therefore **partially refuted** for the RECOMBINE channel
+at the Split-FMNIST / 3-layer MLP scale.
+
+This amendment does **not** weaken the inclusion proof itself
+nor invalidate Lemma DR-4.L. It scopes the empirical
+prediction : the channel inclusion is formally true (every
+operation P_max can run, P_equ can also run), but the
+empirically observed *gain* from the richer channels is
+within statistical noise for this benchmark. Future work
+pre-registered in `docs/osf-prereg-g4-quater-pilot.md` §6 —
+CIFAR-10 / ImageNet / hierarchical E-SNN — could in principle
+restore the empirical prediction at higher capacity ; until
+then, no STABLE promotion of the framework-C "richer ops
+yield richer consolidation" claim can occur.
+
+Provenance :
+- Pre-registration : `docs/osf-prereg-g4-quater-pilot.md`
+- Aggregate verdict : `docs/milestones/g4-quater-aggregate-2026-05-03.{json,md}`
+- Step 3 H4-C milestone : `docs/milestones/g4-quater-step3-2026-05-03.{json,md}`
+- Paper 2 §7.1.6 : `docs/papers/paper2/results.md` + `docs/papers/paper2-fr/results.md`
