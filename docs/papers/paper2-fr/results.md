@@ -235,6 +235,64 @@ Référence : `docs/superpowers/plans/2026-05-03-g6-micro-kiki-mmlu-cl.md`
 + `docs/osf-prereg-g6-pilot.md`
 + `docs/milestones/g6-pilot-pathB-2026-05-03.{json,md}`.
 
+## 7.1.5 Pilote G4-ter (balayage HP + substrat enrichi — 2026-05-03)
+
+Le pilote G4-ter est le suivi confirmatoire N≥30 prévu par la règle
+d'évidence-positive-exploratoire de G4-bis
+(`docs/osf-prereg-g4-pilot.md` §4) et pré-enregistré dans
+`docs/osf-prereg-g4-ter-pilot.md`. Il distingue trois explications
+concurrentes du résultat nul de G4-bis (`g_h1 = -2.31`, `H_DR4`
+moyennes égales dégénérées) :
+
+- **H1 — artefact HP** : la combinaison HP de G4-bis
+  (`replay_lr=0,01`, `replay_n_steps=1`, `downscale_factor=0,95`)
+  est trop agressive. Un balayage de sous-grille curée à 10 combos
+  sur la tête MLP binaire (300 cellules, N=10 par cellule) donne
+  un meilleur Hedges' g de `+11,81` à la combinaison `C9`
+  (`downscale_factor=0,99`, `replay_batch=64`,
+  `replay_n_steps=10`, `replay_lr=0,05`) avec `g_hp_best > 0,21`
+  (au-dessus de la borne basse de l'IC Hu 2020). H0_HP **rejetée**
+  (criblage, N=10 par combo).
+- **H2 — limitation au niveau du substrat** : la tête binaire
+  expose uniquement les canaux de couplage REPLAY + DOWNSCALE.
+  Une tête hiérarchique (entrée → 32 → 16 → sortie) qui expose
+  `_l2.weight` comme site RESTRUCTURE et les activations
+  hidden_2 comme source d'échantillonnage Gaussienne-MoG pour
+  RECOMBINE produit `g_h2 = +2,77` à la combinaison ancre C5 sur
+  120 cellules (N=30 par bras), Welch unilatéral
+  p = 4,9e-14 ≪ α/4 = 0,0125. H0_substrat **rejetée**.
+- **H_DR4-ter — monotonicité** : le substrat enrichi
+  structurellement-distingué brise partiellement le tie dégénéré
+  de G4-bis — la rétention de référence chute à 0,5869 (n=30)
+  tandis que les trois bras de rêve se regroupent autour de
+  0,7046–0,7065. Rétention moyenne `P_min = 0,7065`,
+  `P_equ = 0,7046`, `P_max = 0,7046` (Jonckheere J = 1335,0,
+  p = 0,544 à α/4 = 0,0125). L'ordre prédit
+  `P_max ≥ P_equ ≥ P_min` n'est **pas observé** (P_min dépasse
+  marginalement les autres). H_DR4-ter est **non concluante** —
+  ni monotonicité-rejetée, ni falsifiée.
+
+Le verdict verrouille l'axe EC à `PARTIAL` selon la table DualVer
+de la pré-enregistration §7 (H_DR4-ter non concluante, même si H1
+et H2 rejettent H0). Les profils de rêve à tête enrichie battent la
+référence sans rêve par une large marge (g ≈ 2,8 ≫ borne ancre Hu
+2020 = 0,21), mais l'**ordre entre profils de rêve** est lessivé à
+l'ancre C5. Un suivi confirmatoire N≥95 (G4-quater) est prévu pour
+tester si substrat enrichi × `hp_best=C9` retrouve l'ordre prédit
+P_max ≥ P_equ ≥ P_min.
+
+Les clés de profil du registre de runs
+`g4-ter/{richer,hp}/<bras>/<combo>` identifient chaque cellule pour
+satisfaire R1.
+
+Provenance :
+- Pré-enregistration : `docs/osf-prereg-g4-ter-pilot.md`
+- Jalon (md) : `docs/milestones/g4-ter-pilot-2026-05-03.md`
+- Jalon (json) : `docs/milestones/g4-ter-pilot-2026-05-03.json`
+- Pilote : `experiments/g4_ter_hp_sweep/run_g4_ter.py`
+- Substrat : `experiments.g4_ter_hp_sweep.dream_wrap_hier.G4HierarchicalClassifier`
+- Grille HP : `experiments.g4_ter_hp_sweep.hp_grid.HP_COMBOS`
+
 ## 7.2 Table comparative inter-substrats H1-H4 (substitution synthétique — pas de revendication empirique)
 
 **Table 7.2 — MLX vs E-SNN hypothèses à Bonferroni

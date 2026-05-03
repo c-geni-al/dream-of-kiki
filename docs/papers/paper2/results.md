@@ -214,6 +214,60 @@ Reference : `docs/superpowers/plans/2026-05-03-g6-micro-kiki-mmlu-cl.md`
 + `docs/osf-prereg-g6-pilot.md`
 + `docs/milestones/g6-pilot-pathB-2026-05-03.{json,md}`.
 
+## 7.1.5 G4-ter pilot (HP sweep + richer substrate — 2026-05-03)
+
+The G4-ter pilot is the confirmatory N≥30 follow-up scheduled by
+the G4-bis exploratory-positive-evidence rule
+(`docs/osf-prereg-g4-pilot.md` §4) and pre-registered at
+`docs/osf-prereg-g4-ter-pilot.md`. It distinguishes three competing
+explanations of the G4-bis null finding (`g_h1 = -2.31`, `H_DR4`
+degenerate equal-means):
+
+- **H1 — HP artefact**: the G4-bis HP combo
+  (`replay_lr=0.01`, `replay_n_steps=1`, `downscale_factor=0.95`)
+  is over-aggressive. A 10-combo curated HP sub-grid sweep on the
+  binary MLP head (300 cells, N=10 per cell) yields a best
+  Hedges' g of `+11.81` at combo `C9`
+  (`downscale_factor=0.99`, `replay_batch=64`, `replay_n_steps=10`,
+  `replay_lr=0.05`) with `g_hp_best > 0.21` (above Hu 2020 lower
+  CI). H0_HP **rejected** (screening, N=10 per combo).
+- **H2 — substrate-level limitation**: the binary head exposes
+  only REPLAY + DOWNSCALE coupling channels. A hierarchical head
+  (input → 32 → 16 → output) that exposes `_l2.weight` as a
+  RESTRUCTURE site and hidden_2 activations as a RECOMBINE
+  Gaussian-MoG sampling source yields `g_h2 = +2.77` at the C5
+  anchor combo over 120 cells (N=30 per arm), Welch one-sided
+  p = 4.9e-14 ≪ α/4 = 0.0125. H0_substrate **rejected**.
+- **H_DR4-ter — monotonicity**: the structurally-distinguished
+  richer substrate breaks the G4-bis degenerate tie partially —
+  baseline retention drops to 0.5869 (n=30) while the three dream
+  arms cluster around 0.7046–0.7065. Mean retention `P_min = 0.7065`,
+  `P_equ = 0.7046`, `P_max = 0.7046` (Jonckheere J = 1335.0,
+  p = 0.544 at α/4 = 0.0125). The predicted ordering
+  `P_max ≥ P_equ ≥ P_min` is **not observed** (P_min slightly
+  edges the others). H_DR4-ter is **inconclusive** — neither
+  monotonic-rejected nor falsified.
+
+The verdict locks the EC axis at `PARTIAL` per the pre-reg DualVer
+table §7 (H_DR4-ter inconclusive, even though H1 and H2 reject H0).
+The richer-head dream profiles outperform the no-dream baseline by
+a large margin (g ≈ 2.8 ≫ Hu 2020 anchor floor 0.21), but the
+**ordering between dream profiles** is washed out at the C5 anchor.
+A confirmatory N≥95 follow-up (G4-quater) is scheduled to test
+whether richer substrate × `hp_best=C9` recovers the predicted
+P_max ≥ P_equ ≥ P_min ordering.
+
+Run-registry profile keys `g4-ter/{richer,hp}/<arm>/<combo>`
+identify each cell to satisfy R1.
+
+Provenance:
+- Pre-registration : `docs/osf-prereg-g4-ter-pilot.md`
+- Milestone (md) : `docs/milestones/g4-ter-pilot-2026-05-03.md`
+- Milestone (json) : `docs/milestones/g4-ter-pilot-2026-05-03.json`
+- Driver : `experiments/g4_ter_hp_sweep/run_g4_ter.py`
+- Substrate : `experiments.g4_ter_hp_sweep.dream_wrap_hier.G4HierarchicalClassifier`
+- HP grid : `experiments.g4_ter_hp_sweep.hp_grid.HP_COMBOS`
+
 ## 7.2 Cross-substrate H1-H4 comparative table (synthetic substitute — not empirical claim)
 
 **Table 7.2 — MLX vs E-SNN hypotheses at Bonferroni α = 0.0125
