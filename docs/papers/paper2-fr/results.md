@@ -221,6 +221,20 @@ seed-round-trip (mêmes nombres sur tous les seeds) est
 **attendue** sous variante c — les variantes a/b
 produiraient des lignes dépendantes du seed.
 
+Une tentative de vérification du 2026-05-03 contre
+arXiv 2401.08623v1
+(`docs/milestones/wake-sleep-baseline-verify-2026-05-03.md`)
+a identifié deux discordances : (i) Alfarano 2024 §4.1 évalue
+WSCL sur Split CIFAR-10, Tiny-ImageNet1/2 et Split FG-ImageNet
+— *pas* sur Split-FMNIST ; (ii) les Tables 2-3 rapportent des
+pourcentages et la paire placeholder `(0,082, 0,847)` ne
+correspond à aucune cellule ER-ACE+WSCL pour aucune taille de
+buffer ni aucun des trois benchmarks rapportés. Le drapeau
+PLACEHOLDER reste donc actif en attente d'une décision du
+mainteneur (re-clé sur un benchmark Alfarano, ou bascule de
+l'ancre comparateur vers un papier qui rapporte effectivement
+Split-FMNIST).
+
 Un test d'équivalence TOST de style H2 contre P_equ est
 **délibérément omis** : la précaution prédicteur (§6.4) se
 compose avec la précaution variant-c valeurs-de-référence ;

@@ -12,6 +12,26 @@ see `docs/specs/2026-04-17-dreamofkiki-framework-C-design.md` §12).
 
 ## [Unreleased]
 
+### Documentation
+- Document outcome of Alfarano 2024 (arXiv 2401.08623) verify
+  attempt for the Wake-Sleep CL baseline placeholder pair
+  (`forgetting_rate=0.082`, `avg_accuracy=0.847`,
+  `task_split=split_fmnist_5tasks`). Pulled the PDF (v1, 14 pp)
+  via WebFetch and parsed Tables 1-4 with pypdf 6.10.2. The
+  placeholder values do not match any cell of Tables 2-3, and
+  Alfarano 2024 §4.1 evaluates on CIFAR-10 / Tiny-ImageNet1/2 /
+  FG-ImageNet rather than Split-FMNIST. New supersede dump
+  `docs/milestones/wake-sleep-baseline-verify-2026-05-03.md`
+  records the mismatches ; the PLACEHOLDER flags at the six
+  sites are retained pending a maintainer decision (re-key on
+  an Alfarano benchmark, or switch the comparator anchor to a
+  paper that reports Split-FMNIST). The §7.7 caveat in
+  `docs/papers/paper2/results.md` and its FR mirror is
+  expanded ; the module-level docstring in
+  `kiki_oniric/substrates/wake_sleep_cl_baseline.py` is
+  updated. **No DualVer bump** — placeholder discipline and
+  numerical values unchanged.
+
 ### Added
 - `kiki_oniric.profiles.so_calibration` module with
   `compute_so_amplitude_proxy()` reader and Sharon 2025 anchor

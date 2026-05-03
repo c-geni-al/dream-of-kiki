@@ -199,6 +199,18 @@ dump carries the same caveat. The seed-round-trip identity
 (same numbers across seeds) is **expected** under variant c —
 variants a/b would yield seed-dependent rows.
 
+A 2026-05-03 verify attempt against arXiv 2401.08623v1
+(`docs/milestones/wake-sleep-baseline-verify-2026-05-03.md`)
+identified two mismatches : (i) Alfarano 2024 §4.1 evaluates
+WSCL on Split CIFAR-10, Tiny-ImageNet1/2 and Split FG-ImageNet
+— *not* on Split-FMNIST ; (ii) Tables 2-3 report percentages
+and the placeholder pair `(0.082, 0.847)` does not match any
+ER-ACE+WSCL cell at any buffer size for any of the three
+reported benchmarks. The PLACEHOLDER flag therefore stands
+pending a maintainer decision (re-key on an Alfarano benchmark,
+or switch the comparator anchor to a paper that does report
+Split-FMNIST).
+
 A H2-style TOST equivalence test against P_equ is
 **deliberately omitted** : the predictor caveat (§6.4)
 compounds with the variant-c reference-values caveat ; a

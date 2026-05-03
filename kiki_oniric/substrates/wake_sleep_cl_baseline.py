@@ -38,12 +38,27 @@ WAKE_SLEEP_BASELINE_VERSION = "C-v0.12.0+PARTIAL"
 # Variant-c reference metrics. Source : Alfarano et al. 2024 IEEE
 # TNNLS Tables 2-3 (Split-FMNIST 5-task class-incremental).
 #
-# PLACEHOLDER — these numerical values MUST be cross-checked
-# against the Alfarano paper PDF before publication. They are
-# documented as published-reference placeholders in the Paper 2
-# milestone dump and the §7.X table caption ; the discipline is
-# "expose the placeholder so reviewers can re-derive it" rather
-# than "ship a verified number we cannot defend".
+# PLACEHOLDER — verify attempt 2026-05-03 (arXiv 2401.08623v1
+# PDF, 14 pp, parsed via pypdf) revealed two mismatches that the
+# maintainer must resolve before any publication claim :
+#   1. Alfarano evaluates on CIFAR-10, Tiny-ImageNet1/2, and
+#      FG-ImageNet (paper §4.1) — NOT on Split-FMNIST. The
+#      `split_fmnist_5tasks` task_split key in this module does
+#      not correspond to any benchmark reported by the paper.
+#   2. Table 2 (forgetting Class-IL) and Table 3 (final average
+#      accuracy with std) report percentages, not unit-interval
+#      decimals. The placeholder values 0.082 / 0.847 do not
+#      match any cell of either table for any of the three
+#      reported benchmarks at any buffer size.
+# Resolution paths : (a) re-key on a benchmark Alfarano actually
+# scores (e.g. `cifar10_5tasks_buffer500` -> ER-ACE+WSCL FAA
+# 74.18 %, forgetting 10.69 %) ; (b) keep `split_fmnist_5tasks`
+# but switch the comparator anchor to a paper that does report
+# Split-FMNIST. Until then, the values stay frozen at the
+# pre-verify defaults so the milestone dump and §7.7 caveat
+# remain consistent ; the discipline is "expose the placeholder
+# so reviewers can re-derive it" rather than "ship a verified
+# number we cannot defend".
 _REFERENCE_METRICS_BY_TASKSPLIT: dict[str, dict[str, float]] = {
     "split_fmnist_5tasks": {
         "forgetting_rate": 0.082,
