@@ -41,3 +41,11 @@ experiments/g4_quinto_test/data/cifar-10-batches-bin/
 experiments/g4_quinto_test/data/cifar-10-binary.tar.gz
 experiments/g4_quinto_test/data/cifar10-train.parquet
 experiments/g4_quinto_test/data/cifar10-test.parquet
+
+# G4-sexto pilot Split-CIFAR-100 + Tiny-ImageNet raw payloads (not committed)
+experiments/g4_sexto_test/data/cifar-100-binary/
+experiments/g4_sexto_test/data/cifar-100-binary.tar.gz
+experiments/g4_sexto_test/data/cifar100-train.parquet
+experiments/g4_sexto_test/data/cifar100-test.parquet
+experiments/g4_sexto_test/data/tiny-imagenet-train.parquet
+experiments/g4_sexto_test/data/tiny-imagenet-valid.parquet
