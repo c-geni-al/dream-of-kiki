@@ -4,6 +4,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
+from experiments.g4_split_fmnist.dream_wrap import build_profile
 from experiments.g4_ter_hp_sweep.dream_wrap_hier import (
     BetaBufferHierFIFO,
     G4HierarchicalClassifier,
@@ -195,9 +196,6 @@ def test_recombine_step_seed_determinism() -> None:
     np.testing.assert_array_equal(
         np.asarray(a._l3.weight), np.asarray(b._l3.weight)
     )
-
-
-from experiments.g4_split_fmnist.dream_wrap import build_profile  # noqa: E402
 
 
 def _fill_buffer(buf: BetaBufferHierFIFO, clf: G4HierarchicalClassifier,

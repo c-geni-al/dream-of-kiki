@@ -84,19 +84,7 @@ RECOMBINE_LR = 0.01
 RESTRUCTURE_FACTOR = 0.05
 
 
-class CellRicher(TypedDict):
-    arm: str
-    seed: int
-    hp_combo_id: str
-    acc_task1_initial: float
-    acc_task1_final: float
-    retention: float
-    excluded_underperforming_baseline: bool
-    wall_time_s: float
-    run_id: str
-
-
-class CellHP(TypedDict):
+class Cell(TypedDict):
     arm: str
     seed: int
     hp_combo_id: str

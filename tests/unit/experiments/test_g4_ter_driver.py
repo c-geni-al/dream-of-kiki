@@ -71,3 +71,5 @@ def test_run_pilot_smoke(tmp_path: Path) -> None:
     assert "h1_hp_artefact" in verdict
     assert "h2_substrate_richer" in verdict
     assert "h_dr4_ter_richer" in verdict
+    # Honesty gate: docstring claims < 60 s; enforce it.
+    assert payload["wall_time_s"] < 60
