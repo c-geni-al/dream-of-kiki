@@ -1,44 +1,47 @@
-# papers — drafts for Paper 1 (framework) and Paper 2 (ablation)
+# papers — venue tracker, submission discipline, byline policy
 
-Two venue targets, two subdirectories :
+Submission package for Paper 1 (framework) and Paper 2 (ablation). **Sources live elsewhere**: `docs/papers/{paper1,paper1-fr,paper2,paper2-fr,paper3}/` carries the actual section files (`abstract.md`, `methodology.md`, `full-draft.md`, …) — see `docs/papers/CLAUDE.md` for sync EN↔FR + citation pinning + section conventions.
 
-- `paper1-framework/` — Nature HB / PLoS Comp Bio. Formal framework
-  C, axioms DR-0..DR-4, Conformance Criterion. Sources under
-  `submitted/`.
-- `paper2-ablation/` — NeurIPS / ICML / TMLR. Empirical ablation on
-  kiki-oniric (`P_min` / `P_equ` / `P_max`). Sources under `draft/`.
+This dir owns: venue tracker, byline policy, cross-paper writing discipline.
 
-## Writing discipline
+## Venue targets
 
-- Every empirical number must resolve to a **registered `run_id`**
-  from `harness/storage/run_registry.py`. No "we observed ~0.6" —
-  cite the run and the dump file under `docs/milestones/`.
-- Every axiom / invariant mentioned must use the canonical ID
-  (DR-0..DR-4, I1..In, S1..Sn, K1..Kn) and match `docs/glossary.md`.
-  Do not introduce local synonyms in prose.
-- Every proof sketched in the paper must have a full version under
-  `docs/proofs/` (or be explicitly marked as deferred).
-- Synthetic-benchmark results are allowed only in methodology /
-  pipeline-validation sections, never in headline claims. Mark
-  clearly as "synthetic placeholder (G2 pilot)".
+| Paper | Target | Status | Source tree |
+|---|---|---|---|
+| Paper 1 (framework C) | PLOS Comp Bio (since 2026-04-20; Nature HB retired) | submission-ready | `docs/papers/paper1/` + `paper1-fr/` (HAL mirror) |
+| Paper 2 (kiki-oniric ablation) | NeurIPS / ICML / TMLR | drafting | `docs/papers/paper2/` + `paper2-fr/` |
+| Paper 3 (cycle-3 amorçage) | TBD | outline only — **PROVISIONAL** banner | `docs/papers/paper3/` |
 
-## Anti-patterns specific to papers
+Byline (all venues) : *dreamOfkiki project contributors*. No AI attribution.
 
-- **Don't** paste numbers from a scratch notebook — they must come
-  from a registry dump. If the dump doesn't exist, the claim doesn't
-  exist.
-- **Don't** edit `submitted/` after a venue submission snapshot ;
-  fork to `submitted-revN/` instead so the submitted state is
-  reproducible.
-- **Don't** mix Paper 1 and Paper 2 scope : the formal framework is
-  substrate-agnostic and must not reference `kiki_oniric` internals
-  by name. The ablation paper conversely must cite DR / I / S IDs
-  from Paper 1 by version.
-- **Don't** use AI attribution in the byline or acknowledgments ;
-  the project policy is "dreamOfkiki project contributors".
-- **Don't** break the DualVer contract in prose : when citing
-  framework C always give the full `C-vX.Y.Z+{STABLE,UNSTABLE}`
-  tag, as shipped in `CHANGELOG.md`.
-- **Don't** regenerate figures without recording the seed and
-  harness version ; figure scripts belong under
-  `scripts/` and emit to `docs/milestones/`.
+## Writing discipline (applies to all venues)
+
+- **Empirical numbers ↔ `run_id`**. Every quantitative claim resolves to a registered `run_id` from `harness/storage/run_registry.py` + a dump under `docs/milestones/`. No "we observed ~0.6" — cite the run.
+- **Canonical IDs**. Every axiom / invariant uses the canonical ID (`DR-0..DR-4`, `DR-2'`, `I/S/K` families) and matches `docs/glossary.md`. No local synonyms.
+- **Proof references**. Every proof sketched in a paper has a full version under `docs/proofs/` (or is explicitly marked deferred). Pin by versioned filename (`dr2-compositionality.md v0.2`).
+- **Synthetic vs empirical**. Synthetic-pipeline results allowed only in methodology / pipeline-validation sections, never in headline claims. Mark `(synthetic placeholder, G2 pilot)` in caption.
+- **DualVer**. When citing framework C, always give the full `C-vX.Y.Z+{STABLE,UNSTABLE}` tag (per `CHANGELOG.md`). No bare `C-v0.5`.
+
+## Submission state lifecycle
+
+- **Draft → submission-ready**: section files closed in `docs/papers/paperN/`, `docs/proofs/` consistent with sketches, milestones cite required `run_id`s. Update venue table above.
+- **Submitted**: tag source tree (`paper-1-v1.0-submitted`), record date, freeze `docs/papers/paperN/`. Forward edits go to branch `submitted-revN` per `docs/papers/CLAUDE.md`.
+- **Revision requested**: branch `submitted-revN/`, EN→FR propagation in same PR, re-baseline `run_id`s if numbers change.
+
+## Coupling
+
+| Concern | Where |
+|---|---|
+| Reviewer recruitment, outreach, mail drafts | `ops/CLAUDE.md` |
+| DR-2 proof status (gates Paper 1 submission) | `docs/proofs/CLAUDE.md` |
+| Section-level conventions (EN↔FR sync, naming, building) | `docs/papers/CLAUDE.md` |
+
+## Anti-patterns (cross-paper)
+
+- Pasting numbers from a scratch notebook — they must resolve to a registry dump. If the dump doesn't exist, the claim doesn't exist.
+- Editing `docs/papers/paperN/` after a venue submission snapshot — branch to `submitted-revN/`; the submitted state must stay reproducible.
+- Mixing Paper 1 (formal, substrate-agnostic) and Paper 2 (engineering ablation) scope: Paper 1 must not reference `kiki_oniric` internals by name; Paper 2 cites Paper 1 axioms by version tag, never copies content.
+- AI attribution in byline / acknowledgments / commit trailers. Project policy is *dreamOfkiki project contributors*.
+- Citing framework C without the full DualVer tag (`C-v0.5.0+STABLE`, not bare `C-v0.5`).
+- Regenerating figures without recording seed + harness version. Figure scripts live under `scripts/`, emit to `docs/milestones/`.
+- Fleshing out `docs/papers/paper3/outline.md` before cycle-3 kickoff — the **PROVISIONAL** banner is load-bearing.

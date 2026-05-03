@@ -31,7 +31,8 @@ version and active gate live in `STATUS.md` — read it first.
 | Evaluation harness, benchmarks, run registry, matrix config | `harness/` |
 | Unit + conformance (axioms, invariants) tests | `tests/` |
 | Pilot scripts, milestone drivers (G-gates) | `scripts/` |
-| Paper drafts (Paper 1 framework, Paper 2 ablation) | `papers/` |
+| Paper section sources (drafts EN/FR for Paper 1/2/3) | `docs/papers/` |
+| Submission tracker, byline policy, cross-paper writing discipline | `papers/` |
 | Outreach, reviewer recruitment, mail drafts | `ops/` |
 
 Several of these directories have their own `CLAUDE.md` with
