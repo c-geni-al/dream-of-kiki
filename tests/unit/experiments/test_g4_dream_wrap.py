@@ -191,3 +191,33 @@ def test_replay_optimizer_step_seeded_reproducible() -> None:
         np.asarray(clf_a._model.layers[0].weight),
         np.asarray(clf_b._model.layers[0].weight),
     )
+
+
+def test_downscale_step_multiplies_weights_by_factor() -> None:
+    """Each layer's weight must scale by exactly ``factor``."""
+    clf = G4Classifier(in_dim=16, hidden_dim=32, n_classes=2, seed=42)
+    w_before = [
+        np.asarray(layer.weight).copy()
+        for layer in clf._model.layers
+        if hasattr(layer, "weight") and layer.weight is not None
+    ]
+    clf._downscale_step(factor=0.95)
+    w_after = [
+        np.asarray(layer.weight)
+        for layer in clf._model.layers
+        if hasattr(layer, "weight") and layer.weight is not None
+    ]
+    assert len(w_before) == len(w_after) > 0
+    for wb, wa in zip(w_before, w_after, strict=True):
+        np.testing.assert_allclose(wa, wb * 0.95, rtol=1e-6)
+
+
+def test_downscale_step_factor_bounds() -> None:
+    """``factor`` outside (0, 1] must raise ValueError."""
+    clf = G4Classifier(in_dim=16, hidden_dim=32, n_classes=2, seed=42)
+    with pytest.raises(ValueError, match="shrink_factor|factor"):
+        clf._downscale_step(factor=0.0)
+    with pytest.raises(ValueError, match="shrink_factor|factor"):
+        clf._downscale_step(factor=1.5)
+    with pytest.raises(ValueError, match="shrink_factor|factor"):
+        clf._downscale_step(factor=-0.1)

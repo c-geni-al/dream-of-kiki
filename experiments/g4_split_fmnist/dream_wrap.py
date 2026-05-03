@@ -287,6 +287,41 @@ class G4Classifier:
             opt.update(self._model, grads)
             mx.eval(self._model.parameters(), opt.state)
 
+    def _downscale_step(self, *, factor: float) -> None:
+        """Multiply every weight + bias in ``self._model`` by ``factor``.
+
+        Tononi-Cirelli SHY synaptic-homeostasis analog. ``factor``
+        is calibrated qualitatively at 0.95 in this pilot (a 5 %
+        per-episode drift to mimic NREM SO-trough downselection).
+        Empirically pinning the optimal factor is future work.
+
+        Bounds : ``factor`` must lie in ``(0, 1]`` — same constraint
+        as :func:`downscale_real_handler` (``shrink_factor``). Raises
+        :class:`ValueError` outside that range with a message tagging
+        ``shrink_factor`` so error logs grep cleanly across both
+        sites.
+        """
+        if not (0.0 < factor <= 1.0):
+            raise ValueError(
+                f"shrink_factor must be in (0, 1], got {factor}"
+            )
+        for layer in self._model.layers:
+            w = getattr(layer, "weight", None)
+            b = getattr(layer, "bias", None)
+            if w is not None:
+                layer.weight = w * factor
+            if b is not None:
+                layer.bias = b * factor
+        # Materialise all updated tensors before returning.
+        tensors: list[mx.array] = []
+        for layer in self._model.layers:
+            if getattr(layer, "weight", None) is not None:
+                tensors.append(layer.weight)
+            if getattr(layer, "bias", None) is not None:
+                tensors.append(layer.bias)
+        if tensors:
+            mx.eval(*tensors)
+
     # -------------------- dream --------------------
 
     def dream_episode(self, profile: ProfileT, seed: int) -> None:
