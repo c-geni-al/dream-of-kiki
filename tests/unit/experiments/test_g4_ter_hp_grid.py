@@ -5,7 +5,7 @@ import dataclasses
 
 import pytest
 
-from experiments.g4_ter_hp_sweep.hp_grid import HP_COMBOS, HPCombo
+from experiments.g4_ter_hp_sweep.hp_grid import HP_COMBOS
 
 
 def test_hp_grid_has_10_combos() -> None:
