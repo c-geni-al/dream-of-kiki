@@ -32,3 +32,6 @@ Thumbs.db
 # Local-only ephemera
 .remember/
 docs/papers/**/build/
+
+# G4 pilot Split-FMNIST raw IDX files (not committed)
+experiments/g4_split_fmnist/data/
