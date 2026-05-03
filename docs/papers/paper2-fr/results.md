@@ -603,6 +603,73 @@ Provenance :
 - Substrat (CNN) : `experiments.g4_quinto_test.small_cnn.G4SmallCNN`
 - Stratégies RECOMBINE : `experiments.g4_quater_test.recombine_strategies.sample_synthetic_latents`
 
+## 7.1.9 Pilote G5-bis — tête riche portée sur E-SNN, verdict artefact MLX-only (2026-05-03)
+
+La trouvaille G4-ter §7.1.5 (g_h2 = + 2,77 sur substrat MLX
+hiérarchique) soulevait la question cross-substrat : l'effet
+positif REPLAY+DOWNSCALE survit-il au port vers un substrat
+non-MLX ? Le pilote G5-bis y répond. Pré-enregistrement
+[`docs/osf-prereg-g5-bis-richer-esnn.md`](../../osf-prereg-g5-bis-richer-esnn.md)
+verrouillé au commit `ae640a5` ; exécution du pilote au commit
+`5168400`. Jalon associé :
+[`docs/milestones/g5-bis-richer-esnn-2026-05-03.md`](../../milestones/g5-bis-richer-esnn-2026-05-03.md).
+
+**Substrat** : `EsnnG5BisHierarchicalClassifier`, un SNN
+LIF rate-coded à 3 couches (32 → 16 → 2 unités de taux de
+décharge) avec rétropropagation par estimateur straight-through
+(Wu 2018), implémenté en numpy pur (sans dépendance `norse`).
+
+**Trouvaille intra-substrat (E-SNN richer, N=10 graines)** :
+- rétention moyenne `baseline = 0,5127`, `P_min = 0,5129`,
+  `P_equ = 0,5131`, `P_max = 0,5131` ;
+- `g_h7a = 0,1043` observé (E-SNN richer P_equ vs baseline) ;
+- p Welch unilatéral = 0,4052 à α/4 = 0,0125 → échec à rejeter H0 ;
+- seuil pré-enregistré `H7B_G_THRESHOLD = 0,5` non atteint.
+
+**Agrégat cross-substrat vs G4-ter MLX richer head**
+([`g5-bis-aggregate-2026-05-03.md`](../../milestones/g5-bis-aggregate-2026-05-03.md)) :
+
+| Bras | g (MLX − E-SNN) | p Welch bilatéral | rejet H₀ ? |
+|------|-----------------|---------------------|-------------|
+| baseline | 3,23 | 6,4 × 10⁻¹⁶ | OUI |
+| P_min | 4,20 | 7,4 × 10⁻¹⁹ | OUI |
+| P_equ | 4,02 | 2,3 × 10⁻¹⁸ | OUI |
+| P_max | 4,02 | 2,3 × 10⁻¹⁸ | OUI |
+
+**Classification : H7-B (artefact MLX-only à cette échelle).**
+
+**Lecture honnête**. L'agrégateur émet `h7_classification =
+"H7-B"` — l'effet positif G4-ter (g = +2,77) **ne transfère
+pas** à la tête riche E-SNN à ce N. La quantification de
+spike-rate, la non-linéarité LIF, et l'approximation
+STE-backward du substrat E-SNN washent apparemment l'effet
+onirique qui émergeait sur MLX. L'ancre Hu 2020 est une
+référence directionnelle (signe de l'hypothèse alternative), pas
+un calibrateur de magnitude ; le verdict H7-B est rapporté
+comme l'issue prédite sous le pré-enregistrement si
+l'universalité cross-substrat H7-C ne tient pas, et **n'est
+pas** adouci en "E-SNN fonctionne à plus petite échelle".
+
+**Implications pour DR-3.** La substrat-agnosticité DR-3 reste
+formellement valide au niveau des tests-de-propriété
+axiomatiques (les vérifications DR-0/1/2'/4 passent sur les
+substrats MLX et E-SNN ; cf. §4.1). Mais la
+substrat-agnosticité *empirique* est désormais réfutée à deux
+niveaux distincts : (a) la rétention absolue diverge
+[@g5-cross-substrate, §7.1.3 binary-head] ; (b) l'effet positif
+onirique lui-même est MLX-bound à ce N. Le fichier de preuve DR-3
+`docs/proofs/dr3-substrate-evidence.md` doit être révisé pour
+noter que la garantie de substrat-agnosticité ne couvre que les
+vérifications du Critère de Conformité, et non la transférabilité
+empirique des tailles d'effet.
+
+Un suivi confirmatoire N=30 (`Option A`) au seuil H7B_G_THRESHOLD
+= 0,5 resserrerait le verdict ; une étape 2 plus profonde dans
+G5-ter portant `G4SmallCNN` vers un CNN à spikes testerait si
+la non-linéarité spiking est le mécanisme load-bearing du
+washout. Les deux planifiés en travaux futurs par pré-reg §6
+ligne 6.
+
 ## 7.2 Table comparative inter-substrats H1-H4 (substitution synthétique — pas de revendication empirique)
 
 **Table 7.2 — MLX vs E-SNN hypothèses à Bonferroni
