@@ -684,9 +684,20 @@ transformeur / E-SNN hiérarchique.
 - Pilote : `experiments/g4_sexto_test/run_step1_cifar100.py`
 - Substrat (CNN) : `experiments.g4_quinto_test.small_cnn.G4SmallCNN`
   (réutilisé)
-- Run principal N=30 M1 Max, ~80 min de paroi ; confirmatoire
-  N=95 parallèle sur Studio M3 Ultra en cours (jalon prévu
-  `g4-sexto-step1-confirmatory-N95-studio-2026-05-04.{json,md}`)
+- Run principal N=30 M1 Max, ~80 min de paroi.
+- Confirmatoire N=95 Studio M3 Ultra : 760 cellules, 5 129 s de
+  paroi, 76 cellules par bras × stratégie après exclusion
+  `acc_initial < 0,20` (~20 % d'exclusion). H6-A confirmé à N
+  plus grand : `mean P_max(mog) = 0,3701`,
+  `mean P_max(none) = 0,3592`, `g de Hedges = 0,1527`,
+  `Welch t = 0,946`, `p = 0,3457` → échec à rejeter à α = 0,0167.
+  Jalon confirmatoire
+  `docs/milestones/g4-sexto-step1-confirmatory-N95-studio-2026-05-04.{json,md}`.
+  À N plus grand l'estimation de taille d'effet remonte
+  modestement (`g_30 = 0,057` → `g_95 = 0,153`) mais reste bien
+  dans la fourchette « small » de Cohen (< 0,2) et le test de
+  Welch échoue toujours à rejeter : la prétention de vacuité
+  empirique survit au gain de précision.
 
 ## 7.1.9 Pilote G5-bis — tête riche portée sur E-SNN, verdict artefact MLX-only (2026-05-03)
 

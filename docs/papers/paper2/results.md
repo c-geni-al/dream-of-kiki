@@ -633,9 +633,19 @@ follow-ups.
 - Driver : `experiments/g4_sexto_test/run_step1_cifar100.py`
 - Substrate (CNN) : `experiments.g4_quinto_test.small_cnn.G4SmallCNN`
   (re-used)
-- N=30 M1 Max main run, ~80 min wall ; parallel N=95 confirmatory
-  on Studio M3 Ultra in flight (planned milestone
-  `g4-sexto-step1-confirmatory-N95-studio-2026-05-04.{json,md}`)
+- N=30 M1 Max main run, ~80 min wall.
+- N=95 Studio M3 Ultra confirmatory : 760 cells, 5 129 s wall,
+  76 cells per arm × strategy after `acc_initial < 0.20`
+  exclusion (~20 % exclusion rate). H6-A confirmed at higher N :
+  `mean P_max(mog) = 0.3701`, `mean P_max(none) = 0.3592`,
+  `Hedges' g = 0.1527`, `Welch t = 0.946`, `p = 0.3457`
+  → fail-to-reject at α = 0.0167. Confirmatory milestone
+  `docs/milestones/g4-sexto-step1-confirmatory-N95-studio-2026-05-04.{json,md}`.
+  At the higher N the effect-size estimate moves up modestly
+  (`g_30 = 0.057` → `g_95 = 0.153`) but remains well within
+  Cohen's "small" range (< 0.2) and the Welch test still
+  fails to reject : the empirical-emptiness claim survives
+  the precision increase.
 
 ## 7.1.9 G5-bis pilot — richer head ported to E-SNN, MLX-only artefact verdict (2026-05-03)
 

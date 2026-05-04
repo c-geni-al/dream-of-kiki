@@ -43,9 +43,16 @@ see `docs/specs/2026-04-17-dreamofkiki-framework-C-design.md` §12).
   `docs/milestones/g4-sexto-step1-2026-05-03.{json,md}` +
   `docs/milestones/g4-sexto-aggregate-2026-05-03.{json,md}`.
   Paper 2 §7.1.8 EN+FR appended.
-- Confirmatory N=95 Studio M3 Ultra run in flight at commit
-  time (planned milestone
-  `g4-sexto-step1-confirmatory-N95-studio-2026-05-04.{json,md}`).
+- Confirmatory N=95 Studio M3 Ultra run COMPLETED (760 cells,
+  5 129 s wall, 76 effective per arm × strategy after
+  `acc_initial < 0.20` exclusion ~20 %). H6-A re-confirmed at
+  higher N : `mean P_max(mog) = 0.3701`,
+  `mean P_max(none) = 0.3592`, `Hedges' g = 0.1527`,
+  `Welch t = 0.946`, `p = 0.3457` → fail-to-reject at α = 0.0167.
+  Effect-size estimate moves from `g_30 = 0.057` to `g_95 = 0.153`
+  (still Cohen "small", < 0.2). Empirical-emptiness claim
+  survives precision increase. Milestone
+  `docs/milestones/g4-sexto-step1-confirmatory-N95-studio-2026-05-04.{json,md}`.
 
 ### Exploratory (Studio CPU pilots — K2 + R1 + Robertson, 2026-05-04)
 
