@@ -1,8 +1,9 @@
 # Paper 1 — Framework C (cycle 1) — Version française
 
-Revue cible : Nature Human Behaviour (primaire) /
-PLoS Computational Biology (repli) /
-Cognitive Science (repli Pivot B)
+Revue cible : PLOS Computational Biology (primaire, depuis le
+pivot 2026-04-20 — voir commit `d6866f3` et `STATUS.md`).
+Cognitive Science (repli Pivot B). Nature Human Behaviour
+retiré comme primaire au pivot du 2026-04-20.
 
 ## Fichiers de ce répertoire
 

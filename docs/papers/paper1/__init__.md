@@ -1,8 +1,9 @@
 # Paper 1 — Framework C (cycle 1)
 
-Target journal : Nature Human Behaviour (primary) /
-PLoS Computational Biology (fallback) /
-Cognitive Science (Pivot B fallback)
+Target journal : PLOS Computational Biology (primary, since
+2026-04-20 pivot — see commit `d6866f3` and `STATUS.md`).
+Cognitive Science (Pivot B fallback). Nature Human Behaviour
+retired as primary at the 2026-04-20 pivot.
 
 ## Files in this directory
 
