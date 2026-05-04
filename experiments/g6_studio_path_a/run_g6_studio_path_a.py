@@ -640,6 +640,17 @@ def main(argv: Optional[list[str]] = None) -> int:
         "--registry-db", type=Path, default=DEFAULT_REGISTRY_DB,
     )
     parser.add_argument(
+        "--subdomains",
+        default=None,
+        help=(
+            "Comma-separated subdomain list (default : auto-detect "
+            "from fixture if it does not match the MMLU defaults). "
+            "Used by symbolic CL fixtures with non-MMLU subject "
+            "names (e.g., xor_shift_3,parity_chunks_4,gray_code,"
+            "reverse,complement_alternating)."
+        ),
+    )
+    parser.add_argument(
         "--smoke-subdomains",
         action="store_true",
         help=(
@@ -673,9 +684,15 @@ def main(argv: Optional[list[str]] = None) -> int:
     if not seeds:
         raise SystemExit("--n-seeds must be >= 1")
     use_smoke_subdomains = args.smoke or args.smoke_subdomains
-    subdomains = (
-        SMOKE_SUBDOMAINS if use_smoke_subdomains else DEFAULT_SUBDOMAINS
-    )
+    if args.subdomains:
+        # Explicit override (e.g., symbolic CL fixture with non-MMLU subjects).
+        subdomains: tuple[str, ...] = tuple(
+            s.strip() for s in args.subdomains.split(",") if s.strip()
+        )
+    elif use_smoke_subdomains:
+        subdomains = SMOKE_SUBDOMAINS
+    else:
+        subdomains = DEFAULT_SUBDOMAINS
     payload = run_pilot(
         fixture_path=args.fixture_path,
         out_json=args.out_json,
