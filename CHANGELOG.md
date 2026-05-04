@@ -12,6 +12,51 @@ see `docs/specs/2026-04-17-dreamofkiki-framework-C-design.md` §12).
 
 ## [Unreleased]
 
+### Empirical (G6-M1Max Path D Helium-2B cross-family, 2026-05-04)
+
+- G6-M1Max Path D pilot completed both steps on M1 Max with
+  Kyutai Helium-1 2B dense substrate (`kyutai/helium-1-2b`,
+  Apache 2.0, 3.86 GB). Pre-reg `docs/osf-prereg-g6-m1max-
+  path-d.md` locked at commit `db44d05`.
+- **Step 1 Helium-2B + real MMLU 50/50** (4 410 s wall, peak
+  mem 8.1 GB, 20/20 cells included) : Welch H9-A `p=0.4963`,
+  `g=0.0054` → fail-to-reject H0, **classification H9-B**
+  (real-LLM wash-out at dense-2B tier on knowledge-recall
+  benchmark). Jonckheere monotonicity p=0.842, no reject.
+- **Step 2 Helium-2B + symbolic CL 50/50** (4 803 s wall,
+  peak mem 8.1 GB) : 19/20 cells excluded by underperforming-
+  baseline rule (acc[S_1 after S_1] < 0.30). Helium-2B at
+  LoRA rank=8 / 50 iters does NOT acquire the bit-string
+  rules from 50 train records — first-subdomain accuracy
+  stays near 4-choice random chance.
+  **Classification INSUFFICIENT** (only P_equ seed=3 passes,
+  N=1, no Welch test possible).
+- **Combined Path D verdict** : H11-A_MMLU = H9-B (null),
+  H11-A_synth = INSUFFICIENT. H11-D conjunction `unresolved`
+  (one path INSUFFICIENT). Convergent-validation matrix at
+  midpoint : 1 of 4 cells filled with a clean null, 1 of 4
+  with INSUFFICIENT methodological finding, 2 of 4 still
+  pending (Path A* in flight on Studio, Path C scaffolded
+  but not launched).
+- **Methodological reading** : Helium-2B is too small to
+  pressure the framework C question on symbolic CL at the
+  locked compute budget ; the convergent validation now
+  depends on Qwen-35B paths (Path A* + Path C). Pre-reg §9
+  envelope b allows raised iters (50 → 200) or rank (8 → 16)
+  re-run via §9.1 amendment if the user wants Helium symbolic
+  CL revisited later.
+- Driver tweaks shipped during the run : `--subdomains` CLI
+  flag (commit `b1727dd`) for non-MMLU fixtures ;
+  `derive_pilot_label` for partial-dump filename namespacing
+  (commit `b42f7e2`) ; `scripts/setup_m1max_helium_path_d.sh`
+  for reproducible M1 Max bootstrap.
+- EC stays PARTIAL ; FC stays C-v0.12.0+PARTIAL.
+- Milestones :
+  `docs/milestones/g6-m1max-path-d-mmlu-2026-05-04.{json,md}`
+  + `docs/milestones/g6-m1max-path-d-synth-2026-05-04.{json,md}`.
+  Paper 2 §7.1.13 EN+FR appended (sub-section "G6-M1Max
+  Path D — Helium-2B cross-family substrate").
+
 ### Empirical (G6-Studio Path A real-LoRA INSUFFICIENT, 2026-05-04)
 
 - G6-Studio Path A pilot completed end-to-end on Mac Studio M3

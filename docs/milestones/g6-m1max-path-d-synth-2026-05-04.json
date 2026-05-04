@@ -1,0 +1,956 @@
+{
+  "arms": [
+    "baseline",
+    "P_min",
+    "P_equ",
+    "P_max"
+  ],
+  "c_version": "C-v0.12.0+PARTIAL",
+  "cells": [
+    {
+      "acc_matrix": {
+        "complement_alternating": [
+          null,
+          null,
+          null,
+          null,
+          0.18
+        ],
+        "gray_code": [
+          null,
+          null,
+          0.22,
+          0.22,
+          0.26
+        ],
+        "parity_chunks_4": [
+          null,
+          0.18,
+          0.2,
+          0.2,
+          0.3
+        ],
+        "reverse": [
+          null,
+          null,
+          null,
+          0.26,
+          0.22
+        ],
+        "xor_shift_3": [
+          0.2,
+          0.24,
+          0.24,
+          0.24,
+          0.32
+        ]
+      },
+      "arm": "baseline",
+      "excluded_underperforming_baseline": true,
+      "retention": 1.3236596736596737,
+      "run_id": "3f83fe784a3860c9b00098d2759322a2",
+      "seed": 0,
+      "wall_time_s": 238.99811005592346
+    },
+    {
+      "acc_matrix": {
+        "complement_alternating": [
+          null,
+          null,
+          null,
+          null,
+          0.18
+        ],
+        "gray_code": [
+          null,
+          null,
+          0.22,
+          0.22,
+          0.26
+        ],
+        "parity_chunks_4": [
+          null,
+          0.14,
+          0.18,
+          0.18,
+          0.26
+        ],
+        "reverse": [
+          null,
+          null,
+          null,
+          0.24,
+          0.2
+        ],
+        "xor_shift_3": [
+          0.24,
+          0.36,
+          0.24,
+          0.24,
+          0.32
+        ]
+      },
+      "arm": "baseline",
+      "excluded_underperforming_baseline": true,
+      "retention": 1.3014069264069263,
+      "run_id": "99af58e635b9d61370a7fc778ed3c949",
+      "seed": 1,
+      "wall_time_s": 239.10891318321228
+    },
+    {
+      "acc_matrix": {
+        "complement_alternating": [
+          null,
+          null,
+          null,
+          null,
+          0.36
+        ],
+        "gray_code": [
+          null,
+          null,
+          0.22,
+          0.26,
+          0.34
+        ],
+        "parity_chunks_4": [
+          null,
+          0.2,
+          0.2,
+          0.3,
+          0.1
+        ],
+        "reverse": [
+          null,
+          null,
+          null,
+          0.22,
+          0.34
+        ],
+        "xor_shift_3": [
+          0.2,
+          0.24,
+          0.24,
+          0.32,
+          0.26
+        ]
+      },
+      "arm": "baseline",
+      "excluded_underperforming_baseline": true,
+      "retention": 1.2227272727272729,
+      "run_id": "a472fba07d440132cd4847896f1773b2",
+      "seed": 2,
+      "wall_time_s": 239.10685515403748
+    },
+    {
+      "acc_matrix": {
+        "complement_alternating": [
+          null,
+          null,
+          null,
+          null,
+          0.18
+        ],
+        "gray_code": [
+          null,
+          null,
+          0.38,
+          0.26,
+          0.26
+        ],
+        "parity_chunks_4": [
+          null,
+          0.2,
+          0.08,
+          0.3,
+          0.3
+        ],
+        "reverse": [
+          null,
+          null,
+          null,
+          0.22,
+          0.22
+        ],
+        "xor_shift_3": [
+          0.24,
+          0.24,
+          0.38,
+          0.32,
+          0.32
+        ]
+      },
+      "arm": "baseline",
+      "excluded_underperforming_baseline": true,
+      "retention": 1.1293859649122806,
+      "run_id": "b2c112fcfbcea2f33fdd53d8e5eb2a9e",
+      "seed": 3,
+      "wall_time_s": 239.3933620452881
+    },
+    {
+      "acc_matrix": {
+        "complement_alternating": [
+          null,
+          null,
+          null,
+          null,
+          0.18
+        ],
+        "gray_code": [
+          null,
+          null,
+          0.22,
+          0.22,
+          0.26
+        ],
+        "parity_chunks_4": [
+          null,
+          0.2,
+          0.2,
+          0.2,
+          0.3
+        ],
+        "reverse": [
+          null,
+          null,
+          null,
+          0.26,
+          0.22
+        ],
+        "xor_shift_3": [
+          0.24,
+          0.24,
+          0.24,
+          0.24,
+          0.32
+        ]
+      },
+      "arm": "baseline",
+      "excluded_underperforming_baseline": true,
+      "retention": 1.2153263403263403,
+      "run_id": "d84c3109e59b098fe398c389ff1decbf",
+      "seed": 4,
+      "wall_time_s": 239.3572301864624
+    },
+    {
+      "acc_matrix": {
+        "complement_alternating": [
+          null,
+          null,
+          null,
+          null,
+          0.32
+        ],
+        "gray_code": [
+          null,
+          null,
+          0.22,
+          0.28,
+          0.38
+        ],
+        "parity_chunks_4": [
+          null,
+          0.2,
+          0.2,
+          0.12,
+          0.06
+        ],
+        "reverse": [
+          null,
+          null,
+          null,
+          0.44,
+          0.38
+        ],
+        "xor_shift_3": [
+          0.2,
+          0.24,
+          0.24,
+          0.26,
+          0.36
+        ]
+      },
+      "arm": "P_min",
+      "excluded_underperforming_baseline": true,
+      "retention": 1.1727272727272726,
+      "run_id": "5622eaa042687cf1e455bedb7527e047",
+      "seed": 0,
+      "wall_time_s": 239.32015585899353
+    },
+    {
+      "acc_matrix": {
+        "complement_alternating": [
+          null,
+          null,
+          null,
+          null,
+          0.26
+        ],
+        "gray_code": [
+          null,
+          null,
+          0.22,
+          0.22,
+          0.22
+        ],
+        "parity_chunks_4": [
+          null,
+          0.2,
+          0.2,
+          0.2,
+          0.18
+        ],
+        "reverse": [
+          null,
+          null,
+          null,
+          0.26,
+          0.24
+        ],
+        "xor_shift_3": [
+          0.24,
+          0.24,
+          0.24,
+          0.24,
+          0.24
+        ]
+      },
+      "arm": "P_min",
+      "excluded_underperforming_baseline": true,
+      "retention": 0.9557692307692307,
+      "run_id": "53f0d470b694acab43c63ae9ac23376f",
+      "seed": 1,
+      "wall_time_s": 239.544331073761
+    },
+    {
+      "acc_matrix": {
+        "complement_alternating": [
+          null,
+          null,
+          null,
+          null,
+          0.18
+        ],
+        "gray_code": [
+          null,
+          null,
+          0.4,
+          0.22,
+          0.26
+        ],
+        "parity_chunks_4": [
+          null,
+          0.18,
+          0.16,
+          0.16,
+          0.3
+        ],
+        "reverse": [
+          null,
+          null,
+          null,
+          0.26,
+          0.22
+        ],
+        "xor_shift_3": [
+          0.24,
+          0.24,
+          0.36,
+          0.38,
+          0.32
+        ]
+      },
+      "arm": "P_min",
+      "excluded_underperforming_baseline": true,
+      "retention": 1.1240384615384615,
+      "run_id": "06e7c76b6da6e0a63fc68d9bfc545529",
+      "seed": 2,
+      "wall_time_s": 239.66299700737
+    },
+    {
+      "acc_matrix": {
+        "complement_alternating": [
+          null,
+          null,
+          null,
+          null,
+          0.22
+        ],
+        "gray_code": [
+          null,
+          null,
+          0.3,
+          0.22,
+          0.22
+        ],
+        "parity_chunks_4": [
+          null,
+          0.22,
+          0.12,
+          0.2,
+          0.2
+        ],
+        "reverse": [
+          null,
+          null,
+          null,
+          0.26,
+          0.26
+        ],
+        "xor_shift_3": [
+          0.24,
+          0.26,
+          0.32,
+          0.24,
+          0.24
+        ]
+      },
+      "arm": "P_min",
+      "excluded_underperforming_baseline": true,
+      "retention": 0.9106060606060606,
+      "run_id": "7b684f52f3faf5caff643adf8b79de78",
+      "seed": 3,
+      "wall_time_s": 239.95964193344116
+    },
+    {
+      "acc_matrix": {
+        "complement_alternating": [
+          null,
+          null,
+          null,
+          null,
+          0.18
+        ],
+        "gray_code": [
+          null,
+          null,
+          0.3,
+          0.26,
+          0.26
+        ],
+        "parity_chunks_4": [
+          null,
+          0.18,
+          0.16,
+          0.3,
+          0.3
+        ],
+        "reverse": [
+          null,
+          null,
+          null,
+          0.22,
+          0.22
+        ],
+        "xor_shift_3": [
+          0.24,
+          0.24,
+          0.2,
+          0.32,
+          0.32
+        ]
+      },
+      "arm": "P_min",
+      "excluded_underperforming_baseline": true,
+      "retention": 1.2166666666666668,
+      "run_id": "edab33ed9ea53ca9d8432b595dc8ed8c",
+      "seed": 4,
+      "wall_time_s": 240.29126811027527
+    },
+    {
+      "acc_matrix": {
+        "complement_alternating": [
+          null,
+          null,
+          null,
+          null,
+          0.18
+        ],
+        "gray_code": [
+          null,
+          null,
+          0.22,
+          0.22,
+          0.28
+        ],
+        "parity_chunks_4": [
+          null,
+          0.2,
+          0.2,
+          0.2,
+          0.3
+        ],
+        "reverse": [
+          null,
+          null,
+          null,
+          0.26,
+          0.22
+        ],
+        "xor_shift_3": [
+          0.2,
+          0.24,
+          0.24,
+          0.24,
+          0.32
+        ]
+      },
+      "arm": "P_equ",
+      "excluded_underperforming_baseline": true,
+      "retention": 1.3047202797202797,
+      "run_id": "b6ed447c86039a940cb9d805612f8a79",
+      "seed": 0,
+      "wall_time_s": 238.3159999847412
+    },
+    {
+      "acc_matrix": {
+        "complement_alternating": [
+          null,
+          null,
+          null,
+          null,
+          0.18
+        ],
+        "gray_code": [
+          null,
+          null,
+          0.32,
+          0.24,
+          0.26
+        ],
+        "parity_chunks_4": [
+          null,
+          0.2,
+          0.2,
+          0.18,
+          0.3
+        ],
+        "reverse": [
+          null,
+          null,
+          null,
+          0.26,
+          0.22
+        ],
+        "xor_shift_3": [
+          0.24,
+          0.24,
+          0.34,
+          0.2,
+          0.32
+        ]
+      },
+      "arm": "P_equ",
+      "excluded_underperforming_baseline": true,
+      "retention": 1.122996794871795,
+      "run_id": "0c6cfa96b10c6aa8be110ab4dc9d945e",
+      "seed": 1,
+      "wall_time_s": 240.2664830684662
+    },
+    {
+      "acc_matrix": {
+        "complement_alternating": [
+          null,
+          null,
+          null,
+          null,
+          0.26
+        ],
+        "gray_code": [
+          null,
+          null,
+          0.22,
+          0.22,
+          0.22
+        ],
+        "parity_chunks_4": [
+          null,
+          0.18,
+          0.2,
+          0.18,
+          0.18
+        ],
+        "reverse": [
+          null,
+          null,
+          null,
+          0.24,
+          0.24
+        ],
+        "xor_shift_3": [
+          0.24,
+          0.24,
+          0.24,
+          0.24,
+          0.24
+        ]
+      },
+      "arm": "P_equ",
+      "excluded_underperforming_baseline": true,
+      "retention": 1.0,
+      "run_id": "803a42893fcb266a368620317b73a91b",
+      "seed": 2,
+      "wall_time_s": 240.64584302902222
+    },
+    {
+      "acc_matrix": {
+        "complement_alternating": [
+          null,
+          null,
+          null,
+          null,
+          0.18
+        ],
+        "gray_code": [
+          null,
+          null,
+          0.22,
+          0.22,
+          0.26
+        ],
+        "parity_chunks_4": [
+          null,
+          0.18,
+          0.28,
+          0.2,
+          0.3
+        ],
+        "reverse": [
+          null,
+          null,
+          null,
+          0.26,
+          0.22
+        ],
+        "xor_shift_3": [
+          0.32,
+          0.24,
+          0.2,
+          0.24,
+          0.32
+        ]
+      },
+      "arm": "P_equ",
+      "excluded_underperforming_baseline": false,
+      "retention": 1.1736596736596736,
+      "run_id": "c0c659d6f13d8da88da89ebe6bba5f6d",
+      "seed": 3,
+      "wall_time_s": 240.14058876037598
+    },
+    {
+      "acc_matrix": {
+        "complement_alternating": [
+          null,
+          null,
+          null,
+          null,
+          0.18
+        ],
+        "gray_code": [
+          null,
+          null,
+          0.26,
+          0.24,
+          0.26
+        ],
+        "parity_chunks_4": [
+          null,
+          0.18,
+          0.3,
+          0.2,
+          0.3
+        ],
+        "reverse": [
+          null,
+          null,
+          null,
+          0.28,
+          0.22
+        ],
+        "xor_shift_3": [
+          0.2,
+          0.24,
+          0.32,
+          0.24,
+          0.32
+        ]
+      },
+      "arm": "P_equ",
+      "excluded_underperforming_baseline": true,
+      "retention": 1.263095238095238,
+      "run_id": "9912b6096cca1e276afa1707b24e5101",
+      "seed": 4,
+      "wall_time_s": 240.56337308883667
+    },
+    {
+      "acc_matrix": {
+        "complement_alternating": [
+          null,
+          null,
+          null,
+          null,
+          0.18
+        ],
+        "gray_code": [
+          null,
+          null,
+          0.24,
+          0.34,
+          0.26
+        ],
+        "parity_chunks_4": [
+          null,
+          0.2,
+          0.14,
+          0.14,
+          0.3
+        ],
+        "reverse": [
+          null,
+          null,
+          null,
+          0.38,
+          0.22
+        ],
+        "xor_shift_3": [
+          0.24,
+          0.24,
+          0.2,
+          0.24,
+          0.32
+        ]
+      },
+      "arm": "P_max",
+      "excluded_underperforming_baseline": true,
+      "retention": 1.1239035087719298,
+      "run_id": "716e4a047c7d59df71d399240b9a6575",
+      "seed": 0,
+      "wall_time_s": 240.9435658454895
+    },
+    {
+      "acc_matrix": {
+        "complement_alternating": [
+          null,
+          null,
+          null,
+          null,
+          0.26
+        ],
+        "gray_code": [
+          null,
+          null,
+          0.22,
+          0.26,
+          0.3
+        ],
+        "parity_chunks_4": [
+          null,
+          0.2,
+          0.2,
+          0.3,
+          0.2
+        ],
+        "reverse": [
+          null,
+          null,
+          null,
+          0.22,
+          0.28
+        ],
+        "xor_shift_3": [
+          0.2,
+          0.24,
+          0.24,
+          0.32,
+          0.24
+        ]
+      },
+      "arm": "P_max",
+      "excluded_underperforming_baseline": true,
+      "retention": 1.209090909090909,
+      "run_id": "11a28ec5b876d6b818ffd37719aa05a5",
+      "seed": 1,
+      "wall_time_s": 240.55110716819763
+    },
+    {
+      "acc_matrix": {
+        "complement_alternating": [
+          null,
+          null,
+          null,
+          null,
+          0.18
+        ],
+        "gray_code": [
+          null,
+          null,
+          0.22,
+          0.26,
+          0.26
+        ],
+        "parity_chunks_4": [
+          null,
+          0.2,
+          0.2,
+          0.28,
+          0.3
+        ],
+        "reverse": [
+          null,
+          null,
+          null,
+          0.22,
+          0.22
+        ],
+        "xor_shift_3": [
+          0.24,
+          0.24,
+          0.24,
+          0.34,
+          0.32
+        ]
+      },
+      "arm": "P_max",
+      "excluded_underperforming_baseline": true,
+      "retention": 1.253787878787879,
+      "run_id": "12c2cee7bab3131af01754e55fb5997f",
+      "seed": 2,
+      "wall_time_s": 237.0848422050476
+    },
+    {
+      "acc_matrix": {
+        "complement_alternating": [
+          null,
+          null,
+          null,
+          null,
+          0.22
+        ],
+        "gray_code": [
+          null,
+          null,
+          0.28,
+          0.28,
+          0.22
+        ],
+        "parity_chunks_4": [
+          null,
+          0.16,
+          0.12,
+          0.12,
+          0.2
+        ],
+        "reverse": [
+          null,
+          null,
+          null,
+          0.34,
+          0.26
+        ],
+        "xor_shift_3": [
+          0.24,
+          0.18,
+          0.38,
+          0.38,
+          0.24
+        ]
+      },
+      "arm": "P_max",
+      "excluded_underperforming_baseline": true,
+      "retention": 0.9501050420168067,
+      "run_id": "75ea26581a08721b53214a98da868a87",
+      "seed": 3,
+      "wall_time_s": 240.54275393486023
+    },
+    {
+      "acc_matrix": {
+        "complement_alternating": [
+          null,
+          null,
+          null,
+          null,
+          0.18
+        ],
+        "gray_code": [
+          null,
+          null,
+          0.26,
+          0.28,
+          0.28
+        ],
+        "parity_chunks_4": [
+          null,
+          0.2,
+          0.18,
+          0.3,
+          0.3
+        ],
+        "reverse": [
+          null,
+          null,
+          null,
+          0.24,
+          0.22
+        ],
+        "xor_shift_3": [
+          0.2,
+          0.24,
+          0.24,
+          0.32,
+          0.32
+        ]
+      },
+      "arm": "P_max",
+      "excluded_underperforming_baseline": true,
+      "retention": 1.2733974358974358,
+      "run_id": "be69ab07232802c7bd8d3bf645e9c806",
+      "seed": 4,
+      "wall_time_s": 240.86168694496155
+    }
+  ],
+  "commit_sha": "b42f7e2296ca3dfac3cd4b787a6442f80008a2d5",
+  "date": "2026-05-04",
+  "fixture_path": "tests/fixtures/symbolic_cl_g6.jsonl",
+  "hyperparams": {
+    "alpha": 16,
+    "batch_size": 1,
+    "iters": 50,
+    "lr": 0.0001,
+    "n_eval": 50,
+    "n_train": 50,
+    "rank": 8
+  },
+  "n_seeds": 5,
+  "retention_by_arm": {
+    "P_equ": [
+      1.1736596736596736
+    ],
+    "P_max": [],
+    "P_min": [],
+    "baseline": []
+  },
+  "smoke": false,
+  "subdomains": [
+    "xor_shift_3",
+    "parity_chunks_4",
+    "gray_code",
+    "reverse",
+    "complement_alternating"
+  ],
+  "verdict": {
+    "bonferroni_alpha": 0.016666666666666666,
+    "h9a_classification": "INSUFFICIENT",
+    "h9a_g": NaN,
+    "h9a_positive_sign": false,
+    "h9a_strict_large_effect": false,
+    "h9a_welch_p": NaN,
+    "h9a_welch_reject": false,
+    "h9c_classification": "INSUFFICIENT",
+    "h9c_jonckheere_p": NaN,
+    "h9c_jonckheere_reject": false,
+    "h9c_mean_p_equ": 1.1736596736596736,
+    "h9c_mean_p_max": NaN,
+    "h9c_mean_p_min": NaN
+  },
+  "wall_time_s": 4802.839115142822
+}

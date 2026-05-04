@@ -1093,6 +1093,88 @@ de preuve DR-3.
   ~52 min de paroi sur Studio M3 Ultra, mémoire GPU pic
   139 GB.
 
+### G6-M1Max Path D — Helium-2B substrat cross-family (Étape 1 + Étape 2, 2026-05-04)
+
+Pré-enregistrement : [`docs/osf-prereg-g6-m1max-path-d.md`](../../osf-prereg-g6-m1max-path-d.md)
+verrouillé au commit `db44d05`. Substrat : Kyutai Helium-1
+2B dense (`kyutai/helium-1-2b`, Apache 2.0, 3,86 GB
+safetensors, reproductible publiquement). Deux étapes
+exécutées séquentiellement sur M1 Max.
+
+**Étape 1 — Helium-2B + MMLU réel 50/50** (jalon
+`docs/milestones/g6-m1max-path-d-mmlu-2026-05-04.{json,md}`,
+4 410 s de paroi, mémoire pic 8,1 GB) : 20/20 cellules
+incluses (aucune exclusion baseline sous-performante). Welch
+H9-A sur `(P_max avec mog)` vs `(P_max avec none)` : **t
+petit**, **`p = 0,4963`**, **`g de Hedges = 0,0054`**, mean
+P_max(mog) ≈ mean P_max(none) ≈ 1,03-1,09. Échec à rejeter
+H0 ; **classification = H9-B** (lavage real-LLM au palier
+2B-dense sur benchmark de rappel de connaissance).
+Monotonicité de Jonckheere (P_min < P_equ < P_max ascendant)
+: `p = 0,842`, pas de rejet. Le protocole de rêve n'apporte
+rien de mesurable à la rétention sur Helium-2B + MMLU.
+
+**Étape 2 — Helium-2B + CL symbolique 50/50** (jalon
+`docs/milestones/g6-m1max-path-d-synth-2026-05-04.{json,md}`,
+4 803 s de paroi, mémoire pic 8,1 GB). Sous-domaines :
+`xor_shift_3`, `parity_chunks_4`, `gray_code`, `reverse`,
+`complement_alternating` (5 règles déterministes de
+transformation de chaînes de bits sur entrées 16 bits, fixture
+`tests/fixtures/symbolic_cl_g6.jsonl` avec graine=42, 500
+records). 19/20 cellules exclues par la règle de baseline
+sous-performante : `acc[S_1 après S_1] < UNDERPERFORM_
+THRESHOLD = 0,30` sur quasi toutes les cellules (bras,
+graine), valeurs de rétention 0,91-1,32. **Classification =
+INSUFFISANT** (seule `P_equ graine=3` passe avec
+rétention=1,17, pas de test Welch possible à N=1).
+
+**Lecture méthodologique** : Helium-2B avec LoRA rank=8 / 50
+itérations N'ACQUIERT PAS les règles symboliques à partir de
+50 records d'entraînement — l'exactitude du premier
+sous-domaine reste près du hasard à 4 choix (0,25). Le
+principe de validation convergente du pré-enregistrement Path
+C §1 ne peut pas s'appliquer sur Helium parce que le substrat
+manque de capacité pour apprendre ce benchmark sous le
+budget de calcul verrouillé. Les hypothèses H11-A_synth /
+H11-B / H11-C / H11-A* (pré-enregistrement §2) ne peuvent
+pas être évaluées. Par §9 envelope b du pré-enregistrement,
+un re-run avec itérations augmentées (50 → 200) ou rang plus
+élevé (8 → 16) nécessiterait un amendement §9.1 ; la
+validation convergente dépend désormais de Path A* (Qwen-35B
++ MMLU, en cours) et Path C (Qwen-35B + CL symbolique,
+scaffolded mais pas lancé).
+
+**Verdict combiné Path D** :
+- H11-A_MMLU = H9-B (null) sur Helium-2B + MMLU.
+- H11-A_synth = INSUFFISANT sur Helium-2B + CL symbolique.
+- État de la conjonction H11-D : **`unresolved`** (une voie
+  INSUFFISANTE).
+
+C'est cohérent avec le motif empirique plus large du
+programme (G4-quater H4-C confirmé vide, G4-quinto H5-C
+confirmé vide, G4-sexto H6-A confirmé vide, G4-septimo H6-B
+confirmé vide, universalité H6-C confirmée, G6-Studio Path A
+INSUFFISANT, Path D Étape 1 H9-B null) : **aucune
+revendication empirique positive du couplage 4-canaux du
+framework C n'a été déclenchée sur les plafonds pré-enregistrés
+testés**. Path D Étape 2 INSUFFISANT est méthodologique, pas
+anti-revendication.
+
+**Provenance** :
+- Pré-enregistrement : [docs/osf-prereg-g6-m1max-path-d.md](../../osf-prereg-g6-m1max-path-d.md)
+- Script de setup : `scripts/setup_m1max_helium_path_d.sh`
+- Jalon Étape 1 : `docs/milestones/g6-m1max-path-d-mmlu-2026-05-04.{json,md}`
+- Jalon Étape 2 : `docs/milestones/g6-m1max-path-d-synth-2026-05-04.{json,md}`
+- Pilote : `experiments/g6_studio_path_a/run_g6_studio_path_a.py`
+  (réutilisé de Path A inchangé ; flag CLI `--subdomains` ajouté
+  au commit `b1727dd` pour fixtures non-MMLU)
+- Substrat : Helium-1 2B dense au cache HF
+- Pipeline LoRA : fork mlx_lm KIKI-Mac_tunner à
+  `/tmp/mlx_lm/` sur M1 Max via PYTHONPATH=/tmp
+- 40 cellules (bras, graine) × 5 sous-domaines × 2 fixtures =
+  200 mesures, ~2,6 h de paroi total sur M1 Max, mémoire pic
+  8,1 GB.
+
 ## 7.2 Table comparative inter-substrats H1-H4 (substitution synthétique — pas de revendication empirique)
 
 **Table 7.2 — MLX vs E-SNN hypothèses à Bonferroni

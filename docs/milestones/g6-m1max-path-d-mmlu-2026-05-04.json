@@ -1,0 +1,978 @@
+{
+  "arms": [
+    "baseline",
+    "P_min",
+    "P_equ",
+    "P_max"
+  ],
+  "c_version": "C-v0.12.0+PARTIAL",
+  "cells": [
+    {
+      "acc_matrix": {
+        "anatomy": [
+          0.43839999999999996,
+          0.5730000000000001,
+          0.58,
+          0.48,
+          0.52
+        ],
+        "astronomy": [
+          null,
+          0.5248,
+          0.44,
+          0.5498000000000001,
+          0.58
+        ],
+        "business_ethics": [
+          null,
+          null,
+          0.46,
+          0.5449999999999999,
+          0.54
+        ],
+        "clinical_knowledge": [
+          null,
+          null,
+          null,
+          0.58,
+          0.56
+        ],
+        "college_biology": [
+          null,
+          null,
+          null,
+          null,
+          0.44
+        ]
+      },
+      "arm": "baseline",
+      "excluded_underperforming_baseline": false,
+      "retention": 1.1076861496370385,
+      "run_id": "576fcbe82e3b0bf8edc6f1ce6288c497",
+      "seed": 0,
+      "wall_time_s": 220.18952798843384
+    },
+    {
+      "acc_matrix": {
+        "anatomy": [
+          0.4446,
+          0.48,
+          0.6252,
+          0.48,
+          0.62
+        ],
+        "astronomy": [
+          null,
+          0.4662,
+          0.44079999999999997,
+          0.58,
+          0.48
+        ],
+        "business_ethics": [
+          null,
+          null,
+          0.4456,
+          0.56,
+          0.42
+        ],
+        "clinical_knowledge": [
+          null,
+          null,
+          null,
+          0.56,
+          0.5
+        ],
+        "college_biology": [
+          null,
+          null,
+          null,
+          null,
+          0.48
+        ]
+      },
+      "arm": "baseline",
+      "excluded_underperforming_baseline": false,
+      "retention": 1.0648798662299088,
+      "run_id": "d395ec153bd5263c39a7575413fc2e07",
+      "seed": 1,
+      "wall_time_s": 218.95060300827026
+    },
+    {
+      "acc_matrix": {
+        "anatomy": [
+          0.4616,
+          0.475,
+          0.54,
+          0.46,
+          0.5
+        ],
+        "astronomy": [
+          null,
+          0.49879999999999997,
+          0.56,
+          0.56,
+          0.48
+        ],
+        "business_ethics": [
+          null,
+          null,
+          0.48,
+          0.5,
+          0.48
+        ],
+        "clinical_knowledge": [
+          null,
+          null,
+          null,
+          0.5,
+          0.44
+        ],
+        "college_biology": [
+          null,
+          null,
+          null,
+          null,
+          0.42
+        ]
+      },
+      "arm": "baseline",
+      "excluded_underperforming_baseline": false,
+      "retention": 0.9813746127621369,
+      "run_id": "d279ccfee84da52b25baf0e1e87c80a8",
+      "seed": 2,
+      "wall_time_s": 220.96287608146667
+    },
+    {
+      "acc_matrix": {
+        "anatomy": [
+          0.4722,
+          0.44499999999999995,
+          0.5673999999999999,
+          0.48,
+          0.58
+        ],
+        "astronomy": [
+          null,
+          0.5014,
+          0.5463999999999999,
+          0.64,
+          0.56
+        ],
+        "business_ethics": [
+          null,
+          null,
+          0.42,
+          0.52,
+          0.54
+        ],
+        "clinical_knowledge": [
+          null,
+          null,
+          null,
+          0.62,
+          0.56
+        ],
+        "college_biology": [
+          null,
+          null,
+          null,
+          null,
+          0.48
+        ]
+      },
+      "arm": "baseline",
+      "excluded_underperforming_baseline": false,
+      "retention": 1.1335264861485022,
+      "run_id": "4744223bb36e6cfb23571d66fe1cef2e",
+      "seed": 3,
+      "wall_time_s": 220.5275638103485
+    },
+    {
+      "acc_matrix": {
+        "anatomy": [
+          0.4258,
+          0.43699999999999994,
+          0.58,
+          0.52,
+          0.44
+        ],
+        "astronomy": [
+          null,
+          0.45339999999999997,
+          0.5262,
+          0.66,
+          0.58
+        ],
+        "business_ethics": [
+          null,
+          null,
+          0.4454,
+          0.54,
+          0.54
+        ],
+        "clinical_knowledge": [
+          null,
+          null,
+          null,
+          0.56,
+          0.56
+        ],
+        "college_biology": [
+          null,
+          null,
+          null,
+          null,
+          0.36
+        ]
+      },
+      "arm": "baseline",
+      "excluded_underperforming_baseline": false,
+      "retention": 1.13124149700158,
+      "run_id": "3ac9130d7b6683d6feca57057a57f254",
+      "seed": 4,
+      "wall_time_s": 216.64990305900574
+    },
+    {
+      "acc_matrix": {
+        "anatomy": [
+          0.5,
+          0.62,
+          0.56,
+          0.58,
+          0.62
+        ],
+        "astronomy": [
+          null,
+          0.6112000000000001,
+          0.44,
+          0.56,
+          0.58
+        ],
+        "business_ethics": [
+          null,
+          null,
+          0.44,
+          0.54,
+          0.5
+        ],
+        "clinical_knowledge": [
+          null,
+          null,
+          null,
+          0.5,
+          0.46
+        ],
+        "college_biology": [
+          null,
+          null,
+          null,
+          null,
+          0.44
+        ]
+      },
+      "arm": "P_min",
+      "excluded_underperforming_baseline": false,
+      "retention": 1.061329128986197,
+      "run_id": "ebae9fd2c5658c1bb5ad85638a1f8d1d",
+      "seed": 0,
+      "wall_time_s": 222.13738107681274
+    },
+    {
+      "acc_matrix": {
+        "anatomy": [
+          0.4488,
+          0.48,
+          0.6,
+          0.54,
+          0.56
+        ],
+        "astronomy": [
+          null,
+          0.5114,
+          0.46,
+          0.46,
+          0.56
+        ],
+        "business_ethics": [
+          null,
+          null,
+          0.46,
+          0.42719999999999997,
+          0.5
+        ],
+        "clinical_knowledge": [
+          null,
+          null,
+          null,
+          0.44,
+          0.62
+        ],
+        "college_biology": [
+          null,
+          null,
+          null,
+          null,
+          0.48
+        ]
+      },
+      "arm": "P_min",
+      "excluded_underperforming_baseline": false,
+      "retention": 1.2097131272294332,
+      "run_id": "b065098d9654a457b3b6a5096c404e11",
+      "seed": 1,
+      "wall_time_s": 221.83686709403992
+    },
+    {
+      "acc_matrix": {
+        "anatomy": [
+          0.4528,
+          0.41519999999999996,
+          0.5074,
+          0.54,
+          0.58
+        ],
+        "astronomy": [
+          null,
+          0.4866,
+          0.5466,
+          0.56,
+          0.52
+        ],
+        "business_ethics": [
+          null,
+          null,
+          0.52,
+          0.54,
+          0.44
+        ],
+        "clinical_knowledge": [
+          null,
+          null,
+          null,
+          0.54,
+          0.48
+        ],
+        "college_biology": [
+          null,
+          null,
+          null,
+          null,
+          0.4
+        ]
+      },
+      "arm": "P_min",
+      "excluded_underperforming_baseline": false,
+      "retention": 1.0211502506552241,
+      "run_id": "45c35aa932ab87b4f571b8ad58df2bf0",
+      "seed": 2,
+      "wall_time_s": 222.5527310371399
+    },
+    {
+      "acc_matrix": {
+        "anatomy": [
+          0.54,
+          0.4684,
+          0.56,
+          0.5,
+          0.58
+        ],
+        "astronomy": [
+          null,
+          0.5573999999999999,
+          0.58,
+          0.58,
+          0.6
+        ],
+        "business_ethics": [
+          null,
+          null,
+          0.46,
+          0.5,
+          0.46
+        ],
+        "clinical_knowledge": [
+          null,
+          null,
+          null,
+          0.58,
+          0.54
+        ],
+        "college_biology": [
+          null,
+          null,
+          null,
+          null,
+          0.48
+        ]
+      },
+      "arm": "P_min",
+      "excluded_underperforming_baseline": false,
+      "retention": 1.020383705408389,
+      "run_id": "5efb362f185079b25922c2d3847eeece",
+      "seed": 3,
+      "wall_time_s": 218.18514490127563
+    },
+    {
+      "acc_matrix": {
+        "anatomy": [
+          0.39019999999999994,
+          0.48719999999999997,
+          0.5439999999999999,
+          0.6073999999999999,
+          0.58
+        ],
+        "astronomy": [
+          null,
+          0.5379999999999999,
+          0.41300000000000003,
+          0.553,
+          0.56
+        ],
+        "business_ethics": [
+          null,
+          null,
+          0.44,
+          0.5,
+          0.48
+        ],
+        "clinical_knowledge": [
+          null,
+          null,
+          null,
+          0.52,
+          0.5
+        ],
+        "college_biology": [
+          null,
+          null,
+          null,
+          null,
+          0.44
+        ]
+      },
+      "arm": "P_min",
+      "excluded_underperforming_baseline": false,
+      "retention": 1.1449392419233928,
+      "run_id": "bb7ed08cc95fcc0d7dae59675142af69",
+      "seed": 4,
+      "wall_time_s": 218.2309181690216
+    },
+    {
+      "acc_matrix": {
+        "anatomy": [
+          0.4268,
+          0.46,
+          0.64,
+          0.48,
+          0.54
+        ],
+        "astronomy": [
+          null,
+          0.5104,
+          0.5,
+          0.54,
+          0.58
+        ],
+        "business_ethics": [
+          null,
+          null,
+          0.42,
+          0.36,
+          0.48
+        ],
+        "clinical_knowledge": [
+          null,
+          null,
+          null,
+          0.44,
+          0.44
+        ],
+        "college_biology": [
+          null,
+          null,
+          null,
+          null,
+          0.44
+        ]
+      },
+      "arm": "P_equ",
+      "excluded_underperforming_baseline": false,
+      "retention": 1.1361125987414646,
+      "run_id": "b95a2ace75330144fdff8dc4384d5e0e",
+      "seed": 0,
+      "wall_time_s": 213.77456402778625
+    },
+    {
+      "acc_matrix": {
+        "anatomy": [
+          0.34,
+          0.424,
+          0.56,
+          0.48,
+          0.5
+        ],
+        "astronomy": [
+          null,
+          0.4914,
+          0.488,
+          0.56,
+          0.54
+        ],
+        "business_ethics": [
+          null,
+          null,
+          0.46,
+          0.5,
+          0.5
+        ],
+        "clinical_knowledge": [
+          null,
+          null,
+          null,
+          0.6,
+          0.5
+        ],
+        "college_biology": [
+          null,
+          null,
+          null,
+          null,
+          0.42
+        ]
+      },
+      "arm": "P_equ",
+      "excluded_underperforming_baseline": false,
+      "retention": 1.12244479731692,
+      "run_id": "9a16c78db51ef8f01836e5e8b61d8d14",
+      "seed": 1,
+      "wall_time_s": 222.15564393997192
+    },
+    {
+      "acc_matrix": {
+        "anatomy": [
+          0.584,
+          0.5212,
+          0.5,
+          0.52,
+          0.54
+        ],
+        "astronomy": [
+          null,
+          0.505,
+          0.58,
+          0.56,
+          0.54
+        ],
+        "business_ethics": [
+          null,
+          null,
+          0.52,
+          0.46,
+          0.48
+        ],
+        "clinical_knowledge": [
+          null,
+          null,
+          null,
+          0.52,
+          0.52
+        ],
+        "college_biology": [
+          null,
+          null,
+          null,
+          null,
+          0.38
+        ]
+      },
+      "arm": "P_equ",
+      "excluded_underperforming_baseline": false,
+      "retention": 0.979260347004142,
+      "run_id": "1207081bd5862ccc91b39f3c3aeb2fcf",
+      "seed": 2,
+      "wall_time_s": 220.87128591537476
+    },
+    {
+      "acc_matrix": {
+        "anatomy": [
+          0.4896,
+          0.4866,
+          0.48,
+          0.46,
+          0.62
+        ],
+        "astronomy": [
+          null,
+          0.4706,
+          0.66,
+          0.6,
+          0.58
+        ],
+        "business_ethics": [
+          null,
+          null,
+          0.56,
+          0.46,
+          0.5
+        ],
+        "clinical_knowledge": [
+          null,
+          null,
+          null,
+          0.56,
+          0.56
+        ],
+        "college_biology": [
+          null,
+          null,
+          null,
+          null,
+          0.46
+        ]
+      },
+      "arm": "P_equ",
+      "excluded_underperforming_baseline": false,
+      "retention": 1.0979165501021204,
+      "run_id": "f81c8e9ae37cdc4b069d159695d4f01a",
+      "seed": 3,
+      "wall_time_s": 219.24531412124634
+    },
+    {
+      "acc_matrix": {
+        "anatomy": [
+          0.5,
+          0.46,
+          0.604,
+          0.48,
+          0.64
+        ],
+        "astronomy": [
+          null,
+          0.585,
+          0.5608000000000001,
+          0.52,
+          0.54
+        ],
+        "business_ethics": [
+          null,
+          null,
+          0.44,
+          0.42,
+          0.5
+        ],
+        "clinical_knowledge": [
+          null,
+          null,
+          null,
+          0.46,
+          0.46
+        ],
+        "college_biology": [
+          null,
+          null,
+          null,
+          null,
+          0.46
+        ]
+      },
+      "arm": "P_equ",
+      "excluded_underperforming_baseline": false,
+      "retention": 1.0848601398601398,
+      "run_id": "13c10bdde6f6a89ccb27d4076942c76d",
+      "seed": 4,
+      "wall_time_s": 218.55716490745544
+    },
+    {
+      "acc_matrix": {
+        "anatomy": [
+          0.5,
+          0.41300000000000003,
+          0.5642,
+          0.56,
+          0.62
+        ],
+        "astronomy": [
+          null,
+          0.47659999999999997,
+          0.5184,
+          0.56,
+          0.54
+        ],
+        "business_ethics": [
+          null,
+          null,
+          0.4164,
+          0.46,
+          0.44
+        ],
+        "clinical_knowledge": [
+          null,
+          null,
+          null,
+          0.56,
+          0.5
+        ],
+        "college_biology": [
+          null,
+          null,
+          null,
+          null,
+          0.46
+        ]
+      },
+      "arm": "P_max",
+      "excluded_underperforming_baseline": false,
+      "retention": 1.0806397534143692,
+      "run_id": "daa15cc75f8ba4c0db6ad8b227623aca",
+      "seed": 0,
+      "wall_time_s": 220.23328518867493
+    },
+    {
+      "acc_matrix": {
+        "anatomy": [
+          0.5616,
+          0.52,
+          0.56,
+          0.5,
+          0.62
+        ],
+        "astronomy": [
+          null,
+          0.58,
+          0.4462,
+          0.5873999999999999,
+          0.5
+        ],
+        "business_ethics": [
+          null,
+          null,
+          0.52,
+          0.5276000000000001,
+          0.44
+        ],
+        "clinical_knowledge": [
+          null,
+          null,
+          null,
+          0.64,
+          0.44
+        ],
+        "college_biology": [
+          null,
+          null,
+          null,
+          null,
+          0.44
+        ]
+      },
+      "arm": "P_max",
+      "excluded_underperforming_baseline": false,
+      "retention": 0.8749278539149229,
+      "run_id": "110f1efdee133b66e6a31b5463684389",
+      "seed": 1,
+      "wall_time_s": 220.18870902061462
+    },
+    {
+      "acc_matrix": {
+        "anatomy": [
+          0.6062000000000001,
+          0.5347999999999999,
+          0.64,
+          0.52,
+          0.66
+        ],
+        "astronomy": [
+          null,
+          0.458,
+          0.54,
+          0.56,
+          0.5244
+        ],
+        "business_ethics": [
+          null,
+          null,
+          0.46,
+          0.46,
+          0.46
+        ],
+        "clinical_knowledge": [
+          null,
+          null,
+          null,
+          0.54,
+          0.52
+        ],
+        "college_biology": [
+          null,
+          null,
+          null,
+          null,
+          0.44
+        ]
+      },
+      "arm": "P_max",
+      "excluded_underperforming_baseline": false,
+      "retention": 1.0491726791241702,
+      "run_id": "80a83f6fed5f43d6c3805d3f0f067412",
+      "seed": 2,
+      "wall_time_s": 222.4978449344635
+    },
+    {
+      "acc_matrix": {
+        "anatomy": [
+          0.43979999999999997,
+          0.48,
+          0.56,
+          0.46,
+          0.62
+        ],
+        "astronomy": [
+          null,
+          0.5114,
+          0.54,
+          0.5,
+          0.52
+        ],
+        "business_ethics": [
+          null,
+          null,
+          0.5,
+          0.48,
+          0.44
+        ],
+        "clinical_knowledge": [
+          null,
+          null,
+          null,
+          0.52,
+          0.44
+        ],
+        "college_biology": [
+          null,
+          null,
+          null,
+          null,
+          0.42
+        ]
+      },
+      "arm": "P_max",
+      "excluded_underperforming_baseline": false,
+      "retention": 1.0381755310778387,
+      "run_id": "ce392411efbefb2dea9d35b28d60b5ec",
+      "seed": 3,
+      "wall_time_s": 220.05901288986206
+    },
+    {
+      "acc_matrix": {
+        "anatomy": [
+          0.4656,
+          0.432,
+          0.5,
+          0.5,
+          0.52
+        ],
+        "astronomy": [
+          null,
+          0.4046,
+          0.58,
+          0.56,
+          0.56
+        ],
+        "business_ethics": [
+          null,
+          null,
+          0.5,
+          0.48,
+          0.54
+        ],
+        "clinical_knowledge": [
+          null,
+          null,
+          null,
+          0.58,
+          0.52
+        ],
+        "college_biology": [
+          null,
+          null,
+          null,
+          null,
+          0.46
+        ]
+      },
+      "arm": "P_max",
+      "excluded_underperforming_baseline": false,
+      "retention": 1.1193683142732846,
+      "run_id": "a3960406278ac2fc2187c0a0b6294e36",
+      "seed": 4,
+      "wall_time_s": 223.44753003120422
+    }
+  ],
+  "commit_sha": "db44d05c37733625f955546bbfb3971cc6ea1ca0",
+  "date": "2026-05-04",
+  "fixture_path": "tests/fixtures/mmlu_g6_real.jsonl",
+  "hyperparams": {
+    "alpha": 16,
+    "batch_size": 1,
+    "iters": 50,
+    "lr": 0.0001,
+    "n_eval": 50,
+    "n_train": 50,
+    "rank": 8
+  },
+  "n_seeds": 5,
+  "retention_by_arm": {
+    "P_equ": [
+      1.1361125987414646,
+      1.12244479731692,
+      0.979260347004142,
+      1.0979165501021204,
+      1.0848601398601398
+    ],
+    "P_max": [
+      1.0806397534143692,
+      0.8749278539149229,
+      1.0491726791241702,
+      1.0381755310778387,
+      1.1193683142732846
+    ],
+    "P_min": [
+      1.061329128986197,
+      1.2097131272294332,
+      1.0211502506552241,
+      1.020383705408389,
+      1.1449392419233928
+    ],
+    "baseline": [
+      1.1076861496370385,
+      1.0648798662299088,
+      0.9813746127621369,
+      1.1335264861485022,
+      1.13124149700158
+    ]
+  },
+  "smoke": false,
+  "subdomains": [
+    "anatomy",
+    "astronomy",
+    "business_ethics",
+    "clinical_knowledge",
+    "college_biology"
+  ],
+  "verdict": {
+    "bonferroni_alpha": 0.016666666666666666,
+    "h9a_classification": "H9-B",
+    "h9a_g": 0.0054288435551049985,
+    "h9a_positive_sign": true,
+    "h9a_strict_large_effect": false,
+    "h9a_welch_p": 0.49632516063773763,
+    "h9a_welch_reject": false,
+    "h9c_classification": "H9-C",
+    "h9c_jonckheere_p": 0.8422417645021294,
+    "h9c_jonckheere_reject": false,
+    "h9c_mean_p_equ": 1.0841188866049574,
+    "h9c_mean_p_max": 1.032456826360917,
+    "h9c_mean_p_min": 1.0915030908405272
+  },
+  "wall_time_s": 4409.601682901382
+}
