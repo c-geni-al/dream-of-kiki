@@ -555,6 +555,88 @@ Provenance :
 - Substrate (CNN) : `experiments.g4_quinto_test.small_cnn.G4SmallCNN`
 - RECOMBINE strategies : `experiments.g4_quater_test.recombine_strategies.sample_synthetic_latents`
 
+## 7.1.8 G4-sexto pilot — RECOMBINE-empty universalises to CIFAR-100 100-class (2026-05-04)
+
+Following the G4-quinto §7.1.7 finding that RECOMBINE was
+empirically empty on FMNIST (3-layer MLP and 5-layer MLP) and
+CIFAR-10 (small CNN), Plan G4-sexto fires the
+"escalation" follow-up : does the empirical-emptiness verdict
+survive at *higher class-count* CL streams (CIFAR-100 with
+n_classes=10 per task, 10 tasks ; Tiny-ImageNet with
+n_classes=20 per task, 10 tasks) ?
+
+Pre-registration
+[`docs/osf-prereg-g4-sexto-pilot.md`](../../osf-prereg-g4-sexto-pilot.md)
+locks Option B as the conservative compute path : Step 1
+(CIFAR-100 only) at N=30 seeds × 4 arms × 2 strategies = 240
+cells ; Step 2 (Tiny-ImageNet) deferred to G4-septimo.
+
+### Verdict
+
+- **H6-A (CIFAR-100, 100-class scale, G4SmallCNN)** : Welch
+  two-sided between (P_max with mog) and (P_max with none),
+  α = 0.0167. Result : `t = 0.197`, `p = 0.8450`,
+  `Hedges' g = 0.057`, `mean_mog = 0.3622`, `mean_none = 0.3580`.
+  **Fail-to-reject H0 → H6-A confirmed**. RECOMBINE adds nothing
+  measurable beyond REPLAY+DOWNSCALE on the small CNN substrate
+  at CIFAR-100 100-class scale.
+- **H6-B (Tiny-ImageNet, 200-class scale, G4MediumCNN)** :
+  **DEFERRED**. Compute Option B is locked at pre-reg ; the
+  Tiny-IN step will run as a G4-septimo follow-up.
+- **H6-C (universality conjunction `H6-A ∧ H6-B`)** : state
+  **deferred** (one of the two clauses incomplete). Provisional
+  reading : under H6-A confirmed, the empirical-emptiness
+  universality is provisionally extended to {FMNIST, CIFAR-10,
+  CIFAR-100} × {3-layer MLP, 5-layer MLP, small CNN}, pending
+  Tiny-IN evidence.
+
+### Honest reading
+
+- **The DR-4 partial refutation extends to higher class scale.**
+  G4-ter §7.1.5 originated the partial refutation (g_h2 = + 2.77
+  for REPLAY+DOWNSCALE without RESTRUCTURE+RECOMBINE on the 3-layer
+  MLP). G4-quater §7.1.6 strengthened it with H4-C confirmed
+  (RESTRUCTURE+RECOMBINE empirically empty on FMNIST). G4-quinto
+  §7.1.7 extended H5-C to FMNIST + CIFAR-10 across MLP and CNN
+  substrates. G4-sexto Step 1 now extends the "RECOMBINE adds
+  nothing" reading further to a 100-class CL stream — the
+  empirical-emptiness verdict is robust to a 10× scaling of the
+  class budget per task.
+- **Scope.** This is a small-CNN-on-CIFAR-100 result. It does NOT
+  yet say RECOMBINE is empty on transformers, on E-SNN
+  hierarchical substrates, or at ImageNet-1k scale.
+  Tiny-ImageNet (G4-septimo) tightens the H6-C conjunction
+  toward universality ; transformer + hierarchical-E-SNN +
+  ImageNet-1k expansions remain open.
+- **What the verdict does not say.** A null result in Welch is
+  always interpretation-careful : "no measurable difference at
+  N=30" is not "RECOMBINE is provably empty". The pre-reg framing
+  is "*confirms* H6-A is fail-to-reject" — i.e. consistent with
+  the framework's claim that RECOMBINE adds no measurable signal,
+  but the strong-form negation requires N >> 30 to bound the
+  effect size from above.
+
+### DualVer impact
+
+EC stays PARTIAL (per pre-reg §6 row 4 : H6-A confirmation does
+not promote to STABLE without H6-C conjunction). FC stays at
+C-v0.12.0. Under H6-A confirmed, the partial refutation of DR-4
+is further extended ; STABLE promotion remains blocked pending
+Tiny-IN / ImageNet-1k / transformer / hierarchical-E-SNN
+follow-ups.
+
+### Provenance
+
+- Pre-registration : [docs/osf-prereg-g4-sexto-pilot.md](../../osf-prereg-g4-sexto-pilot.md)
+- Step 1 milestone : `docs/milestones/g4-sexto-step1-2026-05-03.{json,md}`
+- Aggregate : `docs/milestones/g4-sexto-aggregate-2026-05-03.{json,md}`
+- Driver : `experiments/g4_sexto_test/run_step1_cifar100.py`
+- Substrate (CNN) : `experiments.g4_quinto_test.small_cnn.G4SmallCNN`
+  (re-used)
+- N=30 M1 Max main run, ~80 min wall ; parallel N=95 confirmatory
+  on Studio M3 Ultra in flight (planned milestone
+  `g4-sexto-step1-confirmatory-N95-studio-2026-05-04.{json,md}`)
+
 ## 7.1.9 G5-bis pilot — richer head ported to E-SNN, MLX-only artefact verdict (2026-05-03)
 
 The G4-ter §7.1.5 finding (g_h2 = + 2.77 on MLX hierarchical

@@ -603,6 +603,91 @@ Provenance :
 - Substrat (CNN) : `experiments.g4_quinto_test.small_cnn.G4SmallCNN`
 - Stratégies RECOMBINE : `experiments.g4_quater_test.recombine_strategies.sample_synthetic_latents`
 
+## 7.1.8 Pilote G4-sexto — universalité de la vacuité RECOMBINE sur CIFAR-100 100-classes (2026-05-04)
+
+Suite à la trouvaille G4-quinto §7.1.7 selon laquelle RECOMBINE
+était empiriquement vide sur FMNIST (MLP 3 couches et MLP 5
+couches) et CIFAR-10 (small CNN), le plan G4-sexto exécute le
+suivi « escalade » : le verdict de vacuité empirique survit-il
+à un *budget de classes plus élevé* sur les flux CL
+(CIFAR-100 avec n_classes=10 par tâche, 10 tâches ;
+Tiny-ImageNet avec n_classes=20 par tâche, 10 tâches) ?
+
+Le pré-enregistrement
+[`docs/osf-prereg-g4-sexto-pilot.md`](../../osf-prereg-g4-sexto-pilot.md)
+verrouille l'option B comme chemin de calcul conservateur :
+Étape 1 (CIFAR-100 uniquement) à N=30 graines × 4 bras × 2
+stratégies = 240 cellules ; Étape 2 (Tiny-ImageNet) reportée à
+G4-septimo.
+
+### Verdict
+
+- **H6-A (CIFAR-100, 100 classes, G4SmallCNN)** : Welch
+  bilatéral entre (P_max avec mog) et (P_max avec none),
+  α = 0,0167. Résultat : `t = 0,197`, `p = 0,8450`,
+  `g de Hedges = 0,057`, `mean_mog = 0,3622`,
+  `mean_none = 0,3580`. **Échec à rejeter H0 → H6-A confirmé**.
+  RECOMBINE n'apporte rien de mesurable au-delà de
+  REPLAY+DOWNSCALE sur le substrat small CNN à l'échelle
+  100 classes de CIFAR-100.
+- **H6-B (Tiny-ImageNet, 200 classes, G4MediumCNN)** :
+  **REPORTÉ**. L'option B est verrouillée au pré-enregistrement ;
+  l'étape Tiny-IN s'exécutera en suivi G4-septimo.
+- **H6-C (conjonction d'universalité `H6-A ∧ H6-B`)** : état
+  **reporté** (l'une des deux clauses incomplète). Lecture
+  provisoire : sous H6-A confirmé, l'universalité de la vacuité
+  empirique est provisoirement étendue à {FMNIST, CIFAR-10,
+  CIFAR-100} × {MLP 3 couches, MLP 5 couches, small CNN}, en
+  attente des éléments Tiny-IN.
+
+### Lecture honnête
+
+- **La réfutation partielle de DR-4 s'étend à plus haute échelle
+  de classes.** G4-ter §7.1.5 a originé la réfutation partielle
+  (g_h2 = + 2,77 pour REPLAY+DOWNSCALE sans RESTRUCTURE+RECOMBINE
+  sur le MLP 3 couches). G4-quater §7.1.6 l'a renforcée avec H4-C
+  confirmé (RESTRUCTURE+RECOMBINE empiriquement vide sur FMNIST).
+  G4-quinto §7.1.7 a étendu H5-C à FMNIST + CIFAR-10 sur les
+  substrats MLP et CNN. G4-sexto Étape 1 étend maintenant la
+  lecture « RECOMBINE n'apporte rien » à un flux CL 100 classes —
+  le verdict de vacuité empirique est robuste à un facteur 10
+  d'échelle sur le budget de classes par tâche.
+- **Portée.** Il s'agit d'un résultat small-CNN-sur-CIFAR-100. Il
+  ne dit PAS encore que RECOMBINE est vide sur transformeurs, sur
+  substrats hiérarchiques E-SNN ou à l'échelle ImageNet-1k.
+  Tiny-ImageNet (G4-septimo) resserre la conjonction H6-C vers
+  l'universalité ; les extensions transformeur + E-SNN
+  hiérarchique + ImageNet-1k restent ouvertes.
+- **Ce que le verdict ne dit pas.** Un résultat null en Welch est
+  toujours à interpréter prudemment : « pas de différence
+  mesurable à N=30 » n'est pas « RECOMBINE est prouvée vide ». Le
+  cadrage du pré-enregistrement est « *confirme* H6-A est en
+  échec à rejeter » — c'est-à-dire compatible avec la prédiction
+  du framework selon laquelle RECOMBINE n'ajoute aucun signal
+  mesurable, mais la négation forte exige N >> 30 pour borner
+  la taille d'effet par le haut.
+
+### Impact DualVer
+
+EC reste PARTIAL (par §6 ligne 4 du pré-enregistrement : la
+confirmation de H6-A ne promeut pas vers STABLE sans la
+conjonction H6-C). FC reste à C-v0.12.0. Sous H6-A confirmé, la
+réfutation partielle de DR-4 s'étend ; la promotion STABLE reste
+bloquée en attente des suivis Tiny-IN / ImageNet-1k /
+transformeur / E-SNN hiérarchique.
+
+### Provenance
+
+- Pré-enregistrement : [docs/osf-prereg-g4-sexto-pilot.md](../../osf-prereg-g4-sexto-pilot.md)
+- Jalon Étape 1 : `docs/milestones/g4-sexto-step1-2026-05-03.{json,md}`
+- Agrégat : `docs/milestones/g4-sexto-aggregate-2026-05-03.{json,md}`
+- Pilote : `experiments/g4_sexto_test/run_step1_cifar100.py`
+- Substrat (CNN) : `experiments.g4_quinto_test.small_cnn.G4SmallCNN`
+  (réutilisé)
+- Run principal N=30 M1 Max, ~80 min de paroi ; confirmatoire
+  N=95 parallèle sur Studio M3 Ultra en cours (jalon prévu
+  `g4-sexto-step1-confirmatory-N95-studio-2026-05-04.{json,md}`)
+
 ## 7.1.9 Pilote G5-bis — tête riche portée sur E-SNN, verdict artefact MLX-only (2026-05-03)
 
 La trouvaille G4-ter §7.1.5 (g_h2 = + 2,77 sur substrat MLX

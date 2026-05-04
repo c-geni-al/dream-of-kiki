@@ -227,3 +227,42 @@ Provenance :
 - Step 2 H5-B milestone : `docs/milestones/g4-quinto-step2-2026-05-03.{json,md}`
 - Step 3 H5-C milestone : `docs/milestones/g4-quinto-step3-2026-05-03.{json,md}`
 - Paper 2 §7.1.7 : `docs/papers/paper2/results.md` + `docs/papers/paper2-fr/results.md`
+
+## Empirical-evidence amendment — G4-sexto Step 1 (2026-05-04)
+
+**v0.5 (2026-05-04 G4-sexto addendum)** — extends the G4-quinto
+amendment from a **two-benchmark** to a **three-benchmark** scope
+on the empirical-emptiness axis, by escalating the class budget
+from 10 (CIFAR-10) to 100 (CIFAR-100).
+
+The structural inclusions and Lemma DR-4.L proof remain unchanged.
+
+What G4-sexto Step 1 positively establishes is that the DR-4
+prediction "richer profile retains more on capacity-monotone
+metrics" is **empirically vacuous** for the RECOMBINE channel
+also at 100-class scale on a small-CNN substrate :
+
+- Split-CIFAR-100 × G4SmallCNN (G4-sexto H6-A, N = 30) :
+  Welch p = 0.8450, Hedges' g = 0.057,
+  mean P_max(mog) = 0.3622 vs mean P_max(none) = 0.3580.
+
+The H6-A confirmation extends the universality flag from the
+G4-quinto two-benchmark scope `{FMNIST, CIFAR-10}` to a
+three-benchmark scope `{FMNIST, CIFAR-10, CIFAR-100}` across
+substrates `{3-layer MLP, 5-layer MLP, small CNN}`. The
+empirical-emptiness verdict is robust to a 10× scaling of
+class budget per task.
+
+Caveats unchanged from G4-quinto :
+- H6-B (Tiny-ImageNet 200-class) deferred to G4-septimo under
+  Option B compute lock.
+- H6-C universality conjunction deferred ; provisional under
+  H6-A confirmation only.
+- Confirmatory N=95 Studio run is in flight at the time of this
+  amendment ; N=30 main effect is the locked claim.
+
+Provenance :
+- Pre-registration : `docs/osf-prereg-g4-sexto-pilot.md`
+- Step 1 milestone : `docs/milestones/g4-sexto-step1-2026-05-03.{json,md}`
+- Aggregate verdict : `docs/milestones/g4-sexto-aggregate-2026-05-03.{json,md}`
+- Paper 2 §7.1.8 : `docs/papers/paper2/results.md` + `docs/papers/paper2-fr/results.md`

@@ -12,6 +12,41 @@ see `docs/specs/2026-04-17-dreamofkiki-framework-C-design.md` §12).
 
 ## [Unreleased]
 
+### Empirical (G4-sexto Step 1 CIFAR-100 100-class, 2026-05-04)
+
+- G4-sexto Step 1 N=30 Option B pilot completed on M1 Max (240
+  cells, ~80 min wall). Pre-reg
+  `docs/osf-prereg-g4-sexto-pilot.md` ; aggregator
+  `experiments/g4_sexto_test/aggregator.py`.
+- **H6-A confirmed** : Welch two-sided between (P_max with mog)
+  and (P_max with none) on Split-CIFAR-100 (n_classes=10/task,
+  10 tasks, G4SmallCNN), `t = 0.197`, `p = 0.8450`,
+  `Hedges' g = 0.057`, `mean_mog = 0.3622`, `mean_none = 0.3580`.
+  Fail-to-reject H0 → H6-A confirmed. RECOMBINE adds nothing
+  measurable beyond REPLAY+DOWNSCALE on small-CNN at 100-class
+  scale.
+- **H6-B deferred** : Tiny-ImageNet step locked under Option B,
+  goes to G4-septimo follow-up.
+- **H6-C deferred** : universality conjunction
+  `H6-A ∧ H6-B` incomplete pending Tiny-IN evidence.
+- **DR-4 evidence amended** : `docs/proofs/dr4-profile-inclusion.md`
+  v0.5 G4-sexto addendum extends the G4-quinto two-benchmark
+  empirical-emptiness scope to three benchmarks
+  `{FMNIST, CIFAR-10, CIFAR-100}` across substrates
+  `{3-layer MLP, 5-layer MLP, small CNN}`. Empirical-emptiness
+  verdict robust to 10× scaling of class budget per task. Lemma
+  DR-4.L formal proof unchanged.
+- EC stays PARTIAL ; FC stays C-v0.12.0. STABLE promotion remains
+  blocked pending Tiny-IN, ImageNet-1k, transformer, and
+  hierarchical-E-SNN follow-ups.
+- Milestones :
+  `docs/milestones/g4-sexto-step1-2026-05-03.{json,md}` +
+  `docs/milestones/g4-sexto-aggregate-2026-05-03.{json,md}`.
+  Paper 2 §7.1.8 EN+FR appended.
+- Confirmatory N=95 Studio M3 Ultra run in flight at commit
+  time (planned milestone
+  `g4-sexto-step1-confirmatory-N95-studio-2026-05-04.{json,md}`).
+
 ### Exploratory (Studio CPU pilots — K2 + R1 + Robertson, 2026-05-04)
 
 - Three small CPU pilots on Mac Studio M3 Ultra launched in parallel
