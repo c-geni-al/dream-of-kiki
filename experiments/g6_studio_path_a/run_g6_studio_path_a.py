@@ -111,9 +111,33 @@ DEFAULT_FIXTURE_PATH = (
     REPO_ROOT / "tests" / "fixtures" / "mmlu_g6_synthetic.jsonl"
 )
 PARTIAL_TEMPLATE = (
-    "g6-studio-path-a-partial-{subdomain}-{arm}-seed{seed}-step{idx:02d}-"
+    "{label}-partial-{subdomain}-{arm}-seed{seed}-step{idx:02d}-"
     f"{DATE_TAG}.json"
 )
+DEFAULT_PILOT_LABEL = "g6-studio-path-a"
+
+
+def derive_pilot_label(out_json: Path | str) -> str:
+    """Derive a pilot label from the final-milestone JSON basename.
+
+    The label namespaces per-subdomain partial dumps so concurrent
+    or sequential pilots in the G6 family do not silently
+    overwrite each other's partials on disk (cf. Path A* pre-reg
+    §9.2 amendment). Falls back to ``DEFAULT_PILOT_LABEL`` if the
+    out-json basename does not match the expected dated pattern.
+
+    Examples ::
+
+        g6-studio-path-a-2026-05-04.json     -> g6-studio-path-a
+        g6-studio-path-a-star-2026-05-04.json -> g6-studio-path-a-star
+        g6-m1max-path-d-mmlu-2026-05-04.json -> g6-m1max-path-d-mmlu
+        g6-studio-path-c-2026-05-04.json     -> g6-studio-path-c
+    """
+    stem = Path(out_json).stem
+    parts = stem.rsplit("-", 3)
+    if len(parts) == 4 and parts[1].isdigit() and parts[2].isdigit() and parts[3].isdigit():
+        return parts[0]
+    return DEFAULT_PILOT_LABEL
 
 
 class CellResult(TypedDict):
@@ -156,10 +180,11 @@ def _write_partial(
     idx: int,
     subdomain: str,
     payload: dict[str, Any],
+    pilot_label: str = DEFAULT_PILOT_LABEL,
 ) -> Path:
     """Write a per-subdomain partial JSON dump (resumability)."""
     target = out_dir / PARTIAL_TEMPLATE.format(
-        subdomain=subdomain, arm=arm, seed=seed, idx=idx,
+        label=pilot_label, subdomain=subdomain, arm=arm, seed=seed, idx=idx,
     )
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(
@@ -232,6 +257,7 @@ def _run_cell_real(
     adapter_keys: tuple[str, ...],
     out_dir: Path,
     smoke: bool,
+    pilot_label: str = DEFAULT_PILOT_LABEL,
 ) -> CellResult:
     """Execute one (arm, seed) cell — real LoRA + live-delta coupling.
 
@@ -329,6 +355,7 @@ def _run_cell_real(
             seed=seed,
             idx=idx,
             subdomain=split.subject,
+            pilot_label=pilot_label,
             payload={
                 "arm": arm,
                 "seed": seed,
@@ -444,13 +471,21 @@ def run_pilot(
     adapter_path: Path,
     subdomains: tuple[str, ...],
     smoke: bool,
+    pilot_label: Optional[str] = None,
 ) -> dict[str, Any]:
     """Execute the G6-Studio Path A sweep ; return the verdict payload.
 
     Real backend (``smoke=False`` + ``DREAM_MICRO_KIKI_REAL=1``)
     requires ~8-12 h on Studio M3 Ultra at the locked Option-B
     hyperparams (5 seeds × 4 arms × 5 subdomains = 100 cells).
+
+    The ``pilot_label`` namespaces per-subdomain partial dumps so
+    concurrent or sequential pilots in the G6 family do not
+    silently overwrite each other's partials on disk. If ``None``,
+    derived from ``out_json`` basename via :func:`derive_pilot_label`.
     """
+    if pilot_label is None:
+        pilot_label = derive_pilot_label(out_json)
     splits = build_subdomain_stream(
         fixture_path=fixture_path,
         subdomains=subdomains,
@@ -498,6 +533,7 @@ def run_pilot(
                 adapter_keys=adapter_keys,
                 out_dir=out_dir,
                 smoke=smoke,
+                pilot_label=pilot_label,
             )
             cell["run_id"] = registry.register(
                 c_version=C_VERSION,
